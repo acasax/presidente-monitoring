@@ -27,13 +27,13 @@ class HttpClient {
     service.defaults.headers.post['Content-Type'] = 'application/json';
     service.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
     service.defaults.headers.post['Accept'] = '*/*';
-    service.defaults.headers.post['mode'] = 'cors';
+    // service.defaults.headers.post['mode'] = 'cors';
     service.defaults.baseURL = "http://5.161.104.54";
-    service.defaults.proxy = {
-      protocol: 'http',
-      host: '5.161.104.54',
-      port: 8081,
-    }
+    // service.defaults.proxy = {
+    //   protocol: 'http',
+    //   host: '5.161.104.54',
+    //   port: 8080,
+    // }
 
     //service.defaults.headers.post['mode'] = 'no-cors';
     // registerInterceptor(service);

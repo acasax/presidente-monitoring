@@ -13,4 +13,5 @@ const Login = async (data = {}, query = {}): Promise<IUser[]> => {
   return response.data;
 };
 
+
 export { Login };
