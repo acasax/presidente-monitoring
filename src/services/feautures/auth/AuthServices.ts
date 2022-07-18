@@ -3,7 +3,6 @@ import BaseService from "../../common/BaseService";
 import { IUser } from "./AuthModal";
 
 const Login = async (data = {}, query = {}): Promise<IUser[]> => {
-  console.log('data', data);
   data = JSON.stringify(data);
   const baseService = new BaseService();
   const queryString = baseService.qs.stringify(query);
