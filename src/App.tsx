@@ -1,43 +1,26 @@
-import React, { useEffect } from 'react';
-import logo from './assets/images/logo.svg';
+import React from 'react';
 import './App.css';
-import { Login } from './services/feautures/auth/AuthServices';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './routes/Routes';
 
 function App() {
-
-  // useEffect(() => {
-  //   (async function () {
-  //     const data = await Login({
-  //       'username':'presidente',
-  //       'password':'presidente123'
-  //       });
-  //     //console.log('login', data);
-  //   })();
-  // }, [Login]);
+  // const data = {
+  //   username: 'presidente',
+  //   password: 'presidente123',
+  // };
+  //
+  // // eslint-disable-next-line @typescript-eslint/no-shadow
+  // const handleLogin = useCallback(async (data) => {
+  //   const res = await Login(data);
+  //   console.log(res);
+  // }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <button onClick={async () => await Login({
-          'username': 'presidente',
-          'password': 'presidente123'
-        })}>
-          Activate Lasers
-        </button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
+    </>
   );
 }
 
