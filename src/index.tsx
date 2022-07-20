@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { store } from './store/store';
+import './assets/style/index.css';
 
 ReactDOM.render(
   <Suspense fallback="loading">

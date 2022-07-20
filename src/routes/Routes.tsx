@@ -15,8 +15,8 @@ const Routes = () => {
     if (!paths.includes(history.location.pathname)) {
       history.push(NOT_FOUND_PATH);
     }
-    console.log('isL', isLogged);
-    if (!IsLogged) {
+    console.log(IsLogged);
+    if (IsLogged) {
       history.push(LOGIN_PATH);
     }
   }, [history.location, isLogged]);
