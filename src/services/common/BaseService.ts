@@ -4,8 +4,6 @@ import * as qs from './qs';
 
 import * as url from './url';
 
-import { get } from '../../configuration';
-
 class HttpClient {
   private service: AxiosStatic;
 
@@ -20,22 +18,20 @@ class HttpClient {
   };
 
   constructor() {
-    const config = get();
     const service = axios;
-    //service.defaults.timeout = 20000;
+    // service.defaults.timeout = 20000;
     service.defaults.withCredentials = true;
     service.defaults.headers.post['Content-Type'] = 'application/json';
     service.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-    service.defaults.headers.post['Accept'] = '*/*';
+    service.defaults.headers.post.Accept = '*/*';
     // service.defaults.headers.post['mode'] = 'cors';
-    service.defaults.baseURL = "http://5.161.104.54";
     // service.defaults.proxy = {
     //   protocol: 'http',
     //   host: '5.161.104.54',
     //   port: 8080,
     // }
 
-    //service.defaults.headers.post['mode'] = 'no-cors';
+    // service.defaults.headers.post['mode'] = 'no-cors';
     // registerInterceptor(service);
     this.service = axios;
     this.qs = qs;
