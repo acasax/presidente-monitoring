@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import Screen from '../Screen';
-import { NotFoundPageContainer, NotFoundPageText } from './style';
 
 interface PageTestProps {
   test?: string;
@@ -8,9 +7,9 @@ interface PageTestProps {
 
 const NotFoundPage: FC<PageTestProps> = () => (
   <Screen>
-    <NotFoundPageContainer>
-      <NotFoundPageText>Not found page</NotFoundPageText>
-    </NotFoundPageContainer>
+    <div className="_not-found-page">
+      <h1 className="_text">Not found page</h1>
+    </div>
   </Screen>
 );
 

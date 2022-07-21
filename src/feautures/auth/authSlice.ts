@@ -17,13 +17,17 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    clearUser: (state) => {
+      state.userData = null;
+    },
     setUser: (state, action: PayloadAction<IUser>) => {
+      console.log('store', action.payload);
       state.userData = action.payload;
     },
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, clearUser } = authSlice.actions;
 
 export const getToken = (state: RootState) => state?.auth?.userData?.token;
 export const getUserData = (state: RootState) => state?.auth?.userData;

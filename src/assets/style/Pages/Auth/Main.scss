@@ -1,0 +1,86 @@
+@import "../../constants";
+
+._auth-page {
+  background-color: $lightBlue;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ._form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 320px;
+
+    ._label-container {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 14px;
+      margin-top: 14px;
+      color: $white;
+
+      ._text {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 22px;
+      }
+    }
+
+    ._input-label {
+      color: $white;
+      font-family: 'Poppins', serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    ._input {
+      color: $white;
+      font-family: 'Poppins', serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      border: 1px solid $white;
+      width: 100%;
+      border-radius: 40px;
+
+      ._icon {
+        color: $white;
+      }
+
+    }
+
+    ._input-error {
+      border: none;
+    }
+
+    ._error-text {
+      color: red;
+      font-size: 13px;
+    }
+
+    ._button-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px;
+
+      ._button {
+        width: 100%;
+        border-radius: 40px;
+        font-size: 24px;
+        font-weight: 600;
+        color: $white;
+        border: 3px solid $blue;
+      }
+    }
+  }
+}

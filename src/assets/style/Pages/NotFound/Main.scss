@@ -1,0 +1,17 @@
+@import "../../constants";
+
+._not-found-page {
+  background-color: $lightBlue;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ._text {
+    font-size: 100px;
+    color: $white;
+    text-align: center;
+  }
+
+}

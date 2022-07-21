@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { TextField } from '@mui/material';
 import { Styles } from '../../constants/StyleContants';
 
 export const AuthPageContainer = styled.div`
@@ -31,10 +30,4 @@ export const AuthFormLabelText = styled.p`
   font-size: 20px;
   line-height: 22px;
   color: ${Styles.Colors.WHITE};
-`;
-
-export default styled(TextField)`
-  color: white;
-  background-color: blue;
-  height: 80px;
 `;

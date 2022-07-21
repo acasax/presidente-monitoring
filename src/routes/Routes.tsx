@@ -12,12 +12,13 @@ const Routes = () => {
 
   useEffect(() => {
     const paths = pathComponentArray.map((x) => x.path);
-    if (!paths.includes(history.location.pathname)) {
+    if (!IsLogged) {
+      history.push(LOGIN_PATH);
+    } else {
       history.push(NOT_FOUND_PATH);
     }
-    console.log(IsLogged);
-    if (IsLogged) {
-      history.push(LOGIN_PATH);
+    if (!paths.includes(history.location.pathname)) {
+      history.push(NOT_FOUND_PATH);
     }
   }, [history.location, isLogged]);
 

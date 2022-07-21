@@ -1,0 +1,84 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+._not-found-page {
+  background-color: #333867;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._not-found-page ._text {
+    font-size: 100px;
+    color: #fff;
+    text-align: center; }
+
+._auth-page {
+  background-color: #333867;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._auth-page ._form_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 320px; }
+    ._auth-page ._form_container ._label-container {
+      display: flex;
+      width: 100%;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 14px;
+      margin-top: 14px;
+      color: #fff; }
+      ._auth-page ._form_container ._label-container ._text {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 22px; }
+    ._auth-page ._form_container ._input-label {
+      color: #fff;
+      font-family: 'Poppins', serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px; }
+    ._auth-page ._form_container ._input {
+      color: #fff;
+      font-family: 'Poppins', serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      border: 1px solid #fff;
+      width: 100%;
+      border-radius: 40px; }
+      ._auth-page ._form_container ._input ._icon {
+        color: #fff; }
+    ._auth-page ._form_container ._input-error {
+      border: none; }
+    ._auth-page ._form_container ._error-text {
+      color: red;
+      font-size: 13px; }
+    ._auth-page ._form_container ._button-container {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50px; }
+      ._auth-page ._form_container ._button-container ._button {
+        width: 100%;
+        border-radius: 40px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #fff;
+        border: 3px solid #5E5CE6; }
+
+* {
+  margin: 0;
+  padding: 0; }
+
+html {
+  font-family: Roboto, sans-serif; }
+
+/*# sourceMappingURL=index.css.map */
