@@ -5,9 +5,10 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Screen from '../Screen';
 import { useLoading } from '../../hooks/UseLoading';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { Login } from '../../feautures/auth/AuthServices';
-import { clearUser, getUserData, setUser } from '../../feautures/auth/authSlice';
+import { clearUser, setUser } from '../../feautures/auth/authSlice';
+import { clearAlertMsg, setAlertMsg, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 
 interface PageTestProps {
   test?: string;
@@ -39,17 +40,20 @@ const AuthPage: FC<PageTestProps> = () => {
   };
 
   const dispatch = useAppDispatch();
-  const user = useAppSelector(getUserData);
 
   const onSubmit = async (data: any) => {
     setLoading();
     try {
-      console.log(data);
       dispatch(clearUser());
       const res = await Login(data);
-      console.log('res', res);
-      dispatch(setUser(res));
-      console.log('user', user);
+      if (res?.message) {
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertStatus(true));
+      } else {
+        dispatch(setUser(res));
+        dispatch(setAlertStatus(false));
+        dispatch(clearAlertMsg());
+      }
     } catch (e) {
       console.log(e);
     } finally {

@@ -9,11 +9,15 @@ const Login = async (data = {}, query = {}): Promise<IUser> => {
   const path = baseService.url.build('user/auth');
   const url = BaseService.combine(path, queryString);
   const response: AxiosResponse<IUser> = await baseService.post(url, data, {});
-
+  if (response?.data?.statusCode) {
+    return {
+      message: response?.data?.message,
+    };
+  }
   const res = {
-    username: response.data.username,
-    password: response.data.password,
-    token: response.headers.authorization,
+    username: response?.data?.username,
+    password: response?.data?.password,
+    token: response?.headers?.authorization,
   };
   return res;
 };

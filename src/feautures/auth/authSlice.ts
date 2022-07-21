@@ -21,7 +21,6 @@ const authSlice = createSlice({
       state.userData = null;
     },
     setUser: (state, action: PayloadAction<IUser>) => {
-      console.log('store', action.payload);
       state.userData = action.payload;
     },
   },
