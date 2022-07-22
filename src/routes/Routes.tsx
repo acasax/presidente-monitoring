@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react';
-import { Switch, useHistory } from 'react-router-dom';
+import { Router, Switch, useHistory } from 'react-router-dom';
 import { pathComponentArray } from './RouteComponentMap';
 import { ProtectedRoute } from './ProtectedRoute';
-import { LOGIN_PATH, NOT_FOUND_PATH } from './path-constants';
+import { LOGIN_PATH, MAIN_PATH, NOT_FOUND_PATH } from './path-constants';
 import { useAppSelector } from '../store/hooks';
 import { isLogged } from '../feautures/auth/authSlice';
-// eslint-disable-next-line import/no-named-as-default
-import CustomAlert from '../components/CustomAlert/CustomAlert';
-import { alertStatus } from '../components/CustomAlert/alertSlice';
+import NavBar from '../components/NavBar/NavBar';
 
 const Routes = () => {
   const history = useHistory();
   const IsLogged = useAppSelector(isLogged);
-  const AlertStatus = useAppSelector(alertStatus);
 
   useEffect(() => {
     const paths = pathComponentArray.map((x) => x.path);
     if (!IsLogged) {
       history.push(LOGIN_PATH);
     } else {
-      history.push(NOT_FOUND_PATH);
+      history.push(MAIN_PATH);
     }
     if (!paths.includes(history.location.pathname)) {
       history.push(NOT_FOUND_PATH);
@@ -27,8 +24,10 @@ const Routes = () => {
   }, [history.location, isLogged]);
 
   return (
-    <>
-      <CustomAlert open={AlertStatus} />
+    <Router history={history}>
+      {
+                IsLogged && <NavBar />
+            }
       <Switch>
         {pathComponentArray.map((pc) => (
           <ProtectedRoute
@@ -39,7 +38,7 @@ const Routes = () => {
           />
         ))}
       </Switch>
-    </>
+    </Router>
   );
 };
 

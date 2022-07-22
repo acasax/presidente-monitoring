@@ -75,6 +75,42 @@
         color: #fff;
         border: 3px solid #5E5CE6; }
 
+._main-page {
+  background-color: #f5f6f8;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._main-page ._text {
+    font-size: 100px;
+    color: #000000;
+    text-align: center; }
+
+._attendance-page {
+  background-color: #f5f6f8;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._attendance-page ._text {
+    font-size: 100px;
+    color: #000000;
+    text-align: center; }
+
+._comparison-page {
+  background-color: #f5f6f8;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._comparison-page ._text {
+    font-size: 100px;
+    color: #000000;
+    text-align: center; }
+
 .root {
   display: block; }
 
@@ -144,6 +180,54 @@
   align-items: center;
   top: 50px;
   width: 100%; }
+
+._nav-bar-container {
+  background: linear-gradient(119deg, #333867 12.45%, #17193B 94.7%);
+  width: 100%;
+  height: 55px;
+  position: fixed;
+  top: 0;
+  align-items: center;
+  padding-left: 25px;
+  padding-right: 25px; }
+  ._nav-bar-container ._nav-bar-row {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between; }
+    ._nav-bar-container ._nav-bar-row ._items-container {
+      display: flex;
+      align-items: center;
+      height: 100%; }
+      ._nav-bar-container ._nav-bar-row ._items-container ._item-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 16px; }
+        ._nav-bar-container ._nav-bar-row ._items-container ._item-container ._text {
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 16px;
+          letter-spacing: 1.25px;
+          text-transform: uppercase;
+          color: #fff;
+          text-decoration: none; }
+        ._nav-bar-container ._nav-bar-row ._items-container ._item-container ._active {
+          color: #5E5CE6; }
+    ._nav-bar-container ._nav-bar-row ._icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      position: fixed;
+      top: 0;
+      right: 25px;
+      height: 55px; }
+      ._nav-bar-container ._nav-bar-row ._icon-container ._icon {
+        width: 25px;
+        height: 25px;
+        color: #fff; }
 
 * {
   margin: 0;

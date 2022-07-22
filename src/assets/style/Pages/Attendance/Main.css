@@ -1,0 +1,13 @@
+._attendance-page {
+  background-color: #f5f6f8;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  ._attendance-page ._text {
+    font-size: 100px;
+    color: #000000;
+    text-align: center; }
+
+/*# sourceMappingURL=Main.css.map */

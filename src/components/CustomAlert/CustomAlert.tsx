@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { alertMsg, clearAlertMsg, setAlertStatus } from './alertSlice';
 
-export const CustomAlert = ({ open }: any) => {
+const CustomAlert = ({ open }: any) => {
   const dispatch = useAppDispatch();
   const msg = useAppSelector(alertMsg);
 

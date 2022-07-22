@@ -2,24 +2,18 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes/Routes';
+import CustomAlert from './components/CustomAlert/CustomAlert';
+import { useAppSelector } from './store/hooks';
+import { alertStatus } from './components/CustomAlert/alertSlice';
 
 function App() {
-  // const data = {
-  //   username: 'presidente',
-  //   password: 'presidente123',
-  // };
-  //
-  // // eslint-disable-next-line @typescript-eslint/no-shadow
-  // const handleLogin = useCallback(async (data) => {
-  //   const res = await Login(data);
-  //   console.log(res);
-  // }, []);
-
+  const AlertStatus = useAppSelector(alertStatus);
   return (
     <>
       <BrowserRouter>
         <Routes />
       </BrowserRouter>
+      <CustomAlert open={AlertStatus} />
     </>
   );
 }
