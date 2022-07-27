@@ -22,7 +22,6 @@ export const loadingSlice = createSlice({
 
 export const { setLoadingStatus } = loadingSlice.actions;
 
-// Sortiraj po like
 export const loadingStatus = (state: RootState) => state.loading.value;
 
 export default loadingSlice.reducer;

@@ -20,8 +20,6 @@ const AuthPage: FC<PageTestProps> = () => {
     control,
   } = useForm();
 
-  // const history = useHistory();
-
   const {
     setLoading,
     resetLoading,

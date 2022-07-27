@@ -17,22 +17,15 @@ class HttpClient {
     readonly default?: {};
   };
 
-  constructor() {
+  constructor(token?: string, contentType = 'application/json') {
     const service = axios;
-    // service.defaults.timeout = 20000;
     service.defaults.withCredentials = true;
-    service.defaults.headers.post['Content-Type'] = 'application/json';
-    service.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+    service.defaults.headers['Content-Type'] = contentType;
+    service.defaults.headers['Access-Control-Allow-Origin'] = '*';
     service.defaults.headers.post.Accept = '*/*';
-    // service.defaults.headers.post['mode'] = 'cors';
-    // service.defaults.proxy = {
-    //   protocol: 'http',
-    //   host: '5.161.104.54',
-    //   port: 8080,
-    // }
+    service.defaults.headers.post.Authorization = token;
+    service.defaults.headers.get.Authorization = token;
 
-    // service.defaults.headers.post['mode'] = 'no-cors';
-    // registerInterceptor(service);
     this.service = axios;
     this.qs = qs;
     this.url = url;

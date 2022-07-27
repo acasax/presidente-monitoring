@@ -14,12 +14,11 @@ const Login = async (data = {}, query = {}): Promise<IUser> => {
       message: response?.data?.message,
     };
   }
-  const res = {
+  return {
     username: response?.data?.username,
     password: response?.data?.password,
     token: response?.headers?.authorization,
   };
-  return res;
 };
 
 export { Login };

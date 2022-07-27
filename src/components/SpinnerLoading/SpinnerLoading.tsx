@@ -12,7 +12,7 @@ const SpinnerLoading = () => (
 export const SpinnerLoadingCenter = () => (
   <div className="spinner-center">
     <div className="spinner-center-inner">
-      <CircularProgress color="success" />
+      <CircularProgress />
     </div>
   </div>
 );

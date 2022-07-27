@@ -229,6 +229,31 @@
         height: 25px;
         color: #fff; }
 
+._icon-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center; }
+  ._icon-button-container ._text-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px; }
+    ._icon-button-container ._text-container ._text {
+      font-weight: 700;
+      text-align: center;
+      font-size: 16px;
+      color: #000000; }
+  ._icon-button-container ._icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 57px;
+    height: 57px;
+    border-radius: 5px;
+    background-color: #17193B; }
+
 * {
   margin: 0;
   padding: 0; }
