@@ -5,8 +5,23 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 55px;
+  padding-left: 77px;
+  padding-right: 77px;
+
+  ._row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%;
+  }
+
+
 
   ._text {
     font-size: 100px;

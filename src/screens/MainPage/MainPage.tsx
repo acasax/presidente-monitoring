@@ -1,10 +1,10 @@
-import React, { FC } from 'react';
-import { Button } from '@mui/material';
+import React, { FC, useEffect } from 'react';
 import Screen from '../Screen';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
-import { getDataForLocation } from '../../feautures/main/MainService';
 import { useAppSelector } from '../../store/hooks';
 import { getToken } from '../../feautures/auth/authSlice';
+import LocationSelect from '../../components/LocationSelect/LocationSelect';
+import CustomButton from '../../components/CustomButton/CustomButton';
 
 interface PageTestProps {
   test?: string
@@ -13,18 +13,21 @@ interface PageTestProps {
 const MainPage: FC<PageTestProps> = () => {
   const token = useAppSelector(getToken);
 
-  const handle = async () => {
-    const res = await getDataForLocation(token);
-    console.log(res);
-  };
+  useEffect(() => {
+    console.log('t', token);
+  }, []);
 
   return (
     <Screen>
       <div className="_main-page">
-        <CustomIconButtonSend />
-        <Button variant="outlined" onClick={handle}>
-          get
-        </Button>
+        <div className="_row">
+          <LocationSelect />
+          <CustomButton />
+        </div>
+        <div className="_row">
+          <CustomIconButtonSend />
+        </div>
+
       </div>
     </Screen>
   );
