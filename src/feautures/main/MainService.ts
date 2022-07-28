@@ -2,17 +2,13 @@ import { AxiosResponse } from 'axios';
 import BaseService from '../../services/common/BaseService';
 
 const SendExcelWithTransaction = async (data = {}, query = {}, token: string): Promise<any> => {
-  console.log('data', data);
-  console.log('token', token);
-  // data = JSON.stringify(data);
-  let response: AxiosResponse<any>;
   const baseService = new BaseService(token, 'multipart/form-data');
   const queryString = baseService.qs.stringify(query);
   const path = baseService.url.build('transaction/add');
   const url = BaseService.combine(path, queryString);
 
   try {
-    response = await baseService.post(url, data, {});
+    await baseService.post(url, data, {});
   } catch (e) {
     console.log(e);
     return {
@@ -20,11 +16,7 @@ const SendExcelWithTransaction = async (data = {}, query = {}, token: string): P
     };
   }
 
-  // const response: AxiosResponse<any> = await baseService.post(url, data, {});
-  // if (response?.data?.statusCode !== 200) {
-  //   console.log('greska');
-  // }
-  return response;
+  return null;
 };
 
 const getDataForLocation = async (token: string): Promise<any> => {

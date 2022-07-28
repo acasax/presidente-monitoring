@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Alert, Collapse, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { alertMsg, clearAlertMsg, setAlertStatus } from './alertSlice';
+import { alertMsg, clearAlertMsg, setAlertOpenStatus } from './alertSlice';
 
-const CustomAlert = ({ open }: any) => {
+const CustomAlert = ({ open, type }: any) => {
   const dispatch = useAppDispatch();
   const msg = useAppSelector(alertMsg);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setAlertOpenStatus(false));
+    }, 10000);
+  }, [open]);
 
   return (
     <div className="_alert-container">
@@ -18,7 +24,7 @@ const CustomAlert = ({ open }: any) => {
               color="inherit"
               size="small"
               onClick={() => {
-                dispatch(setAlertStatus(false));
+                dispatch(setAlertOpenStatus(false));
                 dispatch(clearAlertMsg());
               }}
             >
@@ -26,7 +32,7 @@ const CustomAlert = ({ open }: any) => {
             </IconButton>
                     )}
           variant="filled"
-          severity="error"
+          severity={type}
         >
           {msg}
         </Alert>

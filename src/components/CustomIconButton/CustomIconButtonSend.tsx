@@ -2,10 +2,12 @@ import React from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import SendIcon from '@mui/icons-material/Send';
+import CloseIcon from '@mui/icons-material/Close';
 import { SendExcelWithTransaction } from '../../feautures/main/MainService';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getToken } from '../../feautures/auth/authSlice';
 import { useLoading } from '../../hooks/UseLoading';
+import { setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../CustomAlert/alertSlice';
 
 const CustomIconButtonSend = () => {
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -14,39 +16,65 @@ const CustomIconButtonSend = () => {
     setLoading,
     resetLoading,
   } = useLoading();
+  const dispatch = useAppDispatch();
 
   const handleCapture = ({ target }: any) => {
-    console.log(target.files[0]);
     setSelectedFile(target.files[0]);
   };
 
   const handleSubmit = async () => {
-    console.log(selectedFile);
     setLoading();
     const form = new FormData();
     form.append('file', selectedFile);
-    console.log(Object.fromEntries(form));
+    setLoading();
     try {
       const res = await SendExcelWithTransaction(form, {}, token);
-      console.log('res', res);
+      if (res == null) {
+        dispatch(setAlertStatus('success'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+      } else {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Fajl nije kako treba.'));
+        dispatch(setAlertOpenStatus(true));
+      }
     } catch (e) {
-      console.log(e);
+      dispatch(setAlertStatus('error'));
+      dispatch(setAlertMsg(e?.message));
+      dispatch(setAlertOpenStatus(true));
     } finally {
+      setSelectedFile(null);
       resetLoading();
     }
-    // const res = await SendExcelWithTransaction(selectedFile, {}, token);
-    // console.log('res', res);
+  };
+
+  const handleClearSelectedFile = () => {
+    setSelectedFile(null);
   };
 
   return (
     <div className="_icon-button-container">
-
+      {
+                selectedFile && (
+                <Tooltip title="Odustani">
+                  <IconButton
+                    color="primary"
+                    aria-label="Odustani"
+                    component="label"
+                    onClick={handleClearSelectedFile}
+                  >
+                    <CloseIcon fontSize="large" style={{ color: 'black' }} />
+                  </IconButton>
+                </Tooltip>
+                )
+            }
       <div className="_text-container">
         <p className="_text">
           {selectedFile ? selectedFile.name : 'Izaberi fajl'}
         </p>
       </div>
       <div className="_icon-container">
+
         {
                     !selectedFile ? (
                       <Tooltip title="Izaberi fajl">

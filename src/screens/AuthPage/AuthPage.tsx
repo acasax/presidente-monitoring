@@ -8,7 +8,7 @@ import { useLoading } from '../../hooks/UseLoading';
 import { useAppDispatch } from '../../store/hooks';
 import { Login } from '../../feautures/auth/AuthServices';
 import { clearUser, setUser } from '../../feautures/auth/authSlice';
-import { clearAlertMsg, setAlertMsg, setAlertStatus } from '../../components/CustomAlert/alertSlice';
+import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 
 interface PageTestProps {
   test?: string;
@@ -45,11 +45,12 @@ const AuthPage: FC<PageTestProps> = () => {
       dispatch(clearUser());
       const res = await Login(data);
       if (res?.message) {
+        dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertStatus(true));
+        dispatch(setAlertOpenStatus(true));
       } else {
         dispatch(setUser(res));
-        dispatch(setAlertStatus(false));
+        dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
     } catch (e) {

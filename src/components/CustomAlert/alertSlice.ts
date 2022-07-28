@@ -6,18 +6,20 @@ import { RootState } from '../../store/store';
 interface AlertStatus {
   value: boolean,
   msg: string,
+  status: string,
 }
 
 const initialState: AlertStatus = {
   value: false,
   msg: '',
+  status: 'error',
 };
 
 export const alertSlice = createSlice({
   name: 'alert',
   initialState,
   reducers: {
-    setAlertStatus: (state, action: PayloadAction<boolean>) => {
+    setAlertOpenStatus: (state, action: PayloadAction<boolean>) => {
       state.value = action.payload;
     },
     setAlertMsg: (state, action: PayloadAction<string>) => {
@@ -26,12 +28,25 @@ export const alertSlice = createSlice({
     clearAlertMsg: (state) => {
       state.msg = '';
     },
+    setAlertStatus: (state, action: PayloadAction<string>) => {
+      state.status = action.payload;
+    },
+    clearAlertStatus: (state) => {
+      state.status = '';
+    },
   },
 });
 
-export const { setAlertStatus, setAlertMsg, clearAlertMsg } = alertSlice.actions;
+export const {
+  setAlertOpenStatus,
+  setAlertMsg,
+  clearAlertMsg,
+  setAlertStatus,
+  clearAlertStatus,
+} = alertSlice.actions;
 
-export const alertStatus = (state: RootState) => state.alert.value;
-export const alertMsg = (state: RootState) => state.alert.msg;
+export const alertOpenStatus = (state: RootState) => state?.alert?.value;
+export const alertMsg = (state: RootState) => state?.alert?.msg;
+export const alertStatus = (state: RootState) => state?.alert?.status;
 
 export default alertSlice.reducer;
