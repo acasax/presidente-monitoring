@@ -41,13 +41,9 @@ const getDataForLocation = async (token: string, query = {}): Promise<any> => {
         queryString += ']';
       }
       queryString += '&';
-      console.log(key); // alerts key
-      console.log(query[key]); // alerts value
     });
 
-  console.log(queryString);
   queryString = queryString.slice(0, -1);
-  console.log(queryString);
 
   const path = baseService.url.build('transaction/profit-by-location');
   const url = BaseService.combine(path, queryString);
