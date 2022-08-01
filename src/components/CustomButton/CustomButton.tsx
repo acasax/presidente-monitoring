@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@mui/material';
 
-const CustomButton = () => {
-  useEffect(() => {
-    console.log('asd');
-  }, []);
-
-  return (
-    <Button variant="outlined" className="_custom-button" type="submit">
-      PRETRAZI
-    </Button>
-  );
-};
+const CustomButton = ({ text, handleFunction }: any) => (
+  <Button variant="outlined" className="_custom-button" type="submit" onClick={handleFunction}>
+    {text}
+  </Button>
+);
 
 export default CustomButton;

@@ -1,17 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-// eslint-disable-next-line import/no-cycle
 import authReducer from '../feautures/auth/authSlice';
-// eslint-disable-next-line import/no-cycle
 import loadingReducer from '../components/SpinnerLoading/loadingSlice';
-// eslint-disable-next-line import/no-cycle
 import alertReducer from '../components/CustomAlert/alertSlice';
+import locationSelectReducer from '../feautures/locationSelect/locationSelectSlice';
+import datePickerReducer from '../feautures/datePicker/datePickerSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     loading: loadingReducer,
     alert: alertReducer,
+    locationSelect: locationSelectReducer,
+    datePicker: datePickerReducer,
   },
 });
 

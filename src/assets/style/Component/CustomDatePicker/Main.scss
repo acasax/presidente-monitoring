@@ -1,0 +1,31 @@
+@import "../../constants";
+
+._data-picker-container {
+  padding: 15px;
+  background-color: $white;
+  box-shadow: 0 4px 4px rgba($black, 0.1);
+  border-radius: 5px;
+  margin-right: 40px;
+
+  ._date-picker-input {
+    color: $black;
+    border: none;
+    border-bottom: 1px solid $black;
+    font-size: 16px;
+    padding: 4px 24px 5px 0;
+  }
+
+  ._data-picker-label-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    ._date-picker-label {
+      color: rgba($black, 0.6);
+      font-size: 12px;
+      padding-bottom: 3px;
+    }
+  }
+}
+
+

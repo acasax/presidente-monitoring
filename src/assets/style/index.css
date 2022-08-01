@@ -266,11 +266,11 @@
     background-color: #17193B; }
 
 ._select-container {
-  padding: 5px 12px 10px;
+  padding: 5px 12px 5px;
   background-color: #fff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  min-width: 400px; }
+  margin-right: 40px; }
 
 ._custom-button {
   padding: 11px 16px;
@@ -281,7 +281,29 @@
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 1.25px;
-  color: #5E5CE6; }
+  color: #5E5CE6;
+  text-transform: uppercase; }
+
+._data-picker-container {
+  padding: 15px;
+  background-color: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-right: 40px; }
+  ._data-picker-container ._date-picker-input {
+    color: #000000;
+    border: none;
+    border-bottom: 1px solid #000000;
+    font-size: 16px;
+    padding: 4px 24px 5px 0; }
+  ._data-picker-container ._data-picker-label-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; }
+    ._data-picker-container ._data-picker-label-container ._date-picker-label {
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 12px;
+      padding-bottom: 3px; }
 
 * {
   margin: 0;

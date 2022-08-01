@@ -12,5 +12,8 @@ module.exports = {
         'react/prop-types': 'off',
         'object-curly-newline': 0,
         'import/prefer-default-export': 'off',
+        'import/no-cycle': 0,
+        'react/jsx-props-no-spreading': 0,
+        "no-nested-ternary": "off"
     },
 };

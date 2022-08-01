@@ -19,22 +19,45 @@ const SendExcelWithTransaction = async (data = {}, query = {}, token: string): P
   return null;
 };
 
-const getDataForLocation = async (token: string): Promise<any> => {
+const getDataForLocation = async (token: string, query = {}): Promise<any> => {
   const baseService = new BaseService(token);
-  // const queryString = baseService.qs.stringify(query);
-  const path = baseService.url.build('transaction/profit-by-location?locations=[3,4,7]&dates=["07.2022"]&dateQueryType=MONTH');
-  // const url = BaseService.combine(path, '');
-  const response: AxiosResponse<any> = await baseService.get(path, {});
+  let queryString = '';
+
+  Object.keys(query)
+    .forEach((key) => {
+      queryString += key;
+      queryString += '=';
+      if (key === 'dateQueryType') {
+        queryString += query[key];
+      } else {
+        queryString += '[';
+        if (key === 'dates') {
+          queryString += '"';
+          queryString += query[key];
+          queryString += '"';
+        } else {
+          queryString += query[key];
+        }
+        queryString += ']';
+      }
+      queryString += '&';
+      console.log(key); // alerts key
+      console.log(query[key]); // alerts value
+    });
+
+  console.log(queryString);
+  queryString = queryString.slice(0, -1);
+  console.log(queryString);
+
+  const path = baseService.url.build('transaction/profit-by-location');
+  const url = BaseService.combine(path, queryString);
+  const response: AxiosResponse<any> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
     return {
       message: response?.data?.message,
     };
   }
-  return {
-    username: response?.data?.username,
-    password: response?.data?.password,
-    token: response?.headers?.authorization,
-  };
+  return response.data;
 };
 
 export { SendExcelWithTransaction, getDataForLocation };
