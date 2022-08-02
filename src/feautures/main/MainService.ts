@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import BaseService from '../../services/common/BaseService';
+import { ITransaction } from './MainModal';
 
 const SendExcelWithTransaction = async (data = {}, query = {}, token: string): Promise<any> => {
   const baseService = new BaseService(token, 'multipart/form-data');
@@ -16,7 +17,9 @@ const SendExcelWithTransaction = async (data = {}, query = {}, token: string): P
     };
   }
 
-  return null;
+  return {
+    message: 'Uspesno ste dodali fajl',
+  };
 };
 
 const getDataForLocation = async (token: string, query = {}): Promise<any> => {
@@ -49,7 +52,7 @@ const getDataForLocation = async (token: string, query = {}): Promise<any> => {
 
   const path = baseService.url.build('transaction/profit-by-location');
   const url = `${path}?${queryString}`;
-  const response: AxiosResponse<any> = await baseService.get(url, {});
+  const response: AxiosResponse<ITransaction> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
     return {
       message: response?.data?.message,

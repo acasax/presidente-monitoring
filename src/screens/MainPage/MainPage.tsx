@@ -12,6 +12,9 @@ import { getToken } from '../../feautures/auth/authSlice';
 import { getDataForLocation } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
+import { useLoading } from '../../hooks/UseLoading';
+import CustomTable from '../../components/CustomTable/CustomTable';
+import { getChartData } from '../../feautures/main/mainSlice';
 
 interface PageTestProps {
   test?: string
@@ -22,19 +25,32 @@ const MainPage: FC<PageTestProps> = () => {
   const selectedLocations = useAppSelector(getSelectedLocation);
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
+  const chartData = useAppSelector(getChartData);
   const { values, handleChoseDate } = useContext(MainPageContext);
+
+  const {
+    setLoading,
+    resetLoading,
+  } = useLoading();
 
   useEffect(() => {
     handleChoseDate();
   }, [values]);
 
   const handleLocationsRequest = async () => {
-    const res = await getDataForLocation(token, {
-      locations: selectedLocations,
-      dates: pickedDate,
-      dateQueryType: dataPickerMode,
-    });
-    console.log('res', res);
+    setLoading();
+    try {
+      const res = await getDataForLocation(token, {
+        locations: selectedLocations,
+        dates: pickedDate,
+        dateQueryType: dataPickerMode,
+      });
+      console.log('res', res);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      resetLoading();
+    }
   };
 
   return (
@@ -49,8 +65,9 @@ const MainPage: FC<PageTestProps> = () => {
             handleFunction={handleLocationsRequest}
           />
         </div>
-        <CustomChart />
-        <div className="_row">
+        {chartData && <CustomChart />}
+        <CustomTable />
+        <div className="_footer">
           <CustomIconButtonSend />
         </div>
       </div>

@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Paper from '@mui/material/Paper';
-import { ArgumentAxis, Chart, Legend, LineSeries, Title, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
+import { ArgumentAxis, Chart, Legend, LineSeries, ValueAxis } from '@devexpress/dx-react-chart-material-ui';
 import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
 import { Animation, ArgumentScale } from '@devexpress/dx-react-chart';
 import { curveCatmullRom, line } from 'd3-shape';
 import { scalePoint } from 'd3-scale';
@@ -26,26 +25,6 @@ const Line = (props) => (
   />
 );
 
-const StyledDiv = styled('div')(() => ({
-  [`&.${classes.title}`]: {
-    textAlign: 'center',
-    width: '100%',
-    marginBottom: '10px',
-  },
-}));
-
-const Text = ({ text }) => {
-  const [mainText, subText] = text.split('\\n');
-  return (
-    <StyledDiv className={classes.title}>
-      <Typography component="h3" variant="h5">
-        {mainText}
-      </Typography>
-      <Typography variant="subtitle1">{subText}</Typography>
-    </StyledDiv>
-  );
-};
-
 const Root = (props) => (
   <Legend.Root {...props} sx={{ display: 'flex', margin: 'auto', flexDirection: 'row' }} />
 );
@@ -62,58 +41,48 @@ const StyledChart = styled(Chart)(() => ({
   },
 }));
 
-const CustomChart = () => {
-  useEffect(() => {
+const CustomChart = () => (
+  <Paper sx={{ width: '100%', padding: '30px', boxSizing: 'border-box' }}>
+    <StyledChart
+      data={data}
+    >
+      <ArgumentScale factory={scalePoint} />
+      <ArgumentAxis />
+      <ValueAxis />
 
-  }, []);
-
-  return (
-    <Paper>
-      <StyledChart
-        data={data}
-      >
-        <ArgumentScale factory={scalePoint} />
-        <ArgumentAxis />
-        <ValueAxis />
-
-        <LineSeries
-          name="Hydro-electric"
-          valueField="hydro"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Oil"
-          valueField="oil"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Natural gas"
-          valueField="gas"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Coal"
-          valueField="coal"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Nuclear"
-          valueField="nuclear"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
-        <Title
-          text="Energy Consumption in 2004\n(Millions of Tons, Oil Equivalent)"
-          textComponent={Text}
-        />
-        <Animation />
-      </StyledChart>
-    </Paper>
-  );
-};
+      <LineSeries
+        name="Hydro-electric"
+        valueField="hydro"
+        argumentField="country"
+        seriesComponent={Line}
+      />
+      <LineSeries
+        name="Oil"
+        valueField="oil"
+        argumentField="country"
+        seriesComponent={Line}
+      />
+      <LineSeries
+        name="Natural gas"
+        valueField="gas"
+        argumentField="country"
+        seriesComponent={Line}
+      />
+      <LineSeries
+        name="Coal"
+        valueField="coal"
+        argumentField="country"
+        seriesComponent={Line}
+      />
+      <LineSeries
+        name="Nuclear"
+        valueField="nuclear"
+        argumentField="country"
+        seriesComponent={Line}
+      />
+      <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
+      <Animation />
+    </StyledChart>
+  </Paper>
+);
 export default CustomChart;

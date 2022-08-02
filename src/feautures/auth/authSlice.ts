@@ -4,12 +4,10 @@ import { IUser } from './AuthModal';
 import { RootState } from '../../store/store';
 
 interface InitialState {
-  isLoading: boolean;
   userData: IUser;
 }
 
 const initialState: InitialState = {
-  isLoading: false,
   userData: null,
 };
 

@@ -77,8 +77,6 @@
 
 ._main-page {
   background-color: #f5f6f8;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -89,6 +87,13 @@
   ._main-page ._row {
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    width: 100%; }
+  ._main-page ._footer {
+    display: flex;
+    justify-content: flex-end;
     align-items: center;
     padding-top: 40px;
     padding-bottom: 40px;
@@ -310,6 +315,7 @@
   padding: 0; }
 
 html {
-  font-family: Roboto, sans-serif; }
+  font-family: Roboto, sans-serif;
+  background-color: #f5f6f8; }
 
 /*# sourceMappingURL=index.css.map */
