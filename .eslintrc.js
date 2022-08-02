@@ -14,6 +14,7 @@ module.exports = {
         'import/prefer-default-export': 'off',
         'import/no-cycle': 0,
         'react/jsx-props-no-spreading': 0,
-        "no-nested-ternary": "off"
+        "no-nested-ternary": "off",
+        "react/react-in-jsx-scope": "off",
     },
 };

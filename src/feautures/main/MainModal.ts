@@ -3,3 +3,9 @@ interface IFile {
 }
 
 export type { IFile };
+
+export type TMainPageContext = {
+  values: any,
+  setValues: (b: any) => void,
+  handleChoseDate: () => void,
+};

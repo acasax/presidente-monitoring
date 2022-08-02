@@ -17,8 +17,8 @@ export function formatDate(date, mode) {
     }
     default: {
       return [
-        padTo2Digits(date?.month?.number),
         padTo2Digits(date?.day),
+        padTo2Digits(date?.month?.number),
         date?.year,
       ].join('.');
     }

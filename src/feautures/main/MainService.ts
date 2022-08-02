@@ -32,9 +32,12 @@ const getDataForLocation = async (token: string, query = {}): Promise<any> => {
       } else {
         queryString += '[';
         if (key === 'dates') {
-          queryString += '"';
-          queryString += query[key];
-          queryString += '"';
+          // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+          query[key].map((x) => {
+            queryString += `"${x}"`;
+            queryString += ',';
+          });
+          queryString = queryString.slice(0, -1);
         } else {
           queryString += query[key];
         }
@@ -42,11 +45,10 @@ const getDataForLocation = async (token: string, query = {}): Promise<any> => {
       }
       queryString += '&';
     });
-
   queryString = queryString.slice(0, -1);
 
   const path = baseService.url.build('transaction/profit-by-location');
-  const url = BaseService.combine(path, queryString);
+  const url = `${path}?${queryString}`;
   const response: AxiosResponse<any> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
     return {

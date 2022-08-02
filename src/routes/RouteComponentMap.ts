@@ -9,7 +9,7 @@ interface IPathComponent {
 
 const LoginView = React.lazy(() => import('../screens/AuthPage/AuthPage'));
 const NotFoundView = React.lazy(() => import('../screens/NotFoundPage/NotFoundPage'));
-const MainView = React.lazy(() => import('../screens/MainPage/MainPage'));
+const MainView = React.lazy(() => import('../screens/MainPage/MainPageView'));
 const AttendanceView = React.lazy(() => import('../screens/AttendancePage/AttendancePage'));
 const ComparisonView = React.lazy(() => import('../screens/ComparisonPage/ComparisonPage'));
 

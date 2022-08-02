@@ -21,8 +21,8 @@ const datePickerSlice = createSlice({
     clearDatePickerMode: (state) => {
       state.mode = initialState.mode;
     },
-    setPickedDate: (state, action: PayloadAction<any>) => {
-      state.selectedDates.push(action.payload);
+    setPickedDate: (state, action: PayloadAction<string[]>) => {
+      state.selectedDates = action.payload;
     },
     clearPickedDate: (state) => {
       state.selectedDates = [];

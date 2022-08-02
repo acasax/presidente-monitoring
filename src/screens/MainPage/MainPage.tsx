@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import Screen from '../Screen';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
 import { useAppSelector } from '../../store/hooks';
@@ -10,6 +10,8 @@ import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker
 import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
 import { getDataForLocation } from '../../feautures/main/MainService';
+import { MainPageContext } from '../../feautures/main/context';
+import CustomChart from '../../components/CustomChart/CustomChart';
 
 interface PageTestProps {
   test?: string
@@ -20,6 +22,11 @@ const MainPage: FC<PageTestProps> = () => {
   const selectedLocations = useAppSelector(getSelectedLocation);
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
+  const { values, handleChoseDate } = useContext(MainPageContext);
+
+  useEffect(() => {
+    handleChoseDate();
+  }, [values]);
 
   const handleLocationsRequest = async () => {
     const res = await getDataForLocation(token, {
@@ -27,7 +34,7 @@ const MainPage: FC<PageTestProps> = () => {
       dates: pickedDate,
       dateQueryType: dataPickerMode,
     });
-    console.log(res);
+    console.log('res', res);
   };
 
   return (
@@ -42,6 +49,7 @@ const MainPage: FC<PageTestProps> = () => {
             handleFunction={handleLocationsRequest}
           />
         </div>
+        <CustomChart />
         <div className="_row">
           <CustomIconButtonSend />
         </div>

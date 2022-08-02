@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import DatePicker, { DateObject } from 'react-multi-date-picker';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getDatePickerMode, setPickedDate } from '../../feautures/datePicker/datePickerSlice';
-import { formatDate } from '../../utils/dateTime/functionsDateTime';
+import React, { useContext, useEffect } from 'react';
+import DatePicker from 'react-multi-date-picker';
+import { useAppSelector } from '../../store/hooks';
+import { getDatePickerMode } from '../../feautures/datePicker/datePickerSlice';
+import { MainPageContext } from '../../feautures/main/context';
 
 const CustomDatePicker = () => {
-  const [values, setValues] = useState<any>([]);
   const datePickerMode = useAppSelector(getDatePickerMode);
-  // const pickedDate = useAppSelector(getSelectedDate);
-  const dispatch = useAppDispatch();
-
-  const handleChoseDate = (date: any) => {
-    console.log(formatDate(new DateObject(date[date.length - 1]), datePickerMode));
-    dispatch(setPickedDate(formatDate(new DateObject(date[date.length - 1]), datePickerMode)));
-    setValues(date);
-    console.log(values);
-  };
+  const { values, setValues } = useContext(MainPageContext);
 
   useEffect(() => {
     setValues([]);
@@ -32,7 +23,7 @@ const CustomDatePicker = () => {
         onlyMonthPicker={datePickerMode[0] === 'MONTH'}
         multiple
         value={values}
-        onChange={handleChoseDate}
+        onChange={setValues}
         format={datePickerMode[0] === 'YEAR' ? 'YYYY' : datePickerMode[0] === 'MONTH' ? 'MM.YYYY' : 'DD.MM.YYYY'}
       />
     </div>
