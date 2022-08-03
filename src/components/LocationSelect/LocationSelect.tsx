@@ -58,10 +58,10 @@ const LocationSelect = () => {
   return (
     <div className="_select-container">
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-multiple-name-label">Lokacije</InputLabel>
+        <InputLabel id="location-select-label">Lokacije</InputLabel>
         <Select
-          labelId="demo-simple-select-standard-label"
-          id="demo-simple-select-standard"
+          labelId="location-select-label"
+          id="location-select"
           multiple
           value={selectedLocations}
           onChange={handleChange}

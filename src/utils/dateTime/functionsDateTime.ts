@@ -24,3 +24,15 @@ export function formatDate(date, mode) {
     }
   }
 }
+
+export function getDaysArray(date: string) {
+  const arr = date.split('.');
+  const cDate = new Date(Number(arr[1]), Number(arr[0]), 1);
+  const mountIndex = Number(arr[0]);
+  const res = [];
+  while (cDate.getMonth() === mountIndex) {
+    res.push(`${padTo2Digits(cDate.getDate())}.${padTo2Digits(cDate.getMonth())}.${cDate.getFullYear()}`);
+    cDate.setDate(cDate.getDate() + 1);
+  }
+  return res;
+}

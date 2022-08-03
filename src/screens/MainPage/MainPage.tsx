@@ -4,10 +4,14 @@ import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconBu
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import LocationSelect from '../../components/LocationSelect/LocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import { clearSelectedLocation, getSelectedLocation } from '../../feautures/locationSelect/locationSelectSlice';
+import {
+  getSelectedLocation,
+  getSelectLocationData,
+  setSelectMachineLocationData,
+} from '../../feautures/locationSelect/locationSelectSlice';
 import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
-import { clearPickedDate, getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
+import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
 import { getAverageAndSumByDateAndLocation, getDataForLocation } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
@@ -22,6 +26,8 @@ import {
   setLocationTableDataFooter,
 } from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
+import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
+import MachineLocationSelect from '../../components/LocationSelect/MachineLocationSelect';
 
 interface PageTestProps {
   test?: string
@@ -35,7 +41,8 @@ const MainPage: FC<PageTestProps> = () => {
   const chartData = useAppSelector(getChartData);
   const locationTableData = useAppSelector(getLocationTableData);
   const locationTableDateFooter = useAppSelector(getLocationTableDateFooter);
-  const { values, handleChoseDate, setValues } = useContext(MainPageContext);
+  const locationData = useAppSelector(getSelectLocationData);
+  const { values, handleChoseDate } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
   const {
@@ -55,37 +62,40 @@ const MainPage: FC<PageTestProps> = () => {
         dates: pickedDate,
         dateQueryType: dataPickerMode,
       });
+      const footer = await getAverageAndSumByDateAndLocation(token, {
+        locations: selectedLocations,
+        dates: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
+      });
       if (res?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
-      } else {
-        dispatch(setLocationTableData(res));
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        return;
       }
-      const footer = await getAverageAndSumByDateAndLocation(token, {
-        locations: selectedLocations,
-        dates: pickedDate,
-        dateQueryType: dataPickerMode,
-      });
+      dispatch(setLocationTableData(res));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+
       if (footer?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(footer?.message));
         dispatch(setAlertOpenStatus(true));
-      } else {
-        dispatch(setLocationTableDataFooter(footer));
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        return;
       }
+      dispatch(setLocationTableDataFooter(footer));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+      console.log('se', selectedLocations);
+      // eslint-disable-next-line max-len
+      const machineSelectData = locationData.filter((item) => selectedLocations.includes(Number(item.id)));
+      console.log('machine', machineSelectData);
+      dispatch(setSelectMachineLocationData(machineSelectData));
     } catch (e) {
       dispatch(setAlertStatus('error'));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
-      dispatch(clearSelectedLocation());
-      dispatch(clearPickedDate());
-      setValues([]);
       resetLoading();
     }
   };
@@ -103,6 +113,9 @@ const MainPage: FC<PageTestProps> = () => {
           />
         </div>
         {chartData.length !== 0 && <CustomChart />}
+        <div className="_row">
+          <MachineLocationSelect />
+        </div>
         {/* eslint-disable-next-line max-len */}
         {(locationTableData.length !== 0 && locationTableDateFooter.length !== 0) && <LocationTable />}
         <div className="_footer">
