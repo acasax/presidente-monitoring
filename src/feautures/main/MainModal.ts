@@ -20,7 +20,19 @@ interface ITransaction {
   statusCode?: string
 }
 
-export type { IFile, ITransaction, ITransactionItem };
+interface IAverageAndSumByDateItem {
+  total?: string,
+  average?: string,
+  date?: string,
+}
+
+interface IAverageAndSumByDate {
+  data?: IAverageAndSumByDateItem[],
+  message?: string,
+  statusCode?: string
+}
+
+export type { IFile, ITransaction, ITransactionItem, IAverageAndSumByDate, IAverageAndSumByDateItem };
 
 export type TMainPageContext = {
   values: any,

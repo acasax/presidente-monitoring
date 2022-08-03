@@ -12,14 +12,22 @@
   }
 }
 
-._table-cell-header {
+._table-cell-header-location {
   min-width: 400px;
 }
 
-._table-cell {
+._table-cell-header {
   font-size: 16px !important;
   line-height: 5px !important;
   font-weight: 700 !important;
+  color: $black !important;
+  letter-spacing: 0.5px !important;
+}
+
+._table-cell {
+  font-size: 15px !important;
+  line-height: 5px !important;
+  font-weight: 600 !important;
   color: $black !important;
   letter-spacing: 0.5px !important;
 }

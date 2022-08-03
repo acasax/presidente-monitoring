@@ -9,12 +9,18 @@ import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePick
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
 import { clearPickedDate, getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
-import { getDataForLocation } from '../../feautures/main/MainService';
+import { getAverageAndSumByDateAndLocation, getDataForLocation } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
 import LocationTable from '../../components/CustomTable/LocationTable';
-import { getChartData, getLocationTableData, setLocationTableData } from '../../feautures/main/mainSlice';
+import {
+  getChartData,
+  getLocationTableData,
+  getLocationTableDateFooter,
+  setLocationTableData,
+  setLocationTableDataFooter,
+} from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 
 interface PageTestProps {
@@ -28,6 +34,7 @@ const MainPage: FC<PageTestProps> = () => {
   const pickedDate = useAppSelector(getSelectedDate);
   const chartData = useAppSelector(getChartData);
   const locationTableData = useAppSelector(getLocationTableData);
+  const locationTableDateFooter = useAppSelector(getLocationTableDateFooter);
   const { values, handleChoseDate, setValues } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
@@ -57,6 +64,20 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
+      const footer = await getAverageAndSumByDateAndLocation(token, {
+        locations: selectedLocations,
+        dates: pickedDate,
+        dateQueryType: dataPickerMode,
+      });
+      if (footer?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(footer?.message));
+        dispatch(setAlertOpenStatus(true));
+      } else {
+        dispatch(setLocationTableDataFooter(footer));
+        dispatch(setAlertOpenStatus(false));
+        dispatch(clearAlertMsg());
+      }
     } catch (e) {
       dispatch(setAlertStatus('error'));
       dispatch(setAlertMsg(e?.message));
@@ -82,7 +103,8 @@ const MainPage: FC<PageTestProps> = () => {
           />
         </div>
         {chartData.length !== 0 && <CustomChart />}
-        {locationTableData.length !== 0 && <LocationTable data={locationTableData} />}
+        {/* eslint-disable-next-line max-len */}
+        {(locationTableData.length !== 0 && locationTableDateFooter.length !== 0) && <LocationTable />}
         <div className="_footer">
           <CustomIconButtonSend />
         </div>

@@ -6,9 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useAppSelector } from '../../store/hooks';
+import { getLocationTableData, getLocationTableDateFooter } from '../../feautures/main/mainSlice';
 
-const LocationTable = ({ data }: any) => {
+const LocationTable = () => {
   const [newData, setNewData] = useState([]);
+  const data = useAppSelector(getLocationTableData);
+  const footer = useAppSelector(getLocationTableDateFooter);
 
   function sum(a, b) {
     return a + b;
@@ -41,7 +45,7 @@ const LocationTable = ({ data }: any) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow className="_table-header-container">
-            <TableCell className="_table-header">Lokacije</TableCell>
+            <TableCell className="_table-cell-header-location _table-header">Lokacije</TableCell>
             {
                             newData[0]?.transactions?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
@@ -58,7 +62,11 @@ const LocationTable = ({ data }: any) => {
               key={key}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row" className="_table-cell _table-cell-header">
+              <TableCell
+                component="th"
+                scope="row"
+                className="_table-cell-header _table-cell-header-location"
+              >
                 {row?.id}
                 {' / '}
                 {row?.locationName.trim()}
@@ -84,6 +92,45 @@ const LocationTable = ({ data }: any) => {
               </TableCell>
             </TableRow>
           ))}
+          <TableRow
+            className="_table-header-container"
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell
+              component="th"
+              scope="row"
+              className="_table-cell-header-location _table-header"
+            >
+              Total
+            </TableCell>
+            {
+                            footer.map((item, index) => (
+                              <TableCell align="center" className="_table-cell" key={index}>
+                                {item?.total}
+                              </TableCell>
+                            ))
+                        }
+          </TableRow>
+          <TableRow
+            className="_table-header-container"
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+          >
+            <TableCell
+              component="th"
+              scope="row"
+              className="_table-cell-header-location _table-header"
+            >
+              Prosek
+            </TableCell>
+            {
+                            footer.map((item, index) => (
+                              <TableCell align="center" className="_table-cell" key={index}>
+                                {Math.round(item?.average * 100) / 100}
+                              </TableCell>
+                            ))
+                        }
+          </TableRow>
+
         </TableBody>
       </Table>
     </TableContainer>
