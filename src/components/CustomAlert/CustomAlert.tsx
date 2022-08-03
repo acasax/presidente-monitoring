@@ -11,7 +11,7 @@ const CustomAlert = ({ open, type }: any) => {
   useEffect(() => {
     setTimeout(() => {
       dispatch(setAlertOpenStatus(false));
-    }, 10000);
+    }, 20000);
   }, [open]);
 
   return (

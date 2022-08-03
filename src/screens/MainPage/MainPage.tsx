@@ -1,20 +1,21 @@
 import React, { FC, useContext, useEffect } from 'react';
 import Screen from '../Screen';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import LocationSelect from '../../components/LocationSelect/LocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import { getSelectedLocation } from '../../feautures/locationSelect/locationSelectSlice';
+import { clearSelectedLocation, getSelectedLocation } from '../../feautures/locationSelect/locationSelectSlice';
 import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
-import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
+import { clearPickedDate, getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
 import { getDataForLocation } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
-import CustomTable from '../../components/CustomTable/CustomTable';
-import { getChartData } from '../../feautures/main/mainSlice';
+import LocationTable from '../../components/CustomTable/LocationTable';
+import { getChartData, getLocationTableData, setLocationTableData } from '../../feautures/main/mainSlice';
+import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 
 interface PageTestProps {
   test?: string
@@ -26,7 +27,9 @@ const MainPage: FC<PageTestProps> = () => {
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
   const chartData = useAppSelector(getChartData);
-  const { values, handleChoseDate } = useContext(MainPageContext);
+  const locationTableData = useAppSelector(getLocationTableData);
+  const { values, handleChoseDate, setValues } = useContext(MainPageContext);
+  const dispatch = useAppDispatch();
 
   const {
     setLoading,
@@ -45,10 +48,23 @@ const MainPage: FC<PageTestProps> = () => {
         dates: pickedDate,
         dateQueryType: dataPickerMode,
       });
-      console.log('res', res);
+      if (res?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+      } else {
+        dispatch(setLocationTableData(res));
+        dispatch(setAlertOpenStatus(false));
+        dispatch(clearAlertMsg());
+      }
     } catch (e) {
-      console.log(e);
+      dispatch(setAlertStatus('error'));
+      dispatch(setAlertMsg(e?.message));
+      dispatch(setAlertOpenStatus(true));
     } finally {
+      dispatch(clearSelectedLocation());
+      dispatch(clearPickedDate());
+      setValues([]);
       resetLoading();
     }
   };
@@ -65,8 +81,8 @@ const MainPage: FC<PageTestProps> = () => {
             handleFunction={handleLocationsRequest}
           />
         </div>
-        {chartData && <CustomChart />}
-        <CustomTable />
+        {chartData.length !== 0 && <CustomChart />}
+        {locationTableData.length !== 0 && <LocationTable data={locationTableData} />}
         <div className="_footer">
           <CustomIconButtonSend />
         </div>

@@ -1,0 +1,26 @@
+@import "../../constants";
+
+
+._table-header-container {
+  padding: 15px 10px !important;
+  ._table-header {
+    font-size: 16px !important;
+    line-height: 5px !important;
+    font-weight: 700 !important;
+    color: $blue !important;
+    letter-spacing: 0.5px !important;
+  }
+}
+
+._table-cell-header {
+  min-width: 400px;
+}
+
+._table-cell {
+  font-size: 16px !important;
+  line-height: 5px !important;
+  font-weight: 700 !important;
+  color: $black !important;
+  letter-spacing: 0.5px !important;
+}
+

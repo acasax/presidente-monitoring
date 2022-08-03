@@ -16,5 +16,6 @@ module.exports = {
         'react/jsx-props-no-spreading': 0,
         "no-nested-ternary": "off",
         "react/react-in-jsx-scope": "off",
+        "react/no-array-index-key": 0
     },
 };

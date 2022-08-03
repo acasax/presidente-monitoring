@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
 
 interface InitialState {
-  chartData: any
+  chartData: any,
+  locationTableData: any,
 }
 
 const initialState: InitialState = {
   chartData: [],
+  locationTableData: [],
 };
 
 const mainSlice = createSlice({
@@ -19,14 +21,23 @@ const mainSlice = createSlice({
     clearChartData: (state) => {
       state.chartData = [];
     },
+    setLocationTableData: (state, action: PayloadAction<any[]>) => {
+      state.locationTableData = action.payload;
+    },
+    clearLocationTableData: (state) => {
+      state.locationTableData = [];
+    },
   },
 });
 
 export const {
   setChartData,
   clearChartData,
+  setLocationTableData,
+  clearLocationTableData,
 } = mainSlice.actions;
 
-export const getChartData = (state: RootState) => state?.main;
+export const getChartData = (state: RootState) => state?.main?.chartData;
+export const getLocationTableData = (state: RootState) => state?.main?.locationTableData;
 
 export default mainSlice.reducer;
