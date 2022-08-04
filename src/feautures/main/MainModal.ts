@@ -32,7 +32,25 @@ interface IAverageAndSumByDate {
   statusCode?: string
 }
 
-export type { IFile, ITransaction, ITransactionItem, IAverageAndSumByDate, IAverageAndSumByDateItem };
+interface IMachineTransactionItem {
+  stickerNumber?: number,
+  transactions: ITransactionInfo[]
+}
+
+interface IMachineTransaction {
+  data?: IMachineTransactionItem[],
+  message?: string,
+  statusCode?: string
+}
+
+export type {
+  IFile,
+  ITransaction,
+  ITransactionItem,
+  IAverageAndSumByDate,
+  IAverageAndSumByDateItem,
+  IMachineTransaction,
+};
 
 export type TMainPageContext = {
   values: any,

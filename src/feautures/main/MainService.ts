@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import BaseService from '../../services/common/BaseService';
-import { IAverageAndSumByDate, ITransaction } from './MainModal';
+import { IAverageAndSumByDate, IMachineTransaction, ITransaction } from './MainModal';
 
 const SendExcelWithTransaction = async (data = {}, query = {}, token: string): Promise<any> => {
   const baseService = new BaseService(token, 'multipart/form-data');
@@ -100,6 +100,55 @@ const getAverageAndSumByDateAndLocation = async (token: string, query = {}): Pro
   return response.data;
 };
 
-export { SendExcelWithTransaction, getDataForLocation, getAverageAndSumByDateAndLocation };
+const getDataForMachine = async (token: string, query = {}): Promise<any> => {
+  const baseService = new BaseService(token);
+  let queryString = '';
+
+  console.log('query', query);
+
+  Object.keys(query)
+    .forEach((key) => {
+      queryString += key;
+      queryString += '=';
+      if (key === 'location') {
+        queryString += query[key];
+      }
+      if (key === 'dateQueryType') {
+        queryString += query[key];
+      } else {
+        queryString += '[';
+        if (key === 'dates') {
+          // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+          query[key].map((x) => {
+            queryString += `"${x}"`;
+            queryString += ',';
+          });
+          queryString = queryString.slice(0, -1);
+        } else {
+          queryString += query[key];
+        }
+        queryString += ']';
+      }
+      queryString += '&';
+    });
+  queryString = queryString.slice(0, -1);
+
+  const path = baseService.url.build('machine/profit-for-machines-by-location');
+  const url = `${path}?${queryString}`;
+  const response: AxiosResponse<IMachineTransaction> = await baseService.get(url, {});
+  if (response?.data?.statusCode) {
+    return {
+      message: response?.data?.message,
+    };
+  }
+  return response.data;
+};
+
+export {
+  SendExcelWithTransaction,
+  getDataForLocation,
+  getAverageAndSumByDateAndLocation,
+  getDataForMachine,
+};
 
 export default {};

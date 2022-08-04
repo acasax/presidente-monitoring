@@ -2,23 +2,18 @@ import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
-  getMachineSelectedLocation,
+  getSelectedMachineLocation,
   getSelectMachineLocationData,
-  setMachineSelectedLocation,
+  setSelectedMachineLocation,
 } from '../../feautures/locationSelect/locationSelectSlice';
 
 const MachineLocationSelect = () => {
   const machineLocationData = useAppSelector(getSelectMachineLocationData);
-  const machineSelectedLocation = useAppSelector(getMachineSelectedLocation);
+  const machineSelectedLocation = useAppSelector(getSelectedMachineLocation);
   const dispatch = useAppDispatch();
 
-  const handleChange = (event: SelectChangeEvent<typeof machineSelectedLocation>) => {
-    const {
-      target: { value },
-    } = event;
-    dispatch(setMachineSelectedLocation(
-      typeof value === 'string' ? value.split(',') : value,
-    ));
+  const handleChange = (event: SelectChangeEvent) => {
+    dispatch(setSelectedMachineLocation(event.target.value as string));
   };
 
   return (

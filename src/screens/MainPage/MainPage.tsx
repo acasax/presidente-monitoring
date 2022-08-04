@@ -6,14 +6,19 @@ import LocationSelect from '../../components/LocationSelect/LocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {
   getSelectedLocation,
-  getSelectLocationData,
+  getSelectedMachineLocation,
+  getSelectLocationData, getSelectMachineLocationData,
   setSelectMachineLocationData,
 } from '../../feautures/locationSelect/locationSelectSlice';
 import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
 import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
-import { getAverageAndSumByDateAndLocation, getDataForLocation } from '../../feautures/main/MainService';
+import {
+  getAverageAndSumByDateAndLocation,
+  getDataForLocation,
+  getDataForMachine,
+} from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
@@ -42,6 +47,8 @@ const MainPage: FC<PageTestProps> = () => {
   const locationTableData = useAppSelector(getLocationTableData);
   const locationTableDateFooter = useAppSelector(getLocationTableDateFooter);
   const locationData = useAppSelector(getSelectLocationData);
+  const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
+  const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
   const { values, handleChoseDate } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
@@ -86,11 +93,37 @@ const MainPage: FC<PageTestProps> = () => {
       dispatch(setLocationTableDataFooter(footer));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
-      console.log('se', selectedLocations);
       // eslint-disable-next-line max-len
       const machineSelectData = locationData.filter((item) => selectedLocations.includes(Number(item.id)));
-      console.log('machine', machineSelectData);
       dispatch(setSelectMachineLocationData(machineSelectData));
+    } catch (e) {
+      dispatch(setAlertStatus('error'));
+      dispatch(setAlertMsg(e?.message));
+      dispatch(setAlertOpenStatus(true));
+    } finally {
+      resetLoading();
+    }
+  };
+
+  const handleMachineLocationsRequest = async () => {
+    setLoading();
+    try {
+      const res = await getDataForMachine(token, {
+        location: selectedMachineLocations,
+        dates: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
+      });
+
+      if (res?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      // dispatch(setLocationTableData(res));
+      console.log('res', res);
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
     } catch (e) {
       dispatch(setAlertStatus('error'));
       dispatch(setAlertMsg(e?.message));
@@ -115,6 +148,11 @@ const MainPage: FC<PageTestProps> = () => {
         {chartData.length !== 0 && <CustomChart />}
         <div className="_row">
           <MachineLocationSelect />
+          <CustomButton
+            text="PRETRAZI"
+            handleFunction={handleMachineLocationsRequest}
+            disabled={machineSelectedLocation.length === 0}
+          />
         </div>
         {/* eslint-disable-next-line max-len */}
         {(locationTableData.length !== 0 && locationTableDateFooter.length !== 0) && <LocationTable />}

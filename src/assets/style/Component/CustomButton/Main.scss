@@ -1,14 +1,15 @@
 @import "../../constants";
 
 ._custom-button {
-  padding: 11px 16px;
-  margin: 16px;
-  background-color: $white;
-  box-shadow: 0 4px 4px rgba($black, 0.1);
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 1.25px;
+  padding: 11px 16px !important;
+  margin: 16px !important;
+  background-color: $white !important;
+  box-shadow: 0 4px 4px rgba($black, 0.1) !important;
+  border-radius: 4px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1.25px !important;
   color: $blue;
-  text-transform: uppercase;
+  border: 2px solid $blue;
+  text-transform: uppercase !important;
 }

@@ -6,14 +6,14 @@ interface InitialState {
   locationData: ILocationSelect[],
   selectedLocationData: any[],
   machineLocationData: ILocationSelect[],
-  selectedMachineLocationData: String[],
+  selectedMachineLocationData: any,
 }
 
 const initialState: InitialState = {
   locationData: [],
   selectedLocationData: [],
   machineLocationData: [],
-  selectedMachineLocationData: [],
+  selectedMachineLocationData: '',
 };
 
 const locationSlice = createSlice({
@@ -38,11 +38,11 @@ const locationSlice = createSlice({
     clearSelectMachineLocationData: (state) => {
       state.machineLocationData = [];
     },
-    setMachineSelectedLocation: (state, action: PayloadAction<String[]>) => {
+    setSelectedMachineLocation: (state, action: PayloadAction<any>) => {
       state.selectedMachineLocationData = action.payload;
     },
-    clearMachineSelectedLocation: (state) => {
-      state.selectedMachineLocationData = [];
+    clearSelectedMachineLocation: (state) => {
+      state.selectedMachineLocationData = '';
     },
   },
 });
@@ -54,8 +54,8 @@ export const {
   clearSelectedLocation,
   setSelectMachineLocationData,
   clearSelectMachineLocationData,
-  setMachineSelectedLocation,
-  clearMachineSelectedLocation,
+  setSelectedMachineLocation,
+  clearSelectedMachineLocation,
 } = locationSlice.actions;
 
 export const getSelectLocationData = (state: RootState) => state?.locationSelect?.locationData;
@@ -64,6 +64,6 @@ export const getSelectedLocation = (state: RootState) => state?.locationSelect?.
 // eslint-disable-next-line max-len
 export const getSelectMachineLocationData = (state: RootState) => state?.locationSelect?.machineLocationData;
 // eslint-disable-next-line max-len
-export const getMachineSelectedLocation = (state: RootState) => state?.locationSelect?.selectedMachineLocationData;
+export const getSelectedMachineLocation = (state: RootState) => state?.locationSelect?.selectedMachineLocationData;
 
 export default locationSlice.reducer;
