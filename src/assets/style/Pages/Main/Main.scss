@@ -36,6 +36,31 @@
     }
   }
 
+  ._best-and-worst-day-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+
+    ._header-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+
+      ._header {
+        font-weight: 700;
+        font-size: 32px;
+        letter-spacing: 1.25px;
+        text-transform: uppercase;
+        color: $blue;
+      }
+    }
+
+  }
+
   ._footer {
     display: flex;
     justify-content: flex-end;

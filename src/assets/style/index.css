@@ -102,6 +102,24 @@
     ._main-page ._table-row ._location-table {
       margin-left: 20px;
       width: 100%; }
+  ._main-page ._best-and-worst-day-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%; }
+    ._main-page ._best-and-worst-day-container ._header-container {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px; }
+      ._main-page ._best-and-worst-day-container ._header-container ._header {
+        font-weight: 700;
+        font-size: 32px;
+        letter-spacing: 1.25px;
+        text-transform: uppercase;
+        color: #5E5CE6; }
   ._main-page ._footer {
     display: flex;
     justify-content: flex-end;

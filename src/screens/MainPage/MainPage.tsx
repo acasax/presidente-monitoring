@@ -17,6 +17,7 @@ import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/d
 import { getToken } from '../../feautures/auth/authSlice';
 import {
   getAverageAndSumByDateAndLocation,
+  getBestAndWorstDayAllTime,
   getDataForLocation,
   getDataForMachine,
 } from '../../feautures/main/MainService';
@@ -61,6 +62,53 @@ const MainPage: FC<PageTestProps> = () => {
     setLoading,
     resetLoading,
   } = useLoading();
+
+  const fetchLBestDayOfAllTime = async () => {
+    setLoading();
+    try {
+      const res = await getBestAndWorstDayAllTime(token, { orderBy: 'DESC' });
+      if (res?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+      } else {
+        console.log('asc', res);
+        // dispatch(setSelectLocationData(res?.data));
+        dispatch(setAlertOpenStatus(false));
+        dispatch(clearAlertMsg());
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      resetLoading();
+    }
+  };
+
+  const fetchLWorstDayOfAllTime = async () => {
+    setLoading();
+    try {
+      const res = await getBestAndWorstDayAllTime(token, { orderBy: 'ASC' });
+      if (res?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+      } else {
+        console.log('desc', res);
+        // dispatch(setSelectLocationData(res?.data));
+        dispatch(setAlertOpenStatus(false));
+        dispatch(clearAlertMsg());
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      resetLoading();
+    }
+  };
+
+  useEffect(() => {
+    fetchLWorstDayOfAllTime().catch(console.error);
+    fetchLBestDayOfAllTime().catch(console.error);
+  }, []);
 
   useEffect(() => {
     handleChoseDate();
@@ -165,10 +213,17 @@ const MainPage: FC<PageTestProps> = () => {
           </div>
           <div className="_location-table">
             {/* eslint-disable-next-line max-len */}
-            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <LocationTable />}
+            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
+                            && <LocationTable />}
           </div>
         </div>
-
+        <div className="_best-and-worst-day-container">
+          <div className="_header-container">
+            <p className="_header">
+              NAJBOLJI I NAJGORI DAN
+            </p>
+          </div>
+        </div>
         <div className="_footer">
           <CustomIconButtonSend />
         </div>

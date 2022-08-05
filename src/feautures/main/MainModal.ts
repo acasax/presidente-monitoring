@@ -43,6 +43,18 @@ interface IMachineTransaction {
   statusCode?: string
 }
 
+interface IBestAndWorstDayOfAllTimeItem {
+  day?: string,
+  month?: string,
+  date?: string
+}
+
+interface IBestAndWorstDayOfAllTime {
+  data?: IBestAndWorstDayOfAllTimeItem,
+  message?: string,
+  statusCode?: string
+}
+
 export type {
   IFile,
   ITransaction,
@@ -51,6 +63,8 @@ export type {
   IAverageAndSumByDateItem,
   IMachineTransaction,
   IMachineTransactionItem,
+  IBestAndWorstDayOfAllTime,
+  IBestAndWorstDayOfAllTimeItem,
 };
 
 export type TMainPageContext = {
