@@ -50,6 +50,7 @@ export type {
   IAverageAndSumByDate,
   IAverageAndSumByDateItem,
   IMachineTransaction,
+  IMachineTransactionItem,
 };
 
 export type TMainPageContext = {

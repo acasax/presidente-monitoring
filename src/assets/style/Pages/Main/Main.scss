@@ -14,9 +14,25 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    //padding-top: 40px;
     padding-bottom: 40px;
     width: 100%;
+  }
+
+  ._table-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+
+    ._machine-table {
+      margin-right: 20px;
+      width: 100%;
+    }
+
+    ._location-table {
+      margin-left: 20px;
+      width: 100%;
+    }
   }
 
   ._footer {

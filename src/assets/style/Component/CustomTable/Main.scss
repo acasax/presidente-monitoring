@@ -1,8 +1,14 @@
 @import "../../constants";
 
 
+._table-container {
+  min-width: 650px;
+  flex: 1;
+}
+
 ._table-header-container {
   padding: 15px 10px !important;
+
   ._table-header {
     font-size: 16px !important;
     line-height: 5px !important;
@@ -31,4 +37,7 @@
   color: $black !important;
   letter-spacing: 0.5px !important;
 }
+
+
+
 

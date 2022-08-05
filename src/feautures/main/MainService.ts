@@ -104,8 +104,6 @@ const getDataForMachine = async (token: string, query = {}): Promise<any> => {
   const baseService = new BaseService(token);
   let queryString = '';
 
-  console.log('query', query);
-
   Object.keys(query)
     .forEach((key) => {
       queryString += key;

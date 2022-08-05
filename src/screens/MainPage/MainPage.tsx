@@ -7,7 +7,8 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import {
   getSelectedLocation,
   getSelectedMachineLocation,
-  getSelectLocationData, getSelectMachineLocationData,
+  getSelectLocationData,
+  getSelectMachineLocationData,
   setSelectMachineLocationData,
 } from '../../feautures/locationSelect/locationSelectSlice';
 import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
@@ -26,13 +27,16 @@ import LocationTable from '../../components/CustomTable/LocationTable';
 import {
   getChartData,
   getLocationTableData,
-  getLocationTableDateFooter,
+  getMachineTableData,
+  getTransactionTableDateFooter,
   setLocationTableData,
-  setLocationTableDataFooter,
+  setMachineTableData,
+  setTransactionTableDataFooter,
 } from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
 import MachineLocationSelect from '../../components/LocationSelect/MachineLocationSelect';
+import MachineTable from '../../components/CustomTable/MachineTable';
 
 interface PageTestProps {
   test?: string
@@ -45,10 +49,11 @@ const MainPage: FC<PageTestProps> = () => {
   const pickedDate = useAppSelector(getSelectedDate);
   const chartData = useAppSelector(getChartData);
   const locationTableData = useAppSelector(getLocationTableData);
-  const locationTableDateFooter = useAppSelector(getLocationTableDateFooter);
+  const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
   const locationData = useAppSelector(getSelectLocationData);
   const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
   const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
+  const machineTableData = useAppSelector(getMachineTableData);
   const { values, handleChoseDate } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
@@ -71,8 +76,8 @@ const MainPage: FC<PageTestProps> = () => {
       });
       const footer = await getAverageAndSumByDateAndLocation(token, {
         locations: selectedLocations,
-        dates: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
+        dates: pickedDate,
+        dateQueryType: dataPickerMode[0],
       });
       if (res?.message) {
         dispatch(setAlertStatus('error'));
@@ -90,7 +95,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setLocationTableDataFooter(footer));
+      dispatch(setTransactionTableDataFooter(footer));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
       // eslint-disable-next-line max-len
@@ -120,8 +125,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      // dispatch(setLocationTableData(res));
-      console.log('res', res);
+      dispatch(setMachineTableData(res));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
@@ -154,8 +158,17 @@ const MainPage: FC<PageTestProps> = () => {
             disabled={machineSelectedLocation.length === 0}
           />
         </div>
-        {/* eslint-disable-next-line max-len */}
-        {(locationTableData.length !== 0 && locationTableDateFooter.length !== 0) && <LocationTable />}
+        <div className="_table-row">
+          <div className="_machine-table">
+            {/* eslint-disable-next-line max-len */}
+            {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />}
+          </div>
+          <div className="_location-table">
+            {/* eslint-disable-next-line max-len */}
+            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <LocationTable />}
+          </div>
+        </div>
+
         <div className="_footer">
           <CustomIconButtonSend />
         </div>

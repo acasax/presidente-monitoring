@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { IAverageAndSumByDateItem, ITransactionItem } from './MainModal';
+import { IAverageAndSumByDateItem, IMachineTransactionItem, ITransactionItem } from './MainModal';
 
 interface InitialState {
   chartData: any,
   locationTableData: any,
-  locationTableDateFooter: any,
+  machineTableData: any,
+  transactionTableDateFooter: any,
 }
 
 const initialState: InitialState = {
   chartData: [],
   locationTableData: [],
-  locationTableDateFooter: [],
+  machineTableData: [],
+  transactionTableDateFooter: [],
 };
 
 const mainSlice = createSlice({
@@ -30,11 +32,17 @@ const mainSlice = createSlice({
     clearLocationTableData: (state) => {
       state.locationTableData = [];
     },
-    setLocationTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
-      state.locationTableDateFooter = action.payload;
+    setMachineTableData: (state, action: PayloadAction<IMachineTransactionItem[]>) => {
+      state.machineTableData = action.payload;
     },
-    clearLocationTableDataFooter: (state) => {
-      state.locationTableDateFooter = [];
+    clearMachineTableData: (state) => {
+      state.machineTableData = [];
+    },
+    setTransactionTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
+      state.transactionTableDateFooter = action.payload;
+    },
+    clearTransactionTableDataFooter: (state) => {
+      state.transactionTableDateFooter = [];
     },
   },
 });
@@ -44,12 +52,16 @@ export const {
   clearChartData,
   setLocationTableData,
   clearLocationTableData,
-  setLocationTableDataFooter,
-  clearLocationTableDataFooter,
+  setTransactionTableDataFooter,
+  clearTransactionTableDataFooter,
+  setMachineTableData,
+  clearMachineTableData,
 } = mainSlice.actions;
 
 export const getChartData = (state: RootState) => state?.main?.chartData;
 export const getLocationTableData = (state: RootState) => state?.main?.locationTableData;
-export const getLocationTableDateFooter = (state: RootState) => state?.main.locationTableDateFooter;
+export const getMachineTableData = (state: RootState) => state?.main?.machineTableData;
+// eslint-disable-next-line max-len
+export const getTransactionTableDateFooter = (state: RootState) => state?.main.transactionTableDateFooter;
 
 export default mainSlice.reducer;

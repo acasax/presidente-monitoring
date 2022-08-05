@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import TableCell from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
 import { useAppSelector } from '../../store/hooks';
-import { getLocationTableData, getTransactionTableDateFooter } from '../../feautures/main/mainSlice';
+import { getMachineTableData, getTransactionTableDateFooter } from '../../feautures/main/mainSlice';
 
-const LocationTable = () => {
+const MachineTable = () => {
   const [newData, setNewData] = useState([]);
-  const data = useAppSelector(getLocationTableData);
+  const data = useAppSelector(getMachineTableData);
   const footer = useAppSelector(getTransactionTableDateFooter);
 
   function sum(a, b) {
@@ -19,11 +19,9 @@ const LocationTable = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line no-return-assign
     setNewData(
       data.map((row) => ({
         ...row,
-        // eslint-disable-next-line max-len,no-restricted-globals
         sum: row?.transactions?.reduce(
           // eslint-disable-next-line max-len,no-restricted-globals
           (previousValue, currentValue) => sum(previousValue?.profit ? previousValue?.profit : !isNaN(previousValue) ? previousValue : 0, currentValue?.profit ? currentValue?.profit : !isNaN(currentValue) ? currentValue : 0),
@@ -36,8 +34,7 @@ const LocationTable = () => {
         ) / row?.transactions.length,
       })),
     );
-  },
-  [data]);
+  }, [data]);
 
   return (
     <TableContainer component={Paper}>
@@ -62,15 +59,9 @@ const LocationTable = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell
-                component="th"
-                scope="row"
-                className="_table-cell-header _table-cell-header-location"
+                className="_table-cell-header"
               >
-                {row?.id}
-                {' / '}
-                {row?.locationName.trim()}
-                {', '}
-                {row?.address}
+                {row?.stickerNumber}
               </TableCell>
               {
                                 row?.transactions?.map((item, index) => (
@@ -136,4 +127,4 @@ const LocationTable = () => {
   );
 };
 
-export default LocationTable;
+export default MachineTable;
