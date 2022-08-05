@@ -41,7 +41,7 @@ const MachineTable = () => {
       <Table className="_table-container">
         <TableHead>
           <TableRow className="_table-header-container">
-            <TableCell className="_table-cell-header-location _table-header">Lokacije</TableCell>
+            <TableCell className="_table-cell-header-machine _table-header">Lokacije</TableCell>
             {
                             newData[0]?.transactions?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
@@ -89,7 +89,7 @@ const MachineTable = () => {
             <TableCell
               component="th"
               scope="row"
-              className="_table-cell-header-location _table-header"
+              className="_table-cell-header-machine _table-header"
             >
               Total
             </TableCell>
@@ -108,7 +108,7 @@ const MachineTable = () => {
             <TableCell
               component="th"
               scope="row"
-              className="_table-cell-header-location _table-header"
+              className="_table-cell-header-machine _table-header"
             >
               Prosek
             </TableCell>
