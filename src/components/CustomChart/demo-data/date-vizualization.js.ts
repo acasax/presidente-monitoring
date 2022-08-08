@@ -359,6 +359,12 @@ export const energyConsumption = [
     country: 'Germany', hydro: 6.1, oil: 123.6, gas: 77.3, coal: 85.7, nuclear: 37.8,
   }];
 
+export const newdata = [
+  {
+    date: '1.1.1111.', '07/KS': 1234,
+  },
+];
+
 export const carbonEmmision = [
   {
     year: 1950, gas: 97, liquids: 423, solids: 1070, cementProduction: 18, gasFlaring: 23,

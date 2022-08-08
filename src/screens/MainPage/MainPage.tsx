@@ -18,7 +18,7 @@ import { getToken } from '../../feautures/auth/authSlice';
 import {
   getAverageAndSumByDateAndLocation,
   getBestAndWorstDayAllTime,
-  getDataForLocation,
+  getDataForLocationForChart,
   getDataForMachine,
 } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
@@ -29,7 +29,7 @@ import {
   getChartData,
   getWorstDayOfAllTime,
   setBestDayOfAllTime,
-  setLocationTableData,
+  setChartData,
   setMachineTableData,
   setTransactionTableDataFooter,
   setWorstDayOfAllTime,
@@ -118,25 +118,30 @@ const MainPage: FC<PageTestProps> = () => {
   const handleLocationsRequest = async () => {
     setLoading();
     try {
-      const res = await getDataForLocation(token, {
-        locations: selectedLocations,
-        dates: pickedDate,
-        dateQueryType: dataPickerMode,
-      });
+      // const res = await getDataForLocation(token, {
+      //   locations: selectedLocations,
+      //   dates: pickedDate,
+      //   dateQueryType: dataPickerMode,
+      // });
       const footer = await getAverageAndSumByDateAndLocation(token, {
         locations: selectedLocations,
         dates: pickedDate,
         dateQueryType: dataPickerMode[0],
       });
-      if (res?.message) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
-      dispatch(setLocationTableData(res));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
+      const chart = await getDataForLocationForChart(token, {
+        locations: selectedLocations,
+        dates: pickedDate,
+        dateQueryType: dataPickerMode[0],
+      });
+        // if (res?.message) {
+        //   dispatch(setAlertStatus('error'));
+        //   dispatch(setAlertMsg(res?.message));
+        //   dispatch(setAlertOpenStatus(true));
+        //   return;
+        // }
+        // dispatch(setLocationTableData(res));
+        // dispatch(setAlertOpenStatus(false));
+        // dispatch(clearAlertMsg());
 
       if (footer?.message) {
         dispatch(setAlertStatus('error'));
@@ -145,6 +150,16 @@ const MainPage: FC<PageTestProps> = () => {
         return;
       }
       dispatch(setTransactionTableDataFooter(footer));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+
+      if (chart?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(chart?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setChartData(chart));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
       // eslint-disable-next-line max-len
@@ -185,6 +200,10 @@ const MainPage: FC<PageTestProps> = () => {
       resetLoading();
     }
   };
+
+  useEffect(() => {
+    console.log('chart', chartData);
+  }, [chartData]);
 
   return (
     <Screen>
