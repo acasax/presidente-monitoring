@@ -1,0 +1,75 @@
+@import "../../constants";
+
+._best-and-worst-day-of-all-time-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: row;
+  border-radius: 5px;
+  background-color: $white;
+  box-shadow: 0 4px 4px rgba($black, 0.1);
+  padding: 10px 30px;
+
+  ._header-container-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    ._header {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    ._best {
+      color: $green
+    }
+
+    ._worst {
+      color: $red;
+    }
+  }
+
+  ._data-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+
+    ._cell {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-direction: column;
+      flex: 1;
+
+      ._text-cell {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1px;
+        line-height: 22px;
+      }
+
+      ._header-cell {
+        color: $blue;
+      }
+
+      ._data-cell {
+        color: $black;
+      }
+
+    }
+  }
+}
+
+._best-day-of-all-time-container {
+  margin-right: 40px;
+}

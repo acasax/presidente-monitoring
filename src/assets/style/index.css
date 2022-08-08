@@ -120,6 +120,12 @@
         letter-spacing: 1.25px;
         text-transform: uppercase;
         color: #5E5CE6; }
+    ._main-page ._best-and-worst-day-container ._best-and-worst-day-off-all-time-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      flex-direction: row; }
   ._main-page ._footer {
     display: flex;
     justify-content: flex-end;
@@ -373,6 +379,59 @@
   font-weight: 600 !important;
   color: #000000 !important;
   letter-spacing: 0.5px !important; }
+
+._best-and-worst-day-of-all-time-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: row;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px 30px; }
+  ._best-and-worst-day-of-all-time-container ._header-container-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center; }
+    ._best-and-worst-day-of-all-time-container ._header-container-container ._header {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 22px;
+      text-transform: uppercase;
+      letter-spacing: 1px; }
+    ._best-and-worst-day-of-all-time-container ._header-container-container ._best {
+      color: #22E759; }
+    ._best-and-worst-day-of-all-time-container ._header-container-container ._worst {
+      color: #DA0B0B; }
+  ._best-and-worst-day-of-all-time-container ._data-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%; }
+    ._best-and-worst-day-of-all-time-container ._data-row ._cell {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      flex-direction: column;
+      flex: 1; }
+      ._best-and-worst-day-of-all-time-container ._data-row ._cell ._text-cell {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1px;
+        line-height: 22px; }
+      ._best-and-worst-day-of-all-time-container ._data-row ._cell ._header-cell {
+        color: #5E5CE6; }
+      ._best-and-worst-day-of-all-time-container ._data-row ._cell ._data-cell {
+        color: #000000; }
+
+._best-day-of-all-time-container {
+  margin-right: 40px; }
 
 * {
   margin: 0;

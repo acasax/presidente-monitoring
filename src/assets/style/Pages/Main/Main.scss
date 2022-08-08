@@ -59,6 +59,15 @@
       }
     }
 
+    ._best-and-worst-day-off-all-time-row {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      align-items: center;
+      flex-direction: row;
+
+    }
+
   }
 
   ._footer {

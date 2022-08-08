@@ -43,14 +43,32 @@ interface IMachineTransaction {
   statusCode?: string
 }
 
+interface ITransactionByLocationChartInfo {
+  id: string,
+  sid: string,
+  address: string,
+  locationName: string
+}
+
+interface ITransactionByLocationChartItem {
+  date: string,
+  locations: ITransactionByLocationChartInfo[]
+}
+
+interface ITransactionByLocationChart {
+  data?: ITransactionByLocationChartItem[],
+  message?: string,
+  statusCode?: string
+}
+
 interface IBestAndWorstDayOfAllTimeItem {
-  day?: string,
-  month?: string,
-  date?: string
+  day: string,
+  month: string,
+  date: string
 }
 
 interface IBestAndWorstDayOfAllTime {
-  data?: IBestAndWorstDayOfAllTimeItem,
+  data?: IBestAndWorstDayOfAllTimeItem[],
   message?: string,
   statusCode?: string
 }
@@ -65,6 +83,7 @@ export type {
   IMachineTransactionItem,
   IBestAndWorstDayOfAllTime,
   IBestAndWorstDayOfAllTimeItem,
+  ITransactionByLocationChart,
 };
 
 export type TMainPageContext = {

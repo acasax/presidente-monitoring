@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store/store';
-import { IAverageAndSumByDateItem, IMachineTransactionItem, ITransactionItem } from './MainModal';
+import {
+  IAverageAndSumByDateItem,
+  IBestAndWorstDayOfAllTimeItem,
+  IMachineTransactionItem,
+  ITransactionItem,
+} from './MainModal';
 
 interface InitialState {
   chartData: any,
   locationTableData: any,
   machineTableData: any,
   transactionTableDateFooter: any,
+  bestDayAllTime: any,
+  worstDayAllTime: any
 }
 
 const initialState: InitialState = {
@@ -14,6 +21,8 @@ const initialState: InitialState = {
   locationTableData: [],
   machineTableData: [],
   transactionTableDateFooter: [],
+  bestDayAllTime: {},
+  worstDayAllTime: {},
 };
 
 const mainSlice = createSlice({
@@ -44,6 +53,18 @@ const mainSlice = createSlice({
     clearTransactionTableDataFooter: (state) => {
       state.transactionTableDateFooter = [];
     },
+    setBestDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.bestDayAllTime = action.payload;
+    },
+    clearBesDayOfAllTime: (state) => {
+      state.bestDayAllTime = {};
+    },
+    setWorstDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.worstDayAllTime = action.payload;
+    },
+    clearWorstDayOfAllTime: (state) => {
+      state.worstDayAllTime = {};
+    },
   },
 });
 
@@ -56,12 +77,18 @@ export const {
   clearTransactionTableDataFooter,
   setMachineTableData,
   clearMachineTableData,
+  setBestDayOfAllTime,
+  clearBesDayOfAllTime,
+  setWorstDayOfAllTime,
+  clearWorstDayOfAllTime,
 } = mainSlice.actions;
 
 export const getChartData = (state: RootState) => state?.main?.chartData;
 export const getLocationTableData = (state: RootState) => state?.main?.locationTableData;
 export const getMachineTableData = (state: RootState) => state?.main?.machineTableData;
 // eslint-disable-next-line max-len
-export const getTransactionTableDateFooter = (state: RootState) => state?.main.transactionTableDateFooter;
+export const getTransactionTableDateFooter = (state: RootState) => state?.main?.transactionTableDateFooter;
+export const getBestDayOfAllTime = (state: RootState) => state?.main?.bestDayAllTime;
+export const getWorstDayOfAllTime = (state: RootState) => state?.main?.worstDayAllTime;
 
 export default mainSlice.reducer;

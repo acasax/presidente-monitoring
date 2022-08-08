@@ -24,20 +24,21 @@ import {
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
-import LocationTable from '../../components/CustomTable/LocationTable';
 import {
+  getBestDayOfAllTime,
   getChartData,
-  getLocationTableData,
-  getMachineTableData,
-  getTransactionTableDateFooter,
+  getWorstDayOfAllTime,
+  setBestDayOfAllTime,
   setLocationTableData,
   setMachineTableData,
   setTransactionTableDataFooter,
+  setWorstDayOfAllTime,
 } from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
 import MachineLocationSelect from '../../components/LocationSelect/MachineLocationSelect';
-import MachineTable from '../../components/CustomTable/MachineTable';
+import BestAndWorstDayOfAllTimeContainer
+  from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
 
 interface PageTestProps {
   test?: string
@@ -49,12 +50,14 @@ const MainPage: FC<PageTestProps> = () => {
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
   const chartData = useAppSelector(getChartData);
-  const locationTableData = useAppSelector(getLocationTableData);
-  const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
+  // const locationTableData = useAppSelector(getLocationTableData);
+  // const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
   const locationData = useAppSelector(getSelectLocationData);
   const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
   const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
-  const machineTableData = useAppSelector(getMachineTableData);
+  // const machineTableData = useAppSelector(getMachineTableData);
+  const bestDayOfAllTime = useAppSelector(getBestDayOfAllTime);
+  const worstDayOfAllTime = useAppSelector(getWorstDayOfAllTime);
   const { values, handleChoseDate } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
@@ -72,8 +75,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        console.log('asc', res);
-        // dispatch(setSelectLocationData(res?.data));
+        dispatch(setBestDayOfAllTime(res));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -93,8 +95,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        console.log('desc', res);
-        // dispatch(setSelectLocationData(res?.data));
+        dispatch(setWorstDayOfAllTime(res));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -206,22 +207,27 @@ const MainPage: FC<PageTestProps> = () => {
             disabled={machineSelectedLocation.length === 0}
           />
         </div>
-        <div className="_table-row">
-          <div className="_machine-table">
-            {/* eslint-disable-next-line max-len */}
-            {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />}
-          </div>
-          <div className="_location-table">
-            {/* eslint-disable-next-line max-len */}
-            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <LocationTable />}
-          </div>
-        </div>
+        {/* <div className="_table-row"> */}
+        {/*  <div className="_machine-table"> */}
+        {/*    /!* eslint-disable-next-line max-len *!/ */}
+        {/* eslint-disable-next-line max-len */}
+        {/*    {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />} */}
+        {/*  </div> */}
+        {/*  <div className="_location-table"> */}
+        {/*    /!* eslint-disable-next-line max-len *!/ */}
+        {/*    {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0) */}
+        {/*                    && <LocationTable />} */}
+        {/*  </div> */}
+        {/* </div> */}
         <div className="_best-and-worst-day-container">
           <div className="_header-container">
             <p className="_header">
               NAJBOLJI I NAJGORI DAN
             </p>
+          </div>
+          <div className="_best-and-worst-day-off-all-time-row">
+            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
+            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
           </div>
         </div>
         <div className="_footer">
