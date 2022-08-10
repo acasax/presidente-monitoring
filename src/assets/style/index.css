@@ -359,7 +359,8 @@
     line-height: 5px !important;
     font-weight: 700 !important;
     color: #5E5CE6 !important;
-    letter-spacing: 0.5px !important; }
+    letter-spacing: 0.5px !important;
+    flex: 1 !important; }
 
 ._table-cell-header-location {
   min-width: 400px; }
@@ -426,6 +427,10 @@
 
 ._week-analytic-best-table-container {
   margin-right: 40px; }
+
+._week-analytic-table-cell {
+  min-width: 200px;
+  max-width: 200px; }
 
 ._best-and-worst-day-of-all-time-container {
   display: flex;

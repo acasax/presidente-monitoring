@@ -18,12 +18,12 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
     <Table className="_table-container">
       <TableHead>
         <TableRow className="_table-header-container">
-          <TableCell className="_table-header">Nedelja u godini</TableCell>
-          <TableCell className="_table-header" align="center">Nedelja u mesecu</TableCell>
-          <TableCell className="_table-header" align="center">Trajanje od - do</TableCell>
-          <TableCell className="_table-header" align="center">Datum</TableCell>
-          <TableCell className="_table-header" align="center">Dan</TableCell>
-          <TableCell className="_table-header" align="center">Vrednost</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell">Nedelja u godini</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">Nedelja u mesecu</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">Trajanje od - do</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">Datum</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">Dan</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">Vrednost</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -33,27 +33,25 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
           >
             <TableCell
-              component="th"
-              scope="row"
-              className="_table-cell"
+              className="_table-cell _week-analytic-table-cell"
             >
               {row?.week}
             </TableCell>
-            <TableCell align="center" className="_table-cell">
+            <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {key + 1}
             </TableCell>
-            <TableCell align="center" className="_table-cell">
+            <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {row?.startDateOfWeek}
               {' '}
               {row?.endDateOfWeek}
             </TableCell>
-            <TableCell align="center" className="_table-cell">
+            <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {row?.day ? row?.day : '/'}
             </TableCell>
-            <TableCell align="center" className="_table-cell">
+            <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {row?.dateInWeek ? row?.dateInWeek : '/'}
             </TableCell>
-            <TableCell align="center" className="_table-cell">
+            <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {row?.weekSum ? row?.weekSum : '/'}
             </TableCell>
           </TableRow>

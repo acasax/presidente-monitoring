@@ -15,6 +15,7 @@
     font-weight: 700 !important;
     color: $blue !important;
     letter-spacing: 0.5px !important;
+    flex: 1 !important;
   }
 }
 
@@ -45,6 +46,7 @@
 
 ._week-analytic-table-container {
   padding: 15px 30px;
+
 
   ._week-analytic-table-header-container {
     display: flex;
@@ -109,5 +111,11 @@
 ._week-analytic-best-table-container {
   margin-right: 40px;
 }
+
+._week-analytic-table-cell {
+  min-width: 200px;
+  max-width: 200px;
+}
+
 
 
