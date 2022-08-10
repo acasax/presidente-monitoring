@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import LocationSelect from '../../components/LocationSelect/LocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {
+  getSelectedBestAndWorstLocation,
   getSelectedLocation,
   getSelectedMachineLocation,
   getSelectLocationData,
@@ -13,32 +14,54 @@ import {
 } from '../../feautures/locationSelect/locationSelectSlice';
 import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
-import { getDatePickerMode, getSelectedDate } from '../../feautures/datePicker/datePickerSlice';
+import {
+  getBestAndWorstDaySelectedDates,
+  getDatePickerMode,
+  getSelectedDate,
+} from '../../feautures/datePicker/datePickerSlice';
 import { getToken } from '../../feautures/auth/authSlice';
 import {
   getAverageAndSumByDateAndLocation,
   getBestAndWorstDayAllTime,
+  getDataForLocation,
   getDataForLocationForChart,
   getDataForMachine,
+  getDataForWeekAnalytics,
+  getDataForWeekAnalyticsFooter,
 } from '../../feautures/main/MainService';
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
 import {
   getBestDayOfAllTime,
+  getBestDayWeekAnalytics,
+  getBestDayWeekAnalyticsFooter,
   getChartData,
-  getWorstDayOfAllTime,
+  getLocationTableData,
+  getMachineTableData,
+  getTransactionTableDateFooter,
+  getWorstDayOfAllTime, getWorstDayWeekAnalytics, getWorstDayWeekAnalyticsFooter,
   setBestDayOfAllTime,
+  setBestDayWeekAnalytics,
+  setBestDayWeekAnalyticsFooter,
   setChartData,
+  setLocationTableData,
   setMachineTableData,
   setTransactionTableDataFooter,
   setWorstDayOfAllTime,
+  setWorstDayWeekAnalytics,
+  setWorstDayWeekAnalyticsFooter,
 } from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
 import MachineLocationSelect from '../../components/LocationSelect/MachineLocationSelect';
 import BestAndWorstDayOfAllTimeContainer
   from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
+import LocationTable from '../../components/CustomTable/LocationTable';
+import MachineTable from '../../components/CustomTable/MachineTable';
+import BestAndWorstDayLocationSelect from '../../components/LocationSelect/BestAndWorstDayLocationSelect';
+import BestAndWorstDayDatePicker from '../../components/CustomDatePicker/BestAndWorstDayDatePicker';
+import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
 
 interface PageTestProps {
   test?: string
@@ -50,15 +73,26 @@ const MainPage: FC<PageTestProps> = () => {
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
   const chartData = useAppSelector(getChartData);
-  // const locationTableData = useAppSelector(getLocationTableData);
-  // const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
+  const locationTableData = useAppSelector(getLocationTableData);
+  const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
   const locationData = useAppSelector(getSelectLocationData);
   const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
   const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
-  // const machineTableData = useAppSelector(getMachineTableData);
+  const machineTableData = useAppSelector(getMachineTableData);
   const bestDayOfAllTime = useAppSelector(getBestDayOfAllTime);
   const worstDayOfAllTime = useAppSelector(getWorstDayOfAllTime);
-  const { values, handleChoseDate } = useContext(MainPageContext);
+  const bestAndWorstWeekAnalyticsSelectedLocation = useAppSelector(getSelectedBestAndWorstLocation);
+  const bestAndWorstWeekAnalyticsSelectedDates = useAppSelector(getBestAndWorstDaySelectedDates);
+  const bestDayWeekAnalytics = useAppSelector(getBestDayWeekAnalytics);
+  const bestDayWeekAnalyticsFooter = useAppSelector(getBestDayWeekAnalyticsFooter);
+  const worstDayWeekAnalytics = useAppSelector(getWorstDayWeekAnalytics);
+  const worstDayWeekAnalyticsFooter = useAppSelector(getWorstDayWeekAnalyticsFooter);
+  const {
+    values,
+    handleChoseDate,
+    bestAndWorstDayValues,
+    handleChoseBestAndWorstDayDate,
+  } = useContext(MainPageContext);
   const dispatch = useAppDispatch();
 
   const {
@@ -115,14 +149,19 @@ const MainPage: FC<PageTestProps> = () => {
     handleChoseDate();
   }, [values]);
 
+  useEffect(() => {
+    handleChoseBestAndWorstDayDate();
+  }, [bestAndWorstDayValues]);
+
   const handleLocationsRequest = async () => {
     setLoading();
     try {
-      // const res = await getDataForLocation(token, {
-      //   locations: selectedLocations,
-      //   dates: pickedDate,
-      //   dateQueryType: dataPickerMode,
-      // });
+      const res = await getDataForLocation(token, {
+        locations: selectedLocations,
+        dates: pickedDate,
+        dateQueryType: dataPickerMode,
+        responseDataType: 'TABLE',
+      });
       const footer = await getAverageAndSumByDateAndLocation(token, {
         locations: selectedLocations,
         dates: pickedDate,
@@ -132,16 +171,17 @@ const MainPage: FC<PageTestProps> = () => {
         locations: selectedLocations,
         dates: pickedDate,
         dateQueryType: dataPickerMode[0],
+        responseDataType: 'CHART',
       });
-        // if (res?.message) {
-        //   dispatch(setAlertStatus('error'));
-        //   dispatch(setAlertMsg(res?.message));
-        //   dispatch(setAlertOpenStatus(true));
-        //   return;
-        // }
-        // dispatch(setLocationTableData(res));
-        // dispatch(setAlertOpenStatus(false));
-        // dispatch(clearAlertMsg());
+      if (res?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setLocationTableData(res));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
 
       if (footer?.message) {
         dispatch(setAlertStatus('error'));
@@ -201,9 +241,79 @@ const MainPage: FC<PageTestProps> = () => {
     }
   };
 
-  useEffect(() => {
-    console.log('chart', chartData);
-  }, [chartData]);
+  const handleWeekAnalyticsRequest = async () => {
+    setLoading();
+    console.log('bestAndWorstSelectedLocation', bestAndWorstWeekAnalyticsSelectedLocation);
+    console.log('bestAndWorstWeekAnalyticsSelectedDates', bestAndWorstWeekAnalyticsSelectedDates);
+    try {
+      const best = await getDataForWeekAnalytics(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        sortType: 'BEST',
+      });
+
+      const bestFooter = await getDataForWeekAnalyticsFooter(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        sortType: 'BEST',
+      });
+
+      const worst = await getDataForWeekAnalytics(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        sortType: 'WORST',
+      });
+
+      const worstFooter = await getDataForWeekAnalyticsFooter(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        sortType: 'WORST',
+      });
+
+      if (best?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(best?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setBestDayWeekAnalytics(best));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+      if (bestFooter?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(bestFooter?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setBestDayWeekAnalyticsFooter(bestFooter));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+      if (worst?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(worst?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setWorstDayWeekAnalytics(worst));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+      if (worstFooter?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(worstFooter?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setWorstDayWeekAnalyticsFooter(worstFooter));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+    } catch (e) {
+      dispatch(setAlertStatus('error'));
+      dispatch(setAlertMsg(e?.message));
+      dispatch(setAlertOpenStatus(true));
+    } finally {
+      resetLoading();
+    }
+  };
 
   return (
     <Screen>
@@ -217,7 +327,9 @@ const MainPage: FC<PageTestProps> = () => {
             handleFunction={handleLocationsRequest}
           />
         </div>
-        {chartData.length !== 0 && <CustomChart />}
+        <div className="_row">
+          {chartData.length !== 0 && <CustomChart />}
+        </div>
         <div className="_row">
           <MachineLocationSelect />
           <CustomButton
@@ -226,18 +338,17 @@ const MainPage: FC<PageTestProps> = () => {
             disabled={machineSelectedLocation.length === 0}
           />
         </div>
-        {/* <div className="_table-row"> */}
-        {/*  <div className="_machine-table"> */}
-        {/*    /!* eslint-disable-next-line max-len *!/ */}
-        {/* eslint-disable-next-line max-len */}
-        {/*    {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />} */}
-        {/*  </div> */}
-        {/*  <div className="_location-table"> */}
-        {/*    /!* eslint-disable-next-line max-len *!/ */}
-        {/*    {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0) */}
-        {/*                    && <LocationTable />} */}
-        {/*  </div> */}
-        {/* </div> */}
+        <div className="_table-row">
+          <div className="_machine-table">
+            {/* eslint-disable-next-line max-len */}
+            {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />}
+          </div>
+          <div className="_location-table">
+            {/* eslint-disable-next-line max-len */}
+            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
+                            && <LocationTable />}
+          </div>
+        </div>
         <div className="_best-and-worst-day-container">
           <div className="_header-container">
             <p className="_header">
@@ -247,6 +358,33 @@ const MainPage: FC<PageTestProps> = () => {
           <div className="_best-and-worst-day-off-all-time-row">
             <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
+          </div>
+          <div className="_row">
+            <BestAndWorstDayLocationSelect />
+            <BestAndWorstDayDatePicker />
+            <CustomButton
+              text="PRETRAZI"
+              handleFunction={handleWeekAnalyticsRequest}
+            />
+          </div>
+          <div className="_row">
+            {(bestDayWeekAnalytics.length !== 0 && bestDayWeekAnalyticsFooter.length !== 0)
+                            && (
+                            <BestAndWorstDayWeekAnalyticsTable
+                              header="Najbolji"
+                              data={bestDayWeekAnalytics}
+                              footer={bestDayWeekAnalyticsFooter}
+                            />
+                            )}
+            {(worstDayWeekAnalytics.length !== 0 && worstDayWeekAnalyticsFooter.length !== 0)
+                            && (
+                            <BestAndWorstDayWeekAnalyticsTable
+                              header="Najgori"
+                              data={worstDayWeekAnalytics}
+                              footer={worstDayWeekAnalyticsFooter}
+                            />
+                            )}
+
           </div>
         </div>
         <div className="_footer">

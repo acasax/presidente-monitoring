@@ -7,6 +7,7 @@ interface InitialState {
   selectedLocationData: any[],
   machineLocationData: ILocationSelect[],
   selectedMachineLocationData: any,
+  selectedBestAndWorstLocationData: any
 }
 
 const initialState: InitialState = {
@@ -14,6 +15,7 @@ const initialState: InitialState = {
   selectedLocationData: [],
   machineLocationData: [],
   selectedMachineLocationData: '',
+  selectedBestAndWorstLocationData: '',
 };
 
 const locationSlice = createSlice({
@@ -44,6 +46,12 @@ const locationSlice = createSlice({
     clearSelectedMachineLocation: (state) => {
       state.selectedMachineLocationData = '';
     },
+    setSelectedBestAndWorstLocation: (state, action: PayloadAction<any>) => {
+      state.selectedBestAndWorstLocationData = action.payload;
+    },
+    clearSelectedBestAndWorstLocation: (state) => {
+      state.selectedBestAndWorstLocationData = '';
+    },
   },
 });
 
@@ -56,6 +64,8 @@ export const {
   clearSelectMachineLocationData,
   setSelectedMachineLocation,
   clearSelectedMachineLocation,
+  setSelectedBestAndWorstLocation,
+  clearSelectedBestAndWorstLocation,
 } = locationSlice.actions;
 
 export const getSelectLocationData = (state: RootState) => state?.locationSelect?.locationData;
@@ -65,5 +75,7 @@ export const getSelectedLocation = (state: RootState) => state?.locationSelect?.
 export const getSelectMachineLocationData = (state: RootState) => state?.locationSelect?.machineLocationData;
 // eslint-disable-next-line max-len
 export const getSelectedMachineLocation = (state: RootState) => state?.locationSelect?.selectedMachineLocationData;
+// eslint-disable-next-line max-len
+export const getSelectedBestAndWorstLocation = (state: RootState) => state?.locationSelect?.selectedBestAndWorstLocationData;
 
 export default locationSlice.reducer;

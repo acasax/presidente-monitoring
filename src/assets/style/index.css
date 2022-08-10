@@ -125,7 +125,8 @@
       justify-content: space-between;
       width: 100%;
       align-items: center;
-      flex-direction: row; }
+      flex-direction: row;
+      margin-bottom: 40px; }
   ._main-page ._footer {
     display: flex;
     justify-content: flex-end;
@@ -361,10 +362,10 @@
     letter-spacing: 0.5px !important; }
 
 ._table-cell-header-location {
-  width: 400px; }
+  min-width: 400px; }
 
 ._table-cell-header-machine {
-  width: 150px; }
+  min-width: 150px; }
 
 ._table-cell-header {
   font-size: 16px !important;
@@ -379,6 +380,52 @@
   font-weight: 600 !important;
   color: #000000 !important;
   letter-spacing: 0.5px !important; }
+
+._week-analytic-table-container {
+  padding: 15px 30px; }
+  ._week-analytic-table-container ._week-analytic-table-header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    padding: 15px 0; }
+    ._week-analytic-table-container ._week-analytic-table-header-container ._table-header-text {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 22px;
+      text-transform: uppercase;
+      letter-spacing: 1px; }
+    ._week-analytic-table-container ._week-analytic-table-header-container ._best {
+      color: #22E759; }
+    ._week-analytic-table-container ._week-analytic-table-header-container ._worst {
+      color: #DA0B0B; }
+  ._week-analytic-table-container ._week-analytic-table-footer-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 350px;
+    flex-direction: column;
+    margin: 20px 0; }
+    ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%; }
+      ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row ._week-analytic-table-footer-row-header {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: 1px;
+        color: #000000; }
+      ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row ._week-analytic-table-footer-row-text-best {
+        color: #22E759 !important; }
+      ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row ._week-analytic-table-footer-row-text-worst {
+        color: #DA0B0B !important; }
+
+._week-analytic-best-table-container {
+  margin-right: 40px; }
 
 ._best-and-worst-day-of-all-time-container {
   display: flex;

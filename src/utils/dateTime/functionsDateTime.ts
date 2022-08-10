@@ -15,6 +15,12 @@ export function formatDate(date, mode) {
         date?.year,
       ].join('.');
     }
+    case 'MONTH2': {
+      return [
+        date?.year,
+        padTo2Digits(date?.month?.number),
+      ].join('-');
+    }
     default: {
       return [
         padTo2Digits(date?.day),

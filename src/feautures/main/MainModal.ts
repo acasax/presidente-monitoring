@@ -8,7 +8,7 @@ interface ITransactionInfo {
 }
 
 interface ITransactionItem {
-  sid?: string,
+  id?: number,
   address?: string,
   locationName?: string,
   transactions?: ITransactionInfo[],
@@ -73,6 +73,21 @@ interface IBestAndWorstDayOfAllTime {
   statusCode?: string
 }
 
+interface IWeekAnalyticsItem {
+  week: number,
+  startDateOfWeek: string,
+  endDateOfWeek: string,
+  day?: string,
+  dateInWeek?: string,
+  weekSum?: number
+}
+
+interface IWeekAnalytics {
+  data?: IWeekAnalyticsItem[],
+  message?: string,
+  statusCode?: string
+}
+
 export type {
   IFile,
   ITransaction,
@@ -84,10 +99,14 @@ export type {
   IBestAndWorstDayOfAllTime,
   IBestAndWorstDayOfAllTimeItem,
   ITransactionByLocationChart,
+  IWeekAnalytics,
 };
 
 export type TMainPageContext = {
   values: any,
   setValues: (b: any) => void,
   handleChoseDate: () => void,
+  bestAndWorstDayValues: any,
+  setBestAndWorstDayValues: (b: any) => void,
+  handleChoseBestAndWorstDayDate: () => void,
 };

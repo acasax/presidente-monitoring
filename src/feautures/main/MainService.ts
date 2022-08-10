@@ -6,6 +6,7 @@ import {
   IMachineTransaction,
   ITransaction,
   ITransactionByLocationChart,
+  IWeekAnalytics,
 } from './MainModal';
 
 const SendExcelWithTransaction = async (data = {}, query = {}, token: string): Promise<any> => {
@@ -36,27 +37,31 @@ const getDataForLocation = async (token: string, query = {}): Promise<any> => {
     .forEach((key) => {
       queryString += key;
       queryString += '=';
-      if (key === 'dateQueryType') {
+      if (key === 'responseDataType') {
         queryString += query[key];
       } else {
-        queryString += '[';
-        if (key === 'dates') {
-          // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
-          query[key].map((x) => {
-            queryString += `"${x}"`;
-            queryString += ',';
-          });
-          queryString = queryString.slice(0, -1);
-        } else {
+        if (key === 'dateQueryType') {
           queryString += query[key];
+        } else {
+          queryString += '[';
+          if (key === 'dates') {
+            // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+            query[key].map((x) => {
+              queryString += `"${x}"`;
+              queryString += ',';
+            });
+            queryString = queryString.slice(0, -1);
+          } else {
+            queryString += query[key];
+          }
+          queryString += ']';
         }
-        queryString += ']';
+        queryString += '&';
       }
-      queryString += '&';
     });
-  queryString = queryString.slice(0, -1);
+  // queryString = queryString.slice(0, -1);
 
-  const path = baseService.url.build('transaction/profit-by-location');
+  const path = baseService.url.build('location/profit-by-location');
   const url = `${path}?${queryString}`;
   const response: AxiosResponse<ITransaction> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
@@ -116,28 +121,30 @@ const getDataForMachine = async (token: string, query = {}): Promise<any> => {
       queryString += '=';
       if (key === 'location') {
         queryString += query[key];
-      }
-      if (key === 'dateQueryType') {
-        queryString += query[key];
+        queryString += '&';
       } else {
-        queryString += '[';
-        if (key === 'dates') {
-          // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
-          query[key].map((x) => {
-            queryString += `"${x}"`;
-            queryString += ',';
-          });
-          queryString = queryString.slice(0, -1);
-        } else {
+        if (key === 'dateQueryType') {
           queryString += query[key];
+        } else {
+          queryString += '[';
+          if (key === 'dates') {
+            // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+            query[key].map((x) => {
+              queryString += `"${x}"`;
+              queryString += ',';
+            });
+            queryString = queryString.slice(0, -1);
+          } else {
+            queryString += query[key];
+          }
+          queryString += ']';
         }
-        queryString += ']';
+        queryString += '&';
       }
-      queryString += '&';
     });
   queryString = queryString.slice(0, -1);
 
-  const path = baseService.url.build('machine/profit-for-machines-by-location');
+  const path = baseService.url.build('location/profit-for-machines-by-location');
   const url = `${path}?${queryString}`;
   const response: AxiosResponse<IMachineTransaction> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
@@ -180,32 +187,84 @@ const getDataForLocationForChart = async (token: string, query = {}): Promise<an
     .forEach((key) => {
       queryString += key;
       queryString += '=';
-      if (key === 'location') {
-        queryString += query[key];
-      }
-      if (key === 'dateQueryType') {
+      if (key === 'responseDataType') {
         queryString += query[key];
       } else {
-        queryString += '[';
-        if (key === 'dates') {
-          // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
-          query[key].map((x) => {
-            queryString += `"${x}"`;
-            queryString += ',';
-          });
-          queryString = queryString.slice(0, -1);
-        } else {
+        if (key === 'dateQueryType') {
           queryString += query[key];
+        } else {
+          queryString += '[';
+          if (key === 'dates') {
+            // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+            query[key].map((x) => {
+              queryString += `"${x}"`;
+              queryString += ',';
+            });
+            queryString = queryString.slice(0, -1);
+          } else {
+            queryString += query[key];
+          }
+          queryString += ']';
         }
-        queryString += ']';
+        queryString += '&';
       }
-      queryString += '&';
     });
-  queryString = queryString.slice(0, -1);
 
   const path = baseService.url.build('location/profit-by-location');
   const url = `${path}?${queryString}`;
   const response: AxiosResponse<ITransactionByLocationChart> = await baseService.get(url, {});
+  if (response?.data?.statusCode) {
+    return {
+      message: response?.data?.message,
+    };
+  }
+  return response.data;
+};
+
+const getDataForWeekAnalytics = async (token: string, query = {}): Promise<any> => {
+  const baseService = new BaseService(token);
+  let queryString = '';
+
+  console.log('query', query);
+  Object.keys(query)
+    .forEach((key) => {
+      console.log('queryString');
+      queryString += key;
+      queryString += '=';
+      queryString += query[key];
+      queryString += '&';
+    });
+  queryString = queryString.slice(0, -1);
+
+  const path = baseService.url.build('transaction/week-analytics');
+  const url = `${path}?${queryString}`;
+  const response: AxiosResponse<IWeekAnalytics> = await baseService.get(url, {});
+  if (response?.data?.statusCode) {
+    return {
+      message: response?.data?.message,
+    };
+  }
+  return response.data;
+};
+
+const getDataForWeekAnalyticsFooter = async (token: string, query = {}): Promise<any> => {
+  const baseService = new BaseService(token);
+  let queryString = '';
+
+  console.log('query', query);
+  Object.keys(query)
+    .forEach((key) => {
+      console.log('queryString');
+      queryString += key;
+      queryString += '=';
+      queryString += query[key];
+      queryString += '&';
+    });
+  queryString = queryString.slice(0, -1);
+
+  const path = baseService.url.build('transaction/best-or-worst-day-in-month');
+  const url = `${path}?${queryString}`;
+  const response: AxiosResponse<IWeekAnalytics> = await baseService.get(url, {});
   if (response?.data?.statusCode) {
     return {
       message: response?.data?.message,
@@ -221,6 +280,8 @@ export {
   getDataForMachine,
   getBestAndWorstDayAllTime,
   getDataForLocationForChart,
+  getDataForWeekAnalytics,
+  getDataForWeekAnalyticsFooter,
 };
 
 export default {};

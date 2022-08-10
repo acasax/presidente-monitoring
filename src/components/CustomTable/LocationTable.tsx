@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useAppSelector } from '../../store/hooks';
 import { getLocationTableData, getTransactionTableDateFooter } from '../../feautures/main/mainSlice';
+import { padTo2Digits } from '../../utils/dateTime/functionsDateTime';
 
 const LocationTable = () => {
   const [newData, setNewData] = useState([]);
@@ -26,12 +27,12 @@ const LocationTable = () => {
         // eslint-disable-next-line max-len,no-restricted-globals
         sum: row?.transactions?.reduce(
           // eslint-disable-next-line max-len,no-restricted-globals
-          (previousValue, currentValue) => sum(previousValue?.profit ? previousValue?.profit : !isNaN(previousValue) ? previousValue : 0, currentValue?.profit ? currentValue?.profit : !isNaN(currentValue) ? currentValue : 0),
+          (previousValue, currentValue) => sum(previousValue?.sum ? previousValue?.sum : !isNaN(previousValue) ? previousValue : 0, currentValue?.sum ? currentValue?.sum : !isNaN(currentValue) ? currentValue : 0),
           0,
         ),
         average: row?.transactions?.reduce(
           // eslint-disable-next-line max-len,no-restricted-globals
-          (previousValue, currentValue) => sum(previousValue?.profit ? previousValue?.profit : !isNaN(previousValue) ? previousValue : 0, currentValue?.profit ? currentValue?.profit : !isNaN(currentValue) ? currentValue : 0),
+          (previousValue, currentValue) => sum(previousValue?.sum ? previousValue?.sum : !isNaN(previousValue) ? previousValue : 0, currentValue?.sum ? currentValue?.sum : !isNaN(currentValue) ? currentValue : 0),
           0,
         ) / row?.transactions.length,
       })),
@@ -66,7 +67,7 @@ const LocationTable = () => {
                 scope="row"
                 className="_table-cell-header _table-cell-header-location"
               >
-                {row?.id}
+                {padTo2Digits(row?.id)}
                 {' / '}
                 {row?.locationName.trim()}
                 {', '}
@@ -79,7 +80,7 @@ const LocationTable = () => {
                                     key={index}
                                     className="_table-cell"
                                   >
-                                    {item?.profit ? item?.profit : '/'}
+                                    {item?.sum ? item?.sum : '/'}
                                   </TableCell>
                                 ))
                             }

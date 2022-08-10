@@ -19,11 +19,11 @@
 }
 
 ._table-cell-header-location {
-  width: 400px;
+  min-width: 400px;
 }
 
 ._table-cell-header-machine {
-  width: 150px;
+  min-width: 150px;
 }
 
 
@@ -43,6 +43,71 @@
   letter-spacing: 0.5px !important;
 }
 
+._week-analytic-table-container {
+  padding: 15px 30px;
 
+  ._week-analytic-table-header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    padding: 15px 0;
+
+    ._table-header-text {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 22px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    ._best {
+      color: $green;
+    }
+
+    ._worst {
+      color: $red;
+    }
+  }
+
+  ._week-analytic-table-footer-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 350px;
+    flex-direction: column;
+    margin: 20px 0;
+
+    ._week-analytic-table-footer-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      ._week-analytic-table-footer-row-header {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 22px;
+        letter-spacing: 1px;
+        color: $black;
+      }
+
+      ._week-analytic-table-footer-row-text-best {
+        color: $green !important;
+      }
+
+      ._week-analytic-table-footer-row-text-worst {
+        color: $red !important;
+      }
+    }
+  }
+
+}
+
+._week-analytic-best-table-container {
+  margin-right: 40px;
+}
 
 

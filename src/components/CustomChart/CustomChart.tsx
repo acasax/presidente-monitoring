@@ -6,10 +6,8 @@ import { Animation, ArgumentScale } from '@devexpress/dx-react-chart';
 import { curveCatmullRom, line } from 'd3-shape';
 import { scalePoint } from 'd3-scale';
 
-import { energyConsumption as data } from './demo-data/date-vizualization.js';
 import { useAppSelector } from '../../store/hooks';
 import { getChartData } from '../../feautures/main/mainSlice';
-import { padTo2Digits } from '../../utils/dateTime/functionsDateTime';
 
 const PREFIX = 'Demo';
 
@@ -46,69 +44,153 @@ const StyledChart = styled(Chart)(() => ({
 
 const CustomChart = () => {
   const chartData = useAppSelector(getChartData);
-  const [newData, setNewData] = useState([]);
-
-  // function keyValue(a) {
-  //   console.log('a', a);
-  //   Object.preventExtensions(a);
-  // eslint-disable-next-line max-len
-  //   Object.defineProperty(...a, `${padTo2Digits(a?.id)}/${a?.locationName.trim()}`, { value: a?.profit ? a?.profit : 0 });
-  //   // a[`${padTo2Digits(a?.id)}/${a?.locationName}/${a?.address}`] = a?.profit ? a?.profit : 0;
-  //   return a;
-  // }
+  const [chartArgument, setChartArgument] = useState([]);
 
   useEffect(() => {
-    console.log('data', chartData);
-    setNewData(chartData.map((row) => ({
-      date: row?.date,
-      // eslint-disable-next-line no-return-assign
-      ...row?.locations?.map((a) => ({
-        [`${padTo2Digits(a?.id)}/${a?.locationName.trim()}`]: a?.profit ? a?.profit : 0,
-      })),
-    })));
-    console.log('newData', newData);
-    console.log('data', data);
+    let argument = Object.keys(chartData[0]);
+    argument.shift();
+    argument = argument.map((element) => element.trim());
+    setChartArgument(argument);
   }, [chartData]);
 
   return (
     <Paper sx={{ width: '100%', padding: '30px', boxSizing: 'border-box' }}>
       <StyledChart
-        data={data}
+        data={chartData}
       >
         <ArgumentScale factory={scalePoint} />
         <ArgumentAxis />
         <ValueAxis />
+        {
+                    chartArgument.includes('1Kruševac') && (
+                    <LineSeries
+                      name="1Kruševac"
+                      valueField="1Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+        {
+                    chartArgument.includes('2Kruševac') && (
+                    <LineSeries
+                      name="2Kruševac"
+                      valueField="2Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
 
-        <LineSeries
-          name="Hydro-electric"
-          valueField="hydro"
-          argumentField="date"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Oil"
-          valueField="oil"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Natural gas"
-          valueField="gas"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Coal"
-          valueField="coal"
-          argumentField="country"
-          seriesComponent={Line}
-        />
-        <LineSeries
-          name="Nuclear"
-          valueField="nuclear"
-          argumentField="country"
-          seriesComponent={Line}
-        />
+        {
+                    chartArgument.includes('3Aleksandrovac') && (
+                    <LineSeries
+                      name="3Aleksandrovac"
+                      valueField="3Aleksandrovac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('4Brus') && (
+                    <LineSeries
+                      name="4Brus"
+                      valueField="4Brus"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('7Paraćin') && (
+                    <LineSeries
+                      name="7Paraćin"
+                      valueField="7Paraćin"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('8Kruševac') && (
+                    <LineSeries
+                      name="8Kruševac"
+                      valueField="8Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('9Kruševac') && (
+                    <LineSeries
+                      name="9Kruševac"
+                      valueField="9Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('10Kraljevo') && (
+                    <LineSeries
+                      name="10Kraljevo"
+                      valueField="10Kraljevo"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('11Kruševac') && (
+                    <LineSeries
+                      name="11Kruševac"
+                      valueField="11Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('12Borča') && (
+                    <LineSeries
+                      name="12Borča"
+                      valueField="12Borča"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
+        {
+                    chartArgument.includes('13Kraljevo') && (
+                    <LineSeries
+                      name="13Kraljevo"
+                      valueField="13Kraljevo"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+        {
+                    chartArgument.includes('14Kruševac') && (
+                    <LineSeries
+                      name="14Kruševac"
+                      valueField="14Kruševac"
+                      argumentField="date"
+                      seriesComponent={Line}
+                    />
+                    )
+                }
+
         <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
         <Animation />
       </StyledChart>
