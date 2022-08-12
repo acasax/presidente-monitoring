@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { clearPickedDate, getDatePickerMode, setDatePickerMode } from '../../../../feautures/datePicker/datePickerSlice';
+import { clearPickedDate, getDatePickerMode, setDatePickerMode } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 import { DateModeSelectItems } from '../../../../constants/select';
 

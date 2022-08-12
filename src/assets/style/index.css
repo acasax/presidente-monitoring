@@ -325,7 +325,11 @@
   letter-spacing: 1.25px !important;
   color: #5E5CE6;
   border: 2px solid #5E5CE6;
-  text-transform: uppercase !important; }
+  text-transform: uppercase !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  min-width: 110px !important; }
 
 ._data-picker-container {
   padding: 15px;

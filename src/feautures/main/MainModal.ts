@@ -88,6 +88,17 @@ interface IWeekAnalytics {
   statusCode?: string
 }
 
+interface ILocationSelect {
+  id: number,
+  sid: string,
+  locationName: string
+}
+
+interface ILocationSelectPromise {
+  data?: ILocationSelect[],
+  message?: string
+}
+
 export type {
   IFile,
   ITransaction,
@@ -100,6 +111,8 @@ export type {
   IBestAndWorstDayOfAllTimeItem,
   ITransactionByLocationChart,
   IWeekAnalytics,
+  ILocationSelectPromise,
+  ILocationSelect,
 };
 
 export type TMainPageContext = {

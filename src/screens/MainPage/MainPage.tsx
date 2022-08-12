@@ -4,21 +4,39 @@ import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconBu
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import MainLocationSelect from './component/selects/MainLocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
-import {
-  getSelectedBestAndWorstLocation,
-  getSelectedLocation,
-  getSelectedMachineLocation,
-  getSelectLocationData,
-  getSelectMachineLocationData,
-  setSelectMachineLocationData,
-} from '../../feautures/locationSelect/locationSelectSlice';
 import MainDatePickerModeSelect from './component/selects/MainDatePickerModeSelect';
 import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
   getBestAndWorstDaySelectedDates,
+  getBestDayOfAllTime,
+  getBestDayWeekAnalytics,
+  getBestDayWeekAnalyticsFooter,
+  getChartData,
   getDatePickerMode,
+  getLocationTableData,
+  getMachineTableData,
+  getSelectedBestAndWorstLocation,
   getSelectedDate,
-} from '../../feautures/datePicker/datePickerSlice';
+  getSelectedLocation,
+  getSelectedMachineLocation,
+  getSelectLocationData,
+  getSelectMachineLocationData,
+  getTransactionTableDateFooter,
+  getWorstDayOfAllTime,
+  getWorstDayWeekAnalytics,
+  getWorstDayWeekAnalyticsFooter,
+  setBestDayOfAllTime,
+  setBestDayWeekAnalytics,
+  setBestDayWeekAnalyticsFooter,
+  setChartData,
+  setLocationTableData,
+  setMachineTableData,
+  setSelectMachineLocationData,
+  setTransactionTableDataFooter,
+  setWorstDayOfAllTime,
+  setWorstDayWeekAnalytics,
+  setWorstDayWeekAnalyticsFooter,
+} from '../../feautures/main/mainSlice';
 import { getToken } from '../../feautures/auth/authSlice';
 import {
   getAverageAndSumByDateAndLocation,
@@ -32,28 +50,7 @@ import {
 import { MainPageContext } from '../../feautures/main/context';
 import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
-import {
-  getBestDayOfAllTime,
-  getBestDayWeekAnalytics,
-  getBestDayWeekAnalyticsFooter,
-  getChartData,
-  getLocationTableData,
-  getMachineTableData,
-  getTransactionTableDateFooter,
-  getWorstDayOfAllTime,
-  getWorstDayWeekAnalytics,
-  getWorstDayWeekAnalyticsFooter,
-  setBestDayOfAllTime,
-  setBestDayWeekAnalytics,
-  setBestDayWeekAnalyticsFooter,
-  setChartData,
-  setLocationTableData,
-  setMachineTableData,
-  setTransactionTableDataFooter,
-  setWorstDayOfAllTime,
-  setWorstDayWeekAnalytics,
-  setWorstDayWeekAnalyticsFooter,
-} from '../../feautures/main/mainSlice';
+
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
 import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
@@ -64,8 +61,7 @@ import MachineTable from '../../components/CustomTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
 import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
 import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
-import MainBestAndWorstDayDatePickerModeSelect
-  from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
+import MainBestAndWorstDayDatePickerModeSelect from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
 
 interface PageTestProps {
   test?: string
@@ -247,8 +243,6 @@ const MainPage: FC<PageTestProps> = () => {
 
   const handleWeekAnalyticsRequest = async () => {
     setLoading();
-    console.log('bestAndWorstSelectedLocation', bestAndWorstWeekAnalyticsSelectedLocation);
-    console.log('bestAndWorstWeekAnalyticsSelectedDates', bestAndWorstWeekAnalyticsSelectedDates);
     try {
       const best = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,

@@ -5,7 +5,7 @@ import {
   clearBestAndWorstDaySelectedDates,
   getBestAndWorstDayMode,
   setBestAndWorstDayMode,
-} from '../../../../feautures/datePicker/datePickerSlice';
+} from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 import { DateNoDayModeSelectItems } from '../../../../constants/select';
 

@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import BaseService from '../../services/common/BaseService';
-import { ILocationSelectPromise } from './locationSelectModal';
+import { ILocationSelectPromise } from './locationModal';
 
 const getLocations = async (token: string, query = {}): Promise<ILocationSelectPromise> => {
   const baseServices = new BaseService(token);

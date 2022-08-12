@@ -70,17 +70,17 @@ const CustomIconButtonSend = () => {
             }
       <div className="_text-container">
         <p className="_text">
-          {selectedFile ? selectedFile.name : 'Izaberi fajl'}
+          {selectedFile ? selectedFile.name : 'Uvezi fajl'}
         </p>
       </div>
       <div className="_icon-container">
 
         {
                     !selectedFile ? (
-                      <Tooltip title="Izaberi fajl">
+                      <Tooltip title="Uvezi fajl">
                         <IconButton
                           color="primary"
-                          aria-label="Izaberi fajl"
+                          aria-label="Uvezi fajl"
                           component="label"
                         >
                           <input

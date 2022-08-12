@@ -3,8 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../feautures/auth/authSlice';
 import loadingReducer from '../components/SpinnerLoading/loadingSlice';
 import alertReducer from '../components/CustomAlert/alertSlice';
-import locationSelectReducer from '../feautures/locationSelect/locationSelectSlice';
-import datePickerReducer from '../feautures/datePicker/datePickerSlice';
 import mainReducer from '../feautures/main/mainSlice';
 
 export const store = configureStore({
@@ -12,8 +10,6 @@ export const store = configureStore({
     auth: authReducer,
     loading: loadingReducer,
     alert: alertReducer,
-    locationSelect: locationSelectReducer,
-    datePicker: datePickerReducer,
     main: mainReducer,
   },
 });

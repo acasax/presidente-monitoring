@@ -8,9 +8,14 @@ import {
   getSelectLocationData,
   setSelectedBestAndWorstLocation,
   setSelectLocationData,
-} from '../../../../feautures/locationSelect/locationSelectSlice';
-import { getLocations } from '../../../../feautures/locationSelect/LocationSelectService';
-import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../../../components/CustomAlert/alertSlice';
+} from '../../../../feautures/main/mainSlice';
+import { getLocations } from '../../../../feautures/location/LocationService';
+import {
+  clearAlertMsg,
+  setAlertMsg,
+  setAlertOpenStatus,
+  setAlertStatus,
+} from '../../../../components/CustomAlert/alertSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 
 const MainBestAndWorstDayLocationSelect = () => {

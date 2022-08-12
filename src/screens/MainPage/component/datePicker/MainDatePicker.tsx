@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useAppSelector } from '../../../../store/hooks';
-import { getDatePickerMode } from '../../../../feautures/datePicker/datePickerSlice';
+import { getDatePickerMode } from '../../../../feautures/main/mainSlice';
 import { MainPageContext } from '../../../../feautures/main/context';
 import CustomDatePicker from '../../../../components/CustomDatePicker/CustomDatePicker';
 

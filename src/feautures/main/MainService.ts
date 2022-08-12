@@ -225,10 +225,8 @@ const getDataForWeekAnalytics = async (token: string, query = {}): Promise<any> 
   const baseService = new BaseService(token);
   let queryString = '';
 
-  console.log('query', query);
   Object.keys(query)
     .forEach((key) => {
-      console.log('queryString');
       queryString += key;
       queryString += '=';
       queryString += query[key];

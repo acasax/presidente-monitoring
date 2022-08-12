@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { useLoading } from '../../../../hooks/UseLoading';
-import { getLocations } from '../../../../feautures/locationSelect/LocationSelectService';
+import { getLocations } from '../../../../feautures/location/LocationService';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { getToken } from '../../../../feautures/auth/authSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../../../components/CustomAlert/alertSlice';
@@ -10,7 +10,7 @@ import {
   getSelectLocationData,
   setSelectedLocation,
   setSelectLocationData,
-} from '../../../../feautures/locationSelect/locationSelectSlice';
+} from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 
 const MainLocationSelect = () => {

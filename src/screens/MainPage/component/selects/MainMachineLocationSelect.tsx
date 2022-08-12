@@ -5,7 +5,7 @@ import {
   getSelectedMachineLocation,
   getSelectMachineLocationData,
   setSelectedMachineLocation,
-} from '../../../../feautures/locationSelect/locationSelectSlice';
+} from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 
 const MainMachineLocationSelect = () => {

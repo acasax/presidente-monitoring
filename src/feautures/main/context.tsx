@@ -2,7 +2,7 @@ import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'r
 import { DateObject } from 'react-multi-date-picker';
 import { TMainPageContext } from './MainModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getDatePickerMode, setBestAndWorstDaySelectedDates, setPickedDate } from '../datePicker/datePickerSlice';
+import { getDatePickerMode, setBestAndWorstDaySelectedDates, setPickedDate } from './mainSlice';
 import { formatDate } from '../../utils/dateTime/functionsDateTime';
 
 export const MainPageContext = createContext({} as TMainPageContext);
