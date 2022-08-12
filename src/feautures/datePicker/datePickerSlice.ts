@@ -11,7 +11,7 @@ interface InitialState {
 const initialState: InitialState = {
   mode: ['DAY'],
   selectedDates: [],
-  bestAndWorstDayMode: ['MOUNT'],
+  bestAndWorstDayMode: ['MONTH'],
   bestAndWorstDaySelectedDates: [],
 };
 

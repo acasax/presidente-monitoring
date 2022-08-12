@@ -2,7 +2,7 @@ import React, { FC, useContext, useEffect } from 'react';
 import Screen from '../Screen';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import LocationSelect from '../../components/LocationSelect/LocationSelect';
+import MainLocationSelect from './component/selects/MainLocationSelect';
 import CustomButton from '../../components/CustomButton/CustomButton';
 import {
   getSelectedBestAndWorstLocation,
@@ -12,7 +12,7 @@ import {
   getSelectMachineLocationData,
   setSelectMachineLocationData,
 } from '../../feautures/locationSelect/locationSelectSlice';
-import DatePickerModeSelect from '../../components/DatePickerModeSelect/DatePickerModeSelect';
+import MainDatePickerModeSelect from './component/selects/MainDatePickerModeSelect';
 import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
 import {
   getBestAndWorstDaySelectedDates,
@@ -40,7 +40,9 @@ import {
   getLocationTableData,
   getMachineTableData,
   getTransactionTableDateFooter,
-  getWorstDayOfAllTime, getWorstDayWeekAnalytics, getWorstDayWeekAnalyticsFooter,
+  getWorstDayOfAllTime,
+  getWorstDayWeekAnalytics,
+  getWorstDayWeekAnalyticsFooter,
   setBestDayOfAllTime,
   setBestDayWeekAnalytics,
   setBestDayWeekAnalyticsFooter,
@@ -54,14 +56,16 @@ import {
 } from '../../feautures/main/mainSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
-import MachineLocationSelect from '../../components/LocationSelect/MachineLocationSelect';
+import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
 import BestAndWorstDayOfAllTimeContainer
   from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
 import LocationTable from '../../components/CustomTable/LocationTable';
 import MachineTable from '../../components/CustomTable/MachineTable';
-import BestAndWorstDayLocationSelect from '../../components/LocationSelect/BestAndWorstDayLocationSelect';
+import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
 import BestAndWorstDayDatePicker from '../../components/CustomDatePicker/BestAndWorstDayDatePicker';
 import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
+import MainBestAndWorstDayDatePickerModeSelect
+  from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
 
 interface PageTestProps {
   test?: string
@@ -319,8 +323,8 @@ const MainPage: FC<PageTestProps> = () => {
     <Screen>
       <div className="_main-page">
         <div className="_row">
-          <LocationSelect />
-          <DatePickerModeSelect />
+          <MainLocationSelect />
+          <MainDatePickerModeSelect />
           <CustomDatePicker />
           <CustomButton
             text="PRETRAZI"
@@ -331,7 +335,7 @@ const MainPage: FC<PageTestProps> = () => {
           {chartData.length !== 0 && <CustomChart />}
         </div>
         <div className="_row">
-          <MachineLocationSelect />
+          <MainMachineLocationSelect />
           <CustomButton
             text="PRETRAZI"
             handleFunction={handleMachineLocationsRequest}
@@ -360,7 +364,8 @@ const MainPage: FC<PageTestProps> = () => {
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
           </div>
           <div className="_row">
-            <BestAndWorstDayLocationSelect />
+            <MainBestAndWorstDayLocationSelect />
+            <MainBestAndWorstDayDatePickerModeSelect />
             <BestAndWorstDayDatePicker />
             <CustomButton
               text="PRETRAZI"

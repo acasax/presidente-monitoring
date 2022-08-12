@@ -41,7 +41,7 @@ const MachineTable = () => {
       <Table className="_table-container">
         <TableHead>
           <TableRow className="_table-header-container">
-            <TableCell className="_table-cell-header-machine _table-header">Lokacije</TableCell>
+            <TableCell className="_table-cell-header-machine _table-header">Masine</TableCell>
             {
                             newData[0]?.transactions?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
