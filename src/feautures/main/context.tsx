@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useMemo, useState } from 'react';
+import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'react';
 import { DateObject } from 'react-multi-date-picker';
 import { TMainPageContext } from './MainModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -23,6 +23,10 @@ const MainPageContextContainer = ({ children }: { children: ReactNode }) => {
     const selectedDate = bestAndWorstDayValues.map((x) => formatDate(new DateObject(x), ['MONTH2']));
     dispatch(setBestAndWorstDaySelectedDates(selectedDate));
   };
+
+  useEffect(() => {
+    setValues([]);
+  }, [datePickerMode]);
 
   const exportData = useMemo(
     () => (

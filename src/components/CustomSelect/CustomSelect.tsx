@@ -10,34 +10,28 @@ const CustomSelect = ({
   width,
   id,
 }: any) => (
-  <>
-    {
-                items.length !== 0 && (
-                <div className="_select-container">
-                  <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id={`${id}-label`}>{header}</InputLabel>
-                    <Select
-                      labelId={`${id}-label`}
-                      id={id}
-                      multiple={multiple}
-                      value={selectedItems}
-                      onChange={handleChange}
-                      style={{ minWidth: width, maxWidth: width }}
-                    >
-                      {
-                                    items?.map((x) => (
-                                      <MenuItem value={x?.value} key={x?.value}>
-                                        {x?.text}
-                                      </MenuItem>
-                                    ))
-                                }
-                    </Select>
-                  </FormControl>
-                </div>
-                )
-            }
-  </>
-
+  <div className="_select-container">
+    <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <InputLabel id={`${id}-label`}>{header}</InputLabel>
+      <Select
+        labelId={`${id}-label`}
+        id={id}
+        multiple={multiple}
+        value={selectedItems}
+        onChange={handleChange}
+        disabled={items.length === 0}
+        style={{ minWidth: width, maxWidth: width }}
+      >
+        {
+                    items?.map((x) => (
+                      <MenuItem value={x?.value} key={x?.value}>
+                        {x?.text}
+                      </MenuItem>
+                    ))
+                }
+      </Select>
+    </FormControl>
+  </div>
 );
 
 export default CustomSelect;

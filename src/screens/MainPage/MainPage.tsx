@@ -13,7 +13,7 @@ import {
   setSelectMachineLocationData,
 } from '../../feautures/locationSelect/locationSelectSlice';
 import MainDatePickerModeSelect from './component/selects/MainDatePickerModeSelect';
-import CustomDatePicker from '../../components/CustomDatePicker/CustomDatePicker';
+import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
   getBestAndWorstDaySelectedDates,
   getDatePickerMode,
@@ -62,7 +62,7 @@ import BestAndWorstDayOfAllTimeContainer
 import LocationTable from '../../components/CustomTable/LocationTable';
 import MachineTable from '../../components/CustomTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
-import BestAndWorstDayDatePicker from '../../components/CustomDatePicker/BestAndWorstDayDatePicker';
+import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
 import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
 import MainBestAndWorstDayDatePickerModeSelect
   from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
@@ -325,7 +325,7 @@ const MainPage: FC<PageTestProps> = () => {
         <div className="_row">
           <MainLocationSelect />
           <MainDatePickerModeSelect />
-          <CustomDatePicker />
+          <MainDatePicker />
           <CustomButton
             text="PRETRAZI"
             handleFunction={handleLocationsRequest}
