@@ -6,6 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
+import { translateDayName } from '../../utils/dateTime/functionsDateTime';
 
 const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
   <TableContainer
@@ -19,8 +20,14 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
       <TableHead>
         <TableRow className="_table-header-container">
           <TableCell className="_table-header _week-analytic-table-cell">Nedelja u godini</TableCell>
-          <TableCell className="_table-header _week-analytic-table-cell" align="center">Nedelja u mesecu</TableCell>
-          <TableCell className="_table-header _week-analytic-table-cell" align="center">Trajanje od - do</TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">
+            Nedelja u
+            mesecu
+          </TableCell>
+          <TableCell className="_table-header _week-analytic-table-cell" align="center">
+            Trajanje od -
+            do
+          </TableCell>
           <TableCell className="_table-header _week-analytic-table-cell" align="center">Datum</TableCell>
           <TableCell className="_table-header _week-analytic-table-cell" align="center">Dan</TableCell>
           <TableCell className="_table-header _week-analytic-table-cell" align="center">Vrednost</TableCell>
@@ -46,7 +53,7 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
               {row?.endDateOfWeek}
             </TableCell>
             <TableCell align="center" className="_table-cell _week-analytic-table-cell">
-              {row?.day ? row?.day : '/'}
+              {row?.day ? translateDayName(row?.day) : '/'}
             </TableCell>
             <TableCell align="center" className="_table-cell _week-analytic-table-cell">
               {row?.dateInWeek ? row?.dateInWeek : '/'}
@@ -94,7 +101,7 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
               className={header === 'Najbolji' ? '_table-cell _week-analytic-table-footer-row-text-best' : '_table-cell _week-analytic-table-footer-row-text-worst'}
               sx={{ border: 0 }}
             >
-              {footer?.day ? footer?.day : '/'}
+              {footer?.day ? translateDayName(footer?.day) : '/'}
             </TableCell>
           </TableRow>
           <TableRow

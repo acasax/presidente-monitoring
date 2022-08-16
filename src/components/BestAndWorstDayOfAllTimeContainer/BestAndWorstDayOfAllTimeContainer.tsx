@@ -1,4 +1,5 @@
 import React from 'react';
+import { translateDayName } from '../../utils/dateTime/functionsDateTime';
 
 const BestAndWorstDayOfAllTimeContainer = ({ header, data }: any) => (
   <div
@@ -14,7 +15,9 @@ const BestAndWorstDayOfAllTimeContainer = ({ header, data }: any) => (
       </div>
       <div className="_cell">
         <p className="_header-cell _text-cell">Dan</p>
-        <p className="_data-cell _text-cell">{data?.day}</p>
+        <p className="_data-cell _text-cell">
+          {translateDayName(data?.day)}
+        </p>
       </div>
       <div className="_cell">
         <p className="_header-cell _text-cell">Datum</p>

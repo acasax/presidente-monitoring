@@ -63,6 +63,8 @@ import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWo
 import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
 import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
 import MainBestAndWorstDayDatePickerModeSelect from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
+import Header1 from '../../components/Text/Header1';
+import Header2 from '../../components/Text/Header2';
 
 interface PageTestProps {
   test?: string
@@ -318,6 +320,7 @@ const MainPage: FC<PageTestProps> = () => {
   return (
     <Screen>
       <div className="_main-page">
+        <Header1 text="TRANSAKCIJE PO LOKACIJAMA I MASINAMA" />
         <div className="_row">
           <MainLocationSelect />
           <MainDatePickerModeSelect />
@@ -341,20 +344,22 @@ const MainPage: FC<PageTestProps> = () => {
         <div className="_table-row">
           <div className="_machine-table">
             {/* eslint-disable-next-line max-len */}
+            {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0)
+                            && <Header2 text="Podaci o masinama" />}
+            {/* eslint-disable-next-line max-len */}
             {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />}
           </div>
           <div className="_location-table">
+            {/* eslint-disable-next-line max-len */}
+            {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
+                            && <Header2 text="Podaci o lokacijama" />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
                             && <LocationTable />}
           </div>
         </div>
         <div className="_best-and-worst-day-container">
-          <div className="_header-container">
-            <p className="_header">
-              NAJBOLJI I NAJGORI DAN
-            </p>
-          </div>
+          <Header1 text="NAJBOLJI I NAJGORI DAN" />
           <div className="_best-and-worst-day-off-all-time-row">
             <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />

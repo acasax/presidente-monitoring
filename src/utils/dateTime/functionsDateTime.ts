@@ -63,3 +63,24 @@ export function getMountsArray(date: string, status = true) {
   }
   return res;
 }
+
+export function translateDayName(day: string) {
+  switch (day) {
+    case 'Monday':
+      return 'Ponedeljak';
+    case 'Tuesday':
+      return 'Utorak';
+    case 'Wednesday':
+      return 'Sreda';
+    case 'Thursday':
+      return 'Cetvrtak';
+    case 'Friday':
+      return 'Petak';
+    case 'Saturday':
+      return 'Subota';
+    case 'Sunday':
+      return 'Nedelja';
+    default:
+      return '';
+  }
+}

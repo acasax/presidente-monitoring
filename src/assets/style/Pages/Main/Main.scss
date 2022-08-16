@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: 95px;
+  padding-top: 55px;
   padding-left: 77px;
   padding-right: 77px;
 
@@ -42,22 +42,6 @@
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
-
-    ._header-container {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding-top: 40px;
-      padding-bottom: 40px;
-
-      ._header {
-        font-weight: 700;
-        font-size: 32px;
-        letter-spacing: 1.25px;
-        text-transform: uppercase;
-        color: $blue;
-      }
-    }
 
     ._best-and-worst-day-off-all-time-row {
       display: flex;

@@ -81,7 +81,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: 95px;
+  padding-top: 55px;
   padding-left: 77px;
   padding-right: 77px; }
   ._main-page ._row {
@@ -108,18 +108,6 @@
     align-items: flex-start;
     flex-direction: column;
     width: 100%; }
-    ._main-page ._best-and-worst-day-container ._header-container {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding-top: 40px;
-      padding-bottom: 40px; }
-      ._main-page ._best-and-worst-day-container ._header-container ._header {
-        font-weight: 700;
-        font-size: 32px;
-        letter-spacing: 1.25px;
-        text-transform: uppercase;
-        color: #5E5CE6; }
     ._main-page ._best-and-worst-day-container ._best-and-worst-day-off-all-time-row {
       display: flex;
       justify-content: space-between;
@@ -488,6 +476,35 @@
 
 ._best-day-of-all-time-container {
   margin-right: 40px; }
+
+._header1-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  width: 100%;
+  flex-direction: row; }
+  ._header1-text-container ._header1-text {
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    color: #5E5CE6; }
+
+._header2-text-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 100%; }
+  ._header2-text-container ._header2-text {
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    color: #5E5CE6; }
 
 * {
   margin: 0;
