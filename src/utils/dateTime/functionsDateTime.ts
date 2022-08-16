@@ -42,3 +42,24 @@ export function getDaysArray(date: string) {
   }
   return res;
 }
+
+export function getMountsArray(date: string, status = true) {
+  let arr = [];
+  if (status) {
+    arr = date.split('.');
+  } else {
+    arr = date.split('-');
+  }
+  const cDate = new Date(Number(arr[0]), 1, 1);
+  const yearIndex = Number(arr[0]);
+  const res = [];
+  while (cDate.getFullYear() === yearIndex) {
+    if (status) {
+      res.push(`${padTo2Digits(cDate.getMonth())}.${cDate.getFullYear()}`);
+    } else {
+      res.push(`${cDate.getFullYear()}-${padTo2Digits(cDate.getMonth())}`);
+    }
+    cDate.setMonth(cDate.getMonth() + 1);
+  }
+  return res;
+}

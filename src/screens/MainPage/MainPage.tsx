@@ -7,6 +7,7 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import MainDatePickerModeSelect from './component/selects/MainDatePickerModeSelect';
 import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
+  getBestAndWorstDayDatePickerMode,
   getBestAndWorstDaySelectedDates,
   getBestDayOfAllTime,
   getBestDayWeekAnalytics,
@@ -52,7 +53,7 @@ import CustomChart from '../../components/CustomChart/CustomChart';
 import { useLoading } from '../../hooks/UseLoading';
 
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
-import { getDaysArray } from '../../utils/dateTime/functionsDateTime';
+import { getDaysArray, getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
 import BestAndWorstDayOfAllTimeContainer
   from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
@@ -87,6 +88,7 @@ const MainPage: FC<PageTestProps> = () => {
   const bestDayWeekAnalyticsFooter = useAppSelector(getBestDayWeekAnalyticsFooter);
   const worstDayWeekAnalytics = useAppSelector(getWorstDayWeekAnalytics);
   const worstDayWeekAnalyticsFooter = useAppSelector(getWorstDayWeekAnalyticsFooter);
+  const bestAndWorstDayDatePickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
   const {
     values,
     handleChoseDate,
@@ -158,19 +160,19 @@ const MainPage: FC<PageTestProps> = () => {
     try {
       const res = await getDataForLocation(token, {
         locations: selectedLocations,
-        dates: pickedDate,
-        dateQueryType: dataPickerMode,
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode,
         responseDataType: 'TABLE',
       });
       const footer = await getAverageAndSumByDateAndLocation(token, {
         locations: selectedLocations,
-        dates: pickedDate,
-        dateQueryType: dataPickerMode[0],
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
       });
       const chart = await getDataForLocationForChart(token, {
         locations: selectedLocations,
-        dates: pickedDate,
-        dateQueryType: dataPickerMode[0],
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
         responseDataType: 'CHART',
       });
       if (res?.message) {
@@ -219,8 +221,8 @@ const MainPage: FC<PageTestProps> = () => {
     try {
       const res = await getDataForMachine(token, {
         location: selectedMachineLocations,
-        dates: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
+        dates: (dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (dataPickerMode[0] === 'YEAR') ? 'MONTH' : (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
       });
 
       if (res?.message) {
@@ -246,25 +248,25 @@ const MainPage: FC<PageTestProps> = () => {
     try {
       const best = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
         sortType: 'BEST',
       });
 
       const bestFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
         sortType: 'BEST',
       });
 
       const worst = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
         sortType: 'WORST',
       });
 
       const worstFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: bestAndWorstWeekAnalyticsSelectedDates[0],
+        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
         sortType: 'WORST',
       });
 

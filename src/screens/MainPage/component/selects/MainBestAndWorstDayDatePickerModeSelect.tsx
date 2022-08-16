@@ -3,14 +3,14 @@ import { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
   clearBestAndWorstDaySelectedDates,
-  getBestAndWorstDayMode,
+  getBestAndWorstDayDatePickerMode,
   setBestAndWorstDayMode,
 } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 import { DateNoDayModeSelectItems } from '../../../../constants/select';
 
 const MainBestAndWorstDayDatePickerModeSelect = () => {
-  const dataPickerMode = useAppSelector(getBestAndWorstDayMode);
+  const dataPickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
   const dispatch = useAppDispatch();
 
   const handleChange = (event: SelectChangeEvent<typeof dataPickerMode>) => {

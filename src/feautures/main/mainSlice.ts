@@ -239,7 +239,7 @@ export const getSelectedBestAndWorstLocation = (state: RootState) => state?.main
 export const getDatePickerMode = (state: RootState) => state?.main?.mainDatePickerMode;
 export const getSelectedDate = (state: RootState) => state?.main?.selectedDates;
 // eslint-disable-next-line max-len
-export const getBestAndWorstDayMode = (state: RootState) => state?.main?.bestAndWorstDayDatePickerMode;
+export const getBestAndWorstDayDatePickerMode = (state: RootState) => state?.main?.bestAndWorstDayDatePickerMode;
 // eslint-disable-next-line max-len
 export const getBestAndWorstDaySelectedDates = (state: RootState) => state?.main?.bestAndWorstDaySelectedDates;
 
