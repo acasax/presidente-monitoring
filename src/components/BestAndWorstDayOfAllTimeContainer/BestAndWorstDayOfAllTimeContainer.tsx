@@ -1,5 +1,5 @@
 import React from 'react';
-import { translateDayName } from '../../utils/dateTime/functionsDateTime';
+import { translateDayName, translateMountName } from '../../utils/dateTime/functionsDateTime';
 
 const BestAndWorstDayOfAllTimeContainer = ({ header, data }: any) => (
   <div
@@ -11,7 +11,7 @@ const BestAndWorstDayOfAllTimeContainer = ({ header, data }: any) => (
     <div className="_data-row">
       <div className="_cell">
         <p className="_header-cell _text-cell">Mesec</p>
-        <p className="_data-cell _text-cell">{data?.month}</p>
+        <p className="_data-cell _text-cell">{translateMountName(data?.month)}</p>
       </div>
       <div className="_cell">
         <p className="_header-cell _text-cell">Dan</p>

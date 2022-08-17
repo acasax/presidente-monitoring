@@ -84,3 +84,34 @@ export function translateDayName(day: string) {
       return '';
   }
 }
+
+export function translateMountName(mount: string) {
+  switch (mount) {
+    case 'January':
+      return 'Januar';
+    case 'February':
+      return 'Februar';
+    case 'March':
+      return 'Mart';
+    case 'April':
+      return 'April';
+    case 'May':
+      return 'Maj';
+    case 'June':
+      return 'Jun';
+    case 'July':
+      return 'Jul';
+    case 'August':
+      return 'Avgust';
+    case 'September':
+      return 'Septembar';
+    case 'October':
+      return 'Oktobar';
+    case 'November':
+      return 'Novembar';
+    case 'December':
+      return 'Decembar';
+    default:
+      return '';
+  }
+}

@@ -160,6 +160,18 @@ const MainPage: FC<PageTestProps> = () => {
   const handleLocationsRequest = async () => {
     setLoading();
     try {
+      if (selectedLocations.length === 0) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu po lokacijama.'));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      if (pickedDate.length === 0) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Niste izabralio nijedan datum za pretragu po lokacijama.'));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
       const res = await getDataForLocation(token, {
         locations: selectedLocations,
         dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
@@ -221,6 +233,12 @@ const MainPage: FC<PageTestProps> = () => {
   const handleMachineLocationsRequest = async () => {
     setLoading();
     try {
+      if (selectedMachineLocations.length === 0) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu po masinama.'));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
       const res = await getDataForMachine(token, {
         location: selectedMachineLocations,
         dates: (dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
@@ -248,6 +266,18 @@ const MainPage: FC<PageTestProps> = () => {
   const handleWeekAnalyticsRequest = async () => {
     setLoading();
     try {
+      if (bestAndWorstWeekAnalyticsSelectedLocation.length === 0) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      if (bestAndWorstDayDatePickerMode.length === 0) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg('Niste izabralio nijednu datum za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
       const best = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
         month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
@@ -321,6 +351,7 @@ const MainPage: FC<PageTestProps> = () => {
     <Screen>
       <div className="_main-page">
         <Header1 text="TRANSAKCIJE PO LOKACIJAMA I MASINAMA" />
+        <Header2 text="Pretraga za podatke po lokacijama" />
         <div className="_row">
           <MainLocationSelect />
           <MainDatePickerModeSelect />
@@ -330,9 +361,11 @@ const MainPage: FC<PageTestProps> = () => {
             handleFunction={handleLocationsRequest}
           />
         </div>
+        {chartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
         <div className="_row">
           {chartData.length !== 0 && <CustomChart />}
         </div>
+        <Header2 text="Pretraga za podatke po masinama" />
         <div className="_row">
           <MainMachineLocationSelect />
           <CustomButton
