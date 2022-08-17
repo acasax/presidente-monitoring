@@ -37,7 +37,7 @@ const MachineTable = () => {
   }, [data]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ maxWidth: '100%', flex: 1 }}>
       <Table className="_table-container">
         <TableHead>
           <TableRow className="_table-header-container">

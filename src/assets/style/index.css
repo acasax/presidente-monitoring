@@ -97,11 +97,10 @@
     width: 100%;
     flex-direction: row; }
     ._main-page ._table-row ._machine-table {
-      margin-right: 20px;
-      width: 100%; }
+      width: 49%;
+      margin-right: 40px; }
     ._main-page ._table-row ._location-table {
-      margin-left: 20px;
-      width: 100%; }
+      width: 49%; }
   ._main-page ._best-and-worst-day-container {
     display: flex;
     justify-content: flex-start;

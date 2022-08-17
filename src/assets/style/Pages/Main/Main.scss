@@ -26,13 +26,14 @@
     flex-direction: row;
 
     ._machine-table {
-      margin-right: 20px;
-      width: 100%;
+      width: 49%;
+      //flex: 1;
+      margin-right: 40px;
     }
 
     ._location-table {
-      margin-left: 20px;
-      width: 100%;
+      width: 49%;
+     //flex: 1;
     }
   }
 
