@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton } from '@mui/material';
@@ -10,6 +10,16 @@ const NavBar = () => {
   const history = useHistory();
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const [width, setWidth] = useState(0);
+
+  const updateDimension = () => {
+    const widthScreen = window.innerWidth;
+    setWidth(widthScreen);
+  };
+
+  useEffect(() => {
+    updateDimension();
+  }, [updateDimension]);
 
   return (
     <div className="_nav-bar-container">
@@ -45,11 +55,15 @@ const NavBar = () => {
           </div>
 
         </div>
-        <div className="_icon-container">
-          <IconButton onClick={() => dispatch(clearUser())}>
-            <LogoutIcon className="_icon" />
-          </IconButton>
-        </div>
+        {
+                    width > 600 && (
+                    <div className="_icon-container">
+                      <IconButton onClick={() => dispatch(clearUser())}>
+                        <LogoutIcon className="_icon" />
+                      </IconButton>
+                    </div>
+                    )
+                }
       </div>
 
     </div>

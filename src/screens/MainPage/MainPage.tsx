@@ -9,7 +9,6 @@ import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
   getBestAndWorstDayDatePickerMode,
   getBestAndWorstDaySelectedDates,
-  getBestDayOfAllTime,
   getBestDayWeekAnalytics,
   getBestDayWeekAnalyticsFooter,
   getChartData,
@@ -23,7 +22,6 @@ import {
   getSelectLocationData,
   getSelectMachineLocationData,
   getTransactionTableDateFooter,
-  getWorstDayOfAllTime,
   getWorstDayWeekAnalytics,
   getWorstDayWeekAnalyticsFooter,
   setBestDayOfAllTime,
@@ -55,8 +53,6 @@ import { useLoading } from '../../hooks/UseLoading';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray, getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
-import BestAndWorstDayOfAllTimeContainer
-  from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
 import LocationTable from '../../components/CustomTable/LocationTable';
 import MachineTable from '../../components/CustomTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
@@ -82,8 +78,8 @@ const MainPage: FC<PageTestProps> = () => {
   const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
   const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
   const machineTableData = useAppSelector(getMachineTableData);
-  const bestDayOfAllTime = useAppSelector(getBestDayOfAllTime);
-  const worstDayOfAllTime = useAppSelector(getWorstDayOfAllTime);
+  // const bestDayOfAllTime = useAppSelector(getBestDayOfAllTime);
+  // const worstDayOfAllTime = useAppSelector(getWorstDayOfAllTime);
   const bestAndWorstWeekAnalyticsSelectedLocation = useAppSelector(getSelectedBestAndWorstLocation);
   const bestAndWorstWeekAnalyticsSelectedDates = useAppSelector(getBestAndWorstDaySelectedDates);
   const bestDayWeekAnalytics = useAppSelector(getBestDayWeekAnalytics);
@@ -350,27 +346,31 @@ const MainPage: FC<PageTestProps> = () => {
   return (
     <Screen>
       <div className="_main-page">
-        <Header1 text="TRANSAKCIJE PO LOKACIJAMA I MASINAMA" />
+        <Header1 text="TRANSAKCIJE PO LOKACIJAMA" />
         <Header2 text="Pretraga za podatke po lokacijama" />
         <div className="_row">
           <MainLocationSelect />
           <MainDatePickerModeSelect />
           <MainDatePicker />
-          <CustomButton
-            text="PRETRAZI"
-            handleFunction={handleLocationsRequest}
-          />
+          <div className="_search-button-container">
+            <CustomButton
+              text="PRETRAZI"
+              handleFunction={handleLocationsRequest}
+            />
+          </div>
         </div>
         {chartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
         {chartData.length !== 0 && <CustomChart />}
         <Header2 text="Pretraga za podatke po masinama" />
         <div className="_row">
           <MainMachineLocationSelect />
-          <CustomButton
-            text="PRETRAZI"
-            handleFunction={handleMachineLocationsRequest}
-            disabled={machineSelectedLocation.length === 0}
-          />
+          <div className="_search-button-container">
+            <CustomButton
+              text="PRETRAZI"
+              handleFunction={handleMachineLocationsRequest}
+              disabled={machineSelectedLocation.length === 0}
+            />
+          </div>
         </div>
         <div className="_table-row">
           <div className="_machine-table">
@@ -391,10 +391,10 @@ const MainPage: FC<PageTestProps> = () => {
         </div>
         <div className="_best-and-worst-day-container">
           <Header1 text="NAJBOLJI I NAJGORI DAN" />
-          <div className="_best-and-worst-day-off-all-time-row">
-            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
-            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
-          </div>
+          {/* <div className="_best-and-worst-day-off-all-time-row"> */}
+          {/*  <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} /> */}
+          {/*  <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} /> */}
+          {/* </div> */}
           <div className="_row">
             <MainBestAndWorstDayLocationSelect />
             <MainBestAndWorstDayDatePickerModeSelect />

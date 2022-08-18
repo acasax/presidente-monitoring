@@ -10,10 +10,15 @@
   font-weight: 500 !important;
   letter-spacing: 1.25px !important;
   color: $blue;
-  border: 2px solid $blue;
+  border: 1px solid $blue;
   text-transform: uppercase !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
   min-width: 110px !important;
+
+  @media (max-width: $extraSmall) {
+    margin: 0 !important;
+    font-size: 12px !important;
+  }
 }

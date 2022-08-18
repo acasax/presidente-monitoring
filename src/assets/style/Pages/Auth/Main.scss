@@ -16,6 +16,10 @@
     flex-direction: column;
     width: 320px;
 
+    @media (max-width: $extraSmall) {
+      width: 220px;
+    }
+
     ._label-container {
       display: flex;
       width: 100%;

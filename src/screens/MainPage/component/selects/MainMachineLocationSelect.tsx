@@ -14,6 +14,17 @@ const MainMachineLocationSelect = () => {
   const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
 
+  const [width, setWidth] = useState(0);
+
+  const updateDimension = () => {
+    const widthScreen = window.innerWidth;
+    setWidth(widthScreen);
+  };
+
+  useEffect(() => {
+    updateDimension();
+  }, [updateDimension]);
+
   const handleChange = (event: SelectChangeEvent) => {
     dispatch(setSelectedMachineLocation(event.target.value as string));
   };
@@ -34,7 +45,7 @@ const MainMachineLocationSelect = () => {
       handleChange={handleChange}
       items={items}
       multiple={false}
-      width={400}
+      width={width > 600 ? 400 : width - 60}
       id="machine-location-select"
     />
   );

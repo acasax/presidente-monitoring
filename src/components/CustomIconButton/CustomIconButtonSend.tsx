@@ -29,15 +29,9 @@ const CustomIconButtonSend = () => {
     setLoading();
     try {
       const res = await SendExcelWithTransaction(form, {}, token);
-      if (res == null) {
-        dispatch(setAlertStatus('success'));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
-      } else {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Fajl nije kako treba.'));
-        dispatch(setAlertOpenStatus(true));
-      }
+      dispatch(setAlertStatus(res?.status));
+      dispatch(setAlertMsg(res?.message));
+      dispatch(setAlertOpenStatus(true));
     } catch (e) {
       dispatch(setAlertStatus('error'));
       dispatch(setAlertMsg(e?.message));

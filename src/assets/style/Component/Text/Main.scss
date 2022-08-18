@@ -9,12 +9,22 @@
   width: 100%;
   flex-direction: row;
 
+  @media (max-width: $extraSmall) {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+
   ._header1-text {
     font-weight: 700;
     font-size: 32px;
     letter-spacing: 1.25px;
     text-transform: uppercase;
     color: $blue;
+
+    @media (max-width: $extraSmall) {
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
   }
 }
 
@@ -26,11 +36,21 @@
   padding-bottom: 20px;
   width: 100%;
 
+  @media (max-width: $extraSmall) {
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
   ._header2-text {
     font-weight: 700;
     font-size: 24px;
     letter-spacing: 1.25px;
     text-transform: uppercase;
     color: $blue;
+
+    @media (max-width: $extraSmall) {
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
   }
 }

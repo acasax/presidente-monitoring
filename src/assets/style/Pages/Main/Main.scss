@@ -10,12 +10,35 @@
   padding-left: 77px;
   padding-right: 77px;
 
+  @media (max-width: $extraSmall) {
+    padding-top: 70px;
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
   ._row {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 40px;
     width: 100%;
+    flex-direction: row;
+
+    @media (max-width: $extraSmall) {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding-bottom: 20px;
+    }
+
+    ._search-button-container {
+      @media (max-width: $extraSmall) {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+      }
+    }
+
   }
 
   ._table-row {
@@ -51,6 +74,11 @@
       align-items: center;
       flex-direction: row;
       margin-bottom: 40px;
+
+      @media (max-width: $extraSmall) {
+        flex-direction: column;
+      }
+
     }
 
   }

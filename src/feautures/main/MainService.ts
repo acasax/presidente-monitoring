@@ -20,11 +20,13 @@ const SendExcelWithTransaction = async (data = {}, query = {}, token: string): P
   } catch (e) {
     console.log(e);
     return {
-      message: e.message,
+      status: 'error',
+      message: 'Fajl nije kako treba.',
     };
   }
 
   return {
+    status: 'success',
     message: 'Uspesno ste dodali fajl',
   };
 };
