@@ -61,10 +61,10 @@ import LocationTable from '../../components/CustomTable/LocationTable';
 import MachineTable from '../../components/CustomTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
 import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
-import BestAndWorstDayWeekAnalyticsTable from '../../components/CustomTable/BestAndWorstDayWeekAnalyticsTable';
 import MainBestAndWorstDayDatePickerModeSelect from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
 import Header1 from '../../components/Text/Header1';
 import Header2 from '../../components/Text/Header2';
+import WeekAnalyticsContainer from '../../components/WeekAnalyticsContainer/WeekAnalyticsContainer';
 
 interface PageTestProps {
   test?: string
@@ -280,25 +280,25 @@ const MainPage: FC<PageTestProps> = () => {
       }
       const best = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
         sortType: 'BEST',
       });
 
       const bestFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
         sortType: 'BEST',
       });
 
       const worst = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
         sortType: 'WORST',
       });
 
       const worstFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        month: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates[0],
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
         sortType: 'WORST',
       });
 
@@ -404,25 +404,12 @@ const MainPage: FC<PageTestProps> = () => {
               handleFunction={handleWeekAnalyticsRequest}
             />
           </div>
-          <div className="_row">
-            {(bestDayWeekAnalytics.length !== 0 && bestDayWeekAnalyticsFooter.length !== 0)
-                            && (
-                            <BestAndWorstDayWeekAnalyticsTable
-                              header="Najbolji"
-                              data={bestDayWeekAnalytics}
-                              footer={bestDayWeekAnalyticsFooter}
-                            />
-                            )}
-            {(worstDayWeekAnalytics.length !== 0 && worstDayWeekAnalyticsFooter.length !== 0)
-                            && (
-                            <BestAndWorstDayWeekAnalyticsTable
-                              header="Najgori"
-                              data={worstDayWeekAnalytics}
-                              footer={worstDayWeekAnalyticsFooter}
-                            />
-                            )}
-
-          </div>
+          <WeekAnalyticsContainer
+            bestData={bestDayWeekAnalytics}
+            bestFooter={bestDayWeekAnalyticsFooter}
+            worstData={worstDayWeekAnalytics}
+            worstFooter={worstDayWeekAnalyticsFooter}
+          />
         </div>
         <div className="_footer">
           <CustomIconButtonSend />

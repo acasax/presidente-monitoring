@@ -225,8 +225,6 @@ const getDataForWeekAnalytics = async (token: string, query = {}): Promise<any> 
   const baseService = new BaseService(token);
   let queryString = '';
 
-  console.log('query', query);
-
   Object.keys(query)
     .forEach((key) => {
       queryString += key;
@@ -239,7 +237,7 @@ const getDataForWeekAnalytics = async (token: string, query = {}): Promise<any> 
           queryString += query[key];
         } else {
           queryString += '[';
-          if (key === 'month') {
+          if (key === 'months') {
             // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
             query[key].map((x) => {
               queryString += `"${x}"`;
@@ -275,8 +273,28 @@ const getDataForWeekAnalyticsFooter = async (token: string, query = {}): Promise
     .forEach((key) => {
       queryString += key;
       queryString += '=';
-      queryString += query[key];
-      queryString += '&';
+      if (key === 'location') {
+        queryString += query[key];
+        queryString += '&';
+      } else {
+        if (key === 'sortType') {
+          queryString += query[key];
+        } else {
+          queryString += '[';
+          if (key === 'months') {
+            // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+            query[key].map((x) => {
+              queryString += `"${x}"`;
+              queryString += ',';
+            });
+            queryString = queryString.slice(0, -1);
+          } else {
+            queryString += query[key];
+          }
+          queryString += ']';
+        }
+        queryString += '&';
+      }
     });
   queryString = queryString.slice(0, -1);
 

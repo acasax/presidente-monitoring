@@ -77,7 +77,6 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    width: 350px;
     flex-direction: column;
     margin: 20px 0;
 
@@ -86,7 +85,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
+      //width: 100%;
 
       ._week-analytic-table-footer-row-header {
         font-weight: 500;
@@ -113,8 +112,24 @@
 }
 
 ._week-analytic-table-cell {
-  min-width: 200px;
-  max-width: 200px;
+  flex: 1;
+  min-width: 170px;
+}
+
+._week-analytic-table-first-cell {
+  width: 150px !important;
+}
+
+._week-analytic-table-footer-header-cell {
+  width: 220px !important;
+}
+
+._week-analytic-table-footer-value-header-cell {
+  width: 80px !important;
+}
+
+._week-analytic-table-footer-value-cell {
+  width: 100px !important;
 }
 
 

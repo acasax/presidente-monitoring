@@ -396,15 +396,13 @@
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    width: 350px;
     flex-direction: column;
     margin: 20px 0; }
     ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      width: 100%; }
+      justify-content: space-between; }
       ._week-analytic-table-container ._week-analytic-table-footer-container ._week-analytic-table-footer-row ._week-analytic-table-footer-row-header {
         font-weight: 500;
         font-size: 12px;
@@ -420,8 +418,20 @@
   margin-right: 40px; }
 
 ._week-analytic-table-cell {
-  min-width: 200px;
-  max-width: 200px; }
+  flex: 1;
+  min-width: 170px; }
+
+._week-analytic-table-first-cell {
+  width: 150px !important; }
+
+._week-analytic-table-footer-header-cell {
+  width: 220px !important; }
+
+._week-analytic-table-footer-value-header-cell {
+  width: 80px !important; }
+
+._week-analytic-table-footer-value-cell {
+  width: 100px !important; }
 
 ._best-and-worst-day-of-all-time-container {
   display: flex;
@@ -504,6 +514,17 @@
     letter-spacing: 1.25px;
     text-transform: uppercase;
     color: #5E5CE6; }
+
+._week-analytics-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; }
+  ._week-analytics-container ._week-analytics-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 40px;
+    width: 100%; }
 
 * {
   margin: 0;

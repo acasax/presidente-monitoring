@@ -1,0 +1,12 @@
+._week-analytics-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%; }
+  ._week-analytics-container ._week-analytics-row {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 40px;
+    width: 100%; }
+
+/*# sourceMappingURL=Main.css.map */
