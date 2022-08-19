@@ -9,12 +9,18 @@
   background-color: $white;
   box-shadow: 0 4px 4px rgba($black, 0.1);
   padding: 10px 30px;
+  box-sizing: border-box;
 
   ._header-container-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
+
+    @media (max-width: $extraSmall) {
+      width: 100px;
+      align-items: flex-start;
+    }
 
     ._header {
       font-style: normal;
@@ -23,6 +29,10 @@
       line-height: 22px;
       text-transform: uppercase;
       letter-spacing: 1px;
+
+      @media (max-width: $extraSmall) {
+        font-size: 12px;
+      }
     }
 
     ._best {
@@ -56,6 +66,11 @@
         text-align: center;
         letter-spacing: 1px;
         line-height: 22px;
+
+        @media (max-width: $extraSmall) {
+          font-size: 12px;
+        }
+
       }
 
       ._header-cell {
@@ -72,4 +87,9 @@
 
 ._best-day-of-all-time-container {
   margin-right: 40px;
+
+  @media (max-width: $extraSmall) {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
 }

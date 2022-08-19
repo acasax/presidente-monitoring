@@ -7,8 +7,6 @@
 }
 
 ._table-header-container {
-  padding: 15px 10px !important;
-
   ._table-header {
     font-size: 16px !important;
     line-height: 5px !important;
@@ -16,15 +14,29 @@
     color: $blue !important;
     letter-spacing: 0.5px !important;
     flex: 1 !important;
+
+    @media (max-width: $extraSmall) {
+      font-size: 12px !important;
+      padding: 15px 10px !important;
+    }
   }
 }
 
 ._table-cell-header-location {
   min-width: 400px;
+
+  @media (max-width: $extraSmall) {
+    min-width: 100px;
+  }
+
 }
 
 ._table-cell-header-machine {
   min-width: 150px;
+
+  @media (max-width: $extraSmall) {
+    min-width: 100px;
+  }
 }
 
 
@@ -34,6 +46,11 @@
   font-weight: 700 !important;
   color: $black !important;
   letter-spacing: 0.5px !important;
+
+  @media (max-width: $extraSmall) {
+    font-size: 12px !important;
+    padding: 15px 10px !important;
+  }
 }
 
 ._table-cell {
@@ -42,6 +59,12 @@
   font-weight: 600 !important;
   color: $black !important;
   letter-spacing: 0.5px !important;
+
+  @media (max-width: $extraSmall) {
+    font-size: 12px !important;
+    padding: 15px 10px !important;
+  }
+
 }
 
 ._week-analytic-table-container {

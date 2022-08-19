@@ -116,11 +116,26 @@
     align-items: flex-start;
     width: 100%;
     flex-direction: row; }
+    @media (max-width: 600px) {
+      ._main-page ._table-row {
+        flex-direction: column; } }
     ._main-page ._table-row ._machine-table {
       width: 49%;
       margin-right: 40px; }
+      @media (max-width: 600px) {
+        ._main-page ._table-row ._machine-table {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 20px; } }
     ._main-page ._table-row ._location-table {
       width: 49%; }
+      @media (max-width: 600px) {
+        ._main-page ._table-row ._location-table {
+          display: none; } }
+    @media (max-width: 600px) {
+      ._main-page ._table-row ._location-table-mobile {
+        width: 100%;
+        margin-bottom: 20px; } }
   ._main-page ._best-and-worst-day-container {
     display: flex;
     justify-content: flex-start;
@@ -398,21 +413,29 @@
   min-width: 650px;
   flex: 1; }
 
-._table-header-container {
-  padding: 15px 10px !important; }
-  ._table-header-container ._table-header {
-    font-size: 16px !important;
-    line-height: 5px !important;
-    font-weight: 700 !important;
-    color: #5E5CE6 !important;
-    letter-spacing: 0.5px !important;
-    flex: 1 !important; }
+._table-header-container ._table-header {
+  font-size: 16px !important;
+  line-height: 5px !important;
+  font-weight: 700 !important;
+  color: #5E5CE6 !important;
+  letter-spacing: 0.5px !important;
+  flex: 1 !important; }
+  @media (max-width: 600px) {
+    ._table-header-container ._table-header {
+      font-size: 12px !important;
+      padding: 15px 10px !important; } }
 
 ._table-cell-header-location {
   min-width: 400px; }
+  @media (max-width: 600px) {
+    ._table-cell-header-location {
+      min-width: 100px; } }
 
 ._table-cell-header-machine {
   min-width: 150px; }
+  @media (max-width: 600px) {
+    ._table-cell-header-machine {
+      min-width: 100px; } }
 
 ._table-cell-header {
   font-size: 16px !important;
@@ -420,6 +443,10 @@
   font-weight: 700 !important;
   color: #000000 !important;
   letter-spacing: 0.5px !important; }
+  @media (max-width: 600px) {
+    ._table-cell-header {
+      font-size: 12px !important;
+      padding: 15px 10px !important; } }
 
 ._table-cell {
   font-size: 15px !important;
@@ -427,6 +454,10 @@
   font-weight: 600 !important;
   color: #000000 !important;
   letter-spacing: 0.5px !important; }
+  @media (max-width: 600px) {
+    ._table-cell {
+      font-size: 12px !important;
+      padding: 15px 10px !important; } }
 
 ._week-analytic-table-container {
   padding: 15px 30px; }
@@ -496,12 +527,17 @@
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px 30px; }
+  padding: 10px 30px;
+  box-sizing: border-box; }
   ._best-and-worst-day-of-all-time-container ._header-container-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center; }
+    @media (max-width: 600px) {
+      ._best-and-worst-day-of-all-time-container ._header-container-container {
+        width: 100px;
+        align-items: flex-start; } }
     ._best-and-worst-day-of-all-time-container ._header-container-container ._header {
       font-style: normal;
       font-weight: 600;
@@ -509,6 +545,9 @@
       line-height: 22px;
       text-transform: uppercase;
       letter-spacing: 1px; }
+      @media (max-width: 600px) {
+        ._best-and-worst-day-of-all-time-container ._header-container-container ._header {
+          font-size: 12px; } }
     ._best-and-worst-day-of-all-time-container ._header-container-container ._best {
       color: #22E759; }
     ._best-and-worst-day-of-all-time-container ._header-container-container ._worst {
@@ -533,6 +572,9 @@
         text-align: center;
         letter-spacing: 1px;
         line-height: 22px; }
+        @media (max-width: 600px) {
+          ._best-and-worst-day-of-all-time-container ._data-row ._cell ._text-cell {
+            font-size: 12px; } }
       ._best-and-worst-day-of-all-time-container ._data-row ._cell ._header-cell {
         color: #5E5CE6; }
       ._best-and-worst-day-of-all-time-container ._data-row ._cell ._data-cell {
@@ -540,6 +582,10 @@
 
 ._best-day-of-all-time-container {
   margin-right: 40px; }
+  @media (max-width: 600px) {
+    ._best-day-of-all-time-container {
+      margin-right: 0;
+      margin-bottom: 20px; } }
 
 ._header1-text-container {
   display: flex;
