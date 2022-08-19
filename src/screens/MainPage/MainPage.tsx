@@ -360,7 +360,12 @@ const MainPage: FC<PageTestProps> = () => {
           </div>
         </div>
         {chartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
-        {chartData.length !== 0 && <CustomChart />}
+        {chartData.length !== 0
+                    && (
+                    <div className="_row">
+                      <CustomChart />
+                    </div>
+                    )}
         <Header2 text="Pretraga za podatke po masinama" />
         <div className="_row">
           <MainMachineLocationSelect />

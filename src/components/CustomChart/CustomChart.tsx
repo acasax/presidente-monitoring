@@ -28,8 +28,19 @@ const Line = (props) => (
 );
 
 const Root = (props) => (
-  <Legend.Root {...props} sx={{ display: 'flex', margin: 'auto', flexDirection: 'row' }} />
+  <Legend.Root
+    {...props}
+    sx={{ display: 'flex', margin: 'auto', flexDirection: 'row' }}
+  />
 );
+
+const RootMobile = (props) => (
+  <Legend.Root
+    {...props}
+    sx={{ display: 'flex', margin: 'auto', flexDirection: 'column' }}
+  />
+);
+
 const Label = (props) => (
   <Legend.Label {...props} sx={{ mb: 1, whiteSpace: 'nowrap' }} />
 );
@@ -47,6 +58,17 @@ const CustomChart = () => {
   const chartData = useAppSelector(getChartData);
   const [chartArgument, setChartArgument] = useState([]);
 
+  const [width, setWidth] = useState(0);
+
+  const updateDimension = () => {
+    const widthScreen = window.innerWidth;
+    setWidth(widthScreen);
+  };
+
+  useEffect(() => {
+    updateDimension();
+  }, [updateDimension]);
+
   useEffect(() => {
     let argument = Object.keys(chartData[0]);
     argument.shift();
@@ -57,9 +79,12 @@ const CustomChart = () => {
   return (
     <TableContainer component={Paper}>
       <Paper sx={{
-        minWidth: chartData.length > 25 ? 2000 : 0,
+        minWidth: chartData.length > 25 ? width < 600 ? 1000 : 2000 : 0,
         width: '100%',
-        padding: '30px',
+        paddingTop: width < 600 ? '20px' : '30px',
+        paddingBottom: width < 600 ? '20px' : '30px',
+        paddingLeft: width < 600 ? '20px' : '30px',
+        paddingRight: width < 600 ? '40px' : '50px',
         boxSizing: 'border-box',
       }}
       >
@@ -72,7 +97,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('1Kruševac') && (
                         <LineSeries
-                          name="1Kruševac"
+                          name="01 Kruševac, Trg Despota Stefana 30"
                           valueField="1Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -82,7 +107,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('2Kruševac') && (
                         <LineSeries
-                          name="2Kruševac"
+                          name="02 Kruševac, Cara Lazara 193"
                           valueField="2Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -93,7 +118,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('3Aleksandrovac') && (
                         <LineSeries
-                          name="3Aleksandrovac"
+                          name="03 Aleksandrovac, 29. Novembra bb"
                           valueField="3Aleksandrovac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -104,7 +129,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('4Brus') && (
                         <LineSeries
-                          name="4Brus"
+                          name="04 Brus, Kralja Petra I 42"
                           valueField="4Brus"
                           argumentField="date"
                           seriesComponent={Line}
@@ -115,7 +140,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('7Paraćin') && (
                         <LineSeries
-                          name="7Paraćin"
+                          name="07 Paraćin, Vojvode Mišića 8"
                           valueField="7Paraćin"
                           argumentField="date"
                           seriesComponent={Line}
@@ -126,7 +151,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('8Kruševac') && (
                         <LineSeries
-                          name="8Kruševac"
+                          name="08 Kruševac, Bircaninova 10"
                           valueField="8Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -137,7 +162,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('9Kruševac') && (
                         <LineSeries
-                          name="9Kruševac"
+                          name="09 Kruševac, Vidovdanska 233"
                           valueField="9Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -148,7 +173,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('10Kraljevo') && (
                         <LineSeries
-                          name="10Kraljevo"
+                          name="10 Kraljevo, Dimitrija Tucovića 40"
                           valueField="10Kraljevo"
                           argumentField="date"
                           seriesComponent={Line}
@@ -159,7 +184,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('11Kruševac') && (
                         <LineSeries
-                          name="11Kruševac"
+                          name="11 Kruševac, Rasinska 101"
                           valueField="11Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -170,7 +195,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('12Borča') && (
                         <LineSeries
-                          name="12Borča"
+                          name="12 Borča, Zrenjaninski put 155"
                           valueField="12Borča"
                           argumentField="date"
                           seriesComponent={Line}
@@ -181,7 +206,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('13Kraljevo') && (
                         <LineSeries
-                          name="13Kraljevo"
+                          name="13 Kraljevo, Trg Kralja Petra I Oslobodioca 3/1"
                           valueField="13Kraljevo"
                           argumentField="date"
                           seriesComponent={Line}
@@ -191,7 +216,7 @@ const CustomChart = () => {
           {
                         chartArgument.includes('14Kruševac') && (
                         <LineSeries
-                          name="14Kruševac"
+                          name="14 Kruševac, Čolak Antina 17"
                           valueField="14Kruševac"
                           argumentField="date"
                           seriesComponent={Line}
@@ -199,7 +224,12 @@ const CustomChart = () => {
                         )
                     }
 
-          <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
+          <Legend
+            position="bottom"
+            rootComponent={width < 600 ? RootMobile : Root}
+            itemComponent={Item}
+            labelComponent={Label}
+          />
           <Animation />
         </StyledChart>
       </Paper>
