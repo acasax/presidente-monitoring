@@ -6,11 +6,18 @@
   width: 100%;
 
   ._week-analytics-row {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      padding-bottom: 40px;
-      width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 40px;
+    width: 100%;
+    flex-direction: row;
+
+    @media (max-width: $extraSmall) {
+      flex-direction: column;
+      margin-bottom: 20px;
+    }
+
   }
 
 }

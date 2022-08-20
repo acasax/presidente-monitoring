@@ -132,10 +132,12 @@
       @media (max-width: 600px) {
         ._main-page ._table-row ._location-table {
           display: none; } }
-    @media (max-width: 600px) {
-      ._main-page ._table-row ._location-table-mobile {
-        width: 100%;
-        margin-bottom: 20px; } }
+    ._main-page ._table-row ._location-table-mobile {
+      display: none; }
+      @media (max-width: 600px) {
+        ._main-page ._table-row ._location-table-mobile {
+          width: 100%;
+          margin-bottom: 20px; } }
   ._main-page ._best-and-worst-day-container {
     display: flex;
     justify-content: flex-start;
@@ -460,7 +462,11 @@
       padding: 15px 10px !important; } }
 
 ._week-analytic-table-container {
-  padding: 15px 30px; }
+  padding: 15px 30px;
+  box-sizing: border-box; }
+  @media (max-width: 600px) {
+    ._week-analytic-table-container {
+      padding: 15px 10px; } }
   ._week-analytic-table-container ._week-analytic-table-header-container {
     display: flex;
     justify-content: center;
@@ -468,6 +474,9 @@
     width: 100%;
     flex-direction: row;
     padding: 15px 0; }
+    @media (max-width: 600px) {
+      ._week-analytic-table-container ._week-analytic-table-header-container {
+        justify-content: flex-start; } }
     ._week-analytic-table-container ._week-analytic-table-header-container ._table-header-text {
       font-weight: 700;
       font-size: 20px;
@@ -502,6 +511,9 @@
 
 ._week-analytic-best-table-container {
   margin-right: 40px; }
+  @media (max-width: 600px) {
+    ._week-analytic-best-table-container {
+      margin-right: 0; } }
 
 ._week-analytic-table-cell {
   flex: 1;
@@ -641,7 +653,12 @@
     justify-content: flex-start;
     align-items: center;
     padding-bottom: 40px;
-    width: 100%; }
+    width: 100%;
+    flex-direction: row; }
+    @media (max-width: 600px) {
+      ._week-analytics-container ._week-analytics-row {
+        flex-direction: column;
+        margin-bottom: 20px; } }
 
 * {
   margin: 0;

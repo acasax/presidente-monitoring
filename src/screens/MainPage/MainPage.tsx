@@ -426,6 +426,7 @@ const MainPage: FC<PageTestProps> = () => {
         <div className="_best-and-worst-day-container">
           <Header1 text="NAJBOLJI I NAJGORI DAN" />
           <div className="_best-and-worst-day-off-all-time-row">
+            <Header2 text="Podaci oduvek" />
             <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
           </div>

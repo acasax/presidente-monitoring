@@ -69,7 +69,11 @@
 
 ._week-analytic-table-container {
   padding: 15px 30px;
+  box-sizing: border-box;
 
+  @media (max-width: $extraSmall) {
+    padding: 15px 10px;
+  }
 
   ._week-analytic-table-header-container {
     display: flex;
@@ -78,6 +82,10 @@
     width: 100%;
     flex-direction: row;
     padding: 15px 0;
+
+    @media (max-width: $extraSmall) {
+      justify-content: flex-start;
+    }
 
     ._table-header-text {
       font-weight: 700;
@@ -132,6 +140,11 @@
 
 ._week-analytic-best-table-container {
   margin-right: 40px;
+
+  @media (max-width: $extraSmall) {
+    margin-right: 0;
+  }
+
 }
 
 ._week-analytic-table-cell {
