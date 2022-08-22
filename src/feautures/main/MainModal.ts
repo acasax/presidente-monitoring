@@ -33,7 +33,8 @@ interface IAverageAndSumByDate {
 }
 
 interface IMachineTransactionItem {
-  stickerNumber?: number,
+  orderNumber?: string,
+  typeOfGame?: string,
   transactions: ITransactionInfo[]
 }
 

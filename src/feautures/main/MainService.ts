@@ -311,6 +311,50 @@ const getDataForWeekAnalyticsFooter = async (token: string, query = {}): Promise
   return response.data;
 };
 
+const getBestAndWorstInChosenMounts = async (token: string, query = {}): Promise<any> => {
+  const baseService = new BaseService(token);
+  let queryString = '';
+
+  Object.keys(query)
+    .forEach((key) => {
+      queryString += key;
+      queryString += '=';
+      if (key === 'location') {
+        queryString += query[key];
+        queryString += '&';
+      } else {
+        if (key === 'sortType') {
+          queryString += query[key];
+        } else {
+          queryString += '[';
+          if (key === 'months') {
+            // eslint-disable-next-line array-callback-return,@typescript-eslint/no-shadow
+            query[key].map((x) => {
+              queryString += `"${x}"`;
+              queryString += ',';
+            });
+            queryString = queryString.slice(0, -1);
+          } else {
+            queryString += query[key];
+          }
+          queryString += ']';
+        }
+        queryString += '&';
+      }
+    });
+  queryString = queryString.slice(0, -1);
+
+  const path = baseService.url.build('transaction/best-worst-day-between-months');
+  const url = `${path}?${queryString}`;
+  const response: AxiosResponse<IBestAndWorstDayOfAllTime> = await baseService.get(url, {});
+  if (response?.data?.statusCode) {
+    return {
+      message: response?.data?.message,
+    };
+  }
+  return response.data;
+};
+
 export {
   SendExcelWithTransaction,
   getDataForLocation,
@@ -320,6 +364,7 @@ export {
   getDataForLocationForChart,
   getDataForWeekAnalytics,
   getDataForWeekAnalyticsFooter,
+  getBestAndWorstInChosenMounts,
 };
 
 export default {};

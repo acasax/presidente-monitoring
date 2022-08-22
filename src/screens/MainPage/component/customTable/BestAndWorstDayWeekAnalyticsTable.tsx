@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-import { translateDayName } from '../../utils/dateTime/functionsDateTime';
+import { translateDayName } from '../../../../utils/dateTime/functionsDateTime';
 
 const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
   <TableContainer

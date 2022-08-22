@@ -112,6 +112,6 @@ export function translateMountName(mount: string) {
     case 'December':
       return 'Decembar';
     default:
-      return '';
+      return mount;
   }
 }

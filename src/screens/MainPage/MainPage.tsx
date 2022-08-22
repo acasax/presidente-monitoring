@@ -1,4 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
+import { IconButton } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 import Screen from '../Screen';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -9,6 +11,7 @@ import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
   getBestAndWorstDayDatePickerMode,
   getBestAndWorstDaySelectedDates,
+  getBestDayInChosenMounts,
   getBestDayOfAllTime,
   getBestDayWeekAnalytics,
   getBestDayWeekAnalyticsFooter,
@@ -23,12 +26,14 @@ import {
   getSelectLocationData,
   getSelectMachineLocationData,
   getTransactionTableDateFooter,
+  getWorstDayInChosenMounts,
   getWorstDayOfAllTime,
   getWorstDayWeekAnalytics,
   getWorstDayWeekAnalyticsFooter,
   setBestDayOfAllTime,
   setBestDayWeekAnalytics,
   setBestDayWeekAnalyticsFooter,
+  setBestInChosenMounts,
   setChartData,
   setLocationTableData,
   setMachineTableData,
@@ -37,11 +42,13 @@ import {
   setWorstDayOfAllTime,
   setWorstDayWeekAnalytics,
   setWorstDayWeekAnalyticsFooter,
+  setWorstInChosenMounts,
 } from '../../feautures/main/mainSlice';
-import { getToken } from '../../feautures/auth/authSlice';
+import { clearUser, getToken } from '../../feautures/auth/authSlice';
 import {
   getAverageAndSumByDateAndLocation,
   getBestAndWorstDayAllTime,
+  getBestAndWorstInChosenMounts,
   getDataForLocation,
   getDataForLocationForChart,
   getDataForMachine,
@@ -55,8 +62,8 @@ import { useLoading } from '../../hooks/UseLoading';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray, getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
-import LocationTable from '../../components/CustomTable/LocationTable';
-import MachineTable from '../../components/CustomTable/MachineTable';
+import LocationTable from './component/customTable/LocationTable';
+import MachineTable from './component/customTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
 import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
 import MainBestAndWorstDayDatePickerModeSelect from './component/selects/MainBestAndWorstDayDatePickerModeSelect';
@@ -91,6 +98,8 @@ const MainPage: FC<PageTestProps> = () => {
   const worstDayWeekAnalytics = useAppSelector(getWorstDayWeekAnalytics);
   const worstDayWeekAnalyticsFooter = useAppSelector(getWorstDayWeekAnalyticsFooter);
   const bestAndWorstDayDatePickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
+  const bestDayInChosenMounts = useAppSelector(getBestDayInChosenMounts);
+  const worstDayInChosenMounts = useAppSelector(getWorstDayInChosenMounts);
   const {
     values,
     handleChoseDate,
@@ -112,7 +121,6 @@ const MainPage: FC<PageTestProps> = () => {
   };
 
   useEffect(() => {
-    console.log('width', width);
     updateDimension();
   }, [updateDimension]);
 
@@ -314,6 +322,18 @@ const MainPage: FC<PageTestProps> = () => {
         sortType: 'WORST',
       });
 
+      const bestInChosenMounts = await getBestAndWorstInChosenMounts(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: 'BEST',
+      });
+
+      const worstInChosenMounts = await getBestAndWorstInChosenMounts(token, {
+        location: bestAndWorstWeekAnalyticsSelectedLocation,
+        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: 'WORST',
+      });
+
       if (best?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(best?.message));
@@ -323,6 +343,7 @@ const MainPage: FC<PageTestProps> = () => {
       dispatch(setBestDayWeekAnalytics(best));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
+
       if (bestFooter?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(bestFooter?.message));
@@ -332,6 +353,7 @@ const MainPage: FC<PageTestProps> = () => {
       dispatch(setBestDayWeekAnalyticsFooter(bestFooter));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
+
       if (worst?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(worst?.message));
@@ -341,6 +363,7 @@ const MainPage: FC<PageTestProps> = () => {
       dispatch(setWorstDayWeekAnalytics(worst));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
+
       if (worstFooter?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(worstFooter?.message));
@@ -348,6 +371,26 @@ const MainPage: FC<PageTestProps> = () => {
         return;
       }
       dispatch(setWorstDayWeekAnalyticsFooter(worstFooter));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+
+      if (bestInChosenMounts?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(bestInChosenMounts?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setBestInChosenMounts(bestInChosenMounts));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+
+      if (worstInChosenMounts?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(worstInChosenMounts?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setWorstInChosenMounts(worstInChosenMounts));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
@@ -425,8 +468,10 @@ const MainPage: FC<PageTestProps> = () => {
         </div>
         <div className="_best-and-worst-day-container">
           <Header1 text="NAJBOLJI I NAJGORI DAN" />
-          <div className="_best-and-worst-day-off-all-time-row">
+          <div className="_best-and-worst-day-header-container">
             <Header2 text="Podaci oduvek" />
+          </div>
+          <div className="_best-and-worst-day-off-all-time-row">
             <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
           </div>
@@ -434,10 +479,12 @@ const MainPage: FC<PageTestProps> = () => {
             <MainBestAndWorstDayLocationSelect />
             <MainBestAndWorstDayDatePickerModeSelect />
             <BestAndWorstDayDatePicker />
-            <CustomButton
-              text="PRETRAZI"
-              handleFunction={handleWeekAnalyticsRequest}
-            />
+            <div className="_search-button-container">
+              <CustomButton
+                text="PRETRAZI"
+                handleFunction={handleWeekAnalyticsRequest}
+              />
+            </div>
           </div>
           <WeekAnalyticsContainer
             bestData={bestDayWeekAnalytics}
@@ -445,9 +492,32 @@ const MainPage: FC<PageTestProps> = () => {
             worstData={worstDayWeekAnalytics}
             worstFooter={worstDayWeekAnalyticsFooter}
           />
+          {
+                        (bestDayInChosenMounts && worstDayInChosenMounts)
+                        && (
+                        <>
+                          <div className="_best-and-worst-day-header-container">
+                            <Header2 text="Podaci u izabranim mesecima" />
+                          </div>
+                          <div className="_best-and-worst-day-off-all-time-row">
+                            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayInChosenMounts} />
+                            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayInChosenMounts} />
+                          </div>
+                        </>
+                        )
+                    }
         </div>
         <div className="_footer">
           <CustomIconButtonSend />
+          {
+                        width < 600 && (
+                        <div className="_logout-icon-button">
+                          <IconButton onClick={() => dispatch(clearUser())}>
+                            <LogoutIcon className="_icon" />
+                          </IconButton>
+                        </div>
+                        )
+                    }
         </div>
       </div>
     </Screen>

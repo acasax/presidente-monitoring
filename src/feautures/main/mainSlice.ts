@@ -27,7 +27,9 @@ interface InitialState {
   mainDatePickerMode: string[],
   selectedDates: any[],
   bestAndWorstDayDatePickerMode: string[],
-  bestAndWorstDaySelectedDates: any[]
+  bestAndWorstDaySelectedDates: any[],
+  bestDayInChosenMounts: any,
+  worstDayInChosenMounts: any,
 }
 
 const initialState: InitialState = {
@@ -50,6 +52,8 @@ const initialState: InitialState = {
   selectedDates: [],
   bestAndWorstDayDatePickerMode: ['MONTH'],
   bestAndWorstDaySelectedDates: [],
+  bestDayInChosenMounts: {},
+  worstDayInChosenMounts: {},
 };
 
 const mainSlice = createSlice({
@@ -170,6 +174,18 @@ const mainSlice = createSlice({
     clearBestAndWorstDaySelectedDates: (state) => {
       state.bestAndWorstDaySelectedDates = [];
     },
+    setBestInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.bestDayInChosenMounts = action.payload;
+    },
+    clearBestInChosenMounts: (state) => {
+      state.bestDayInChosenMounts = {};
+    },
+    setWorstInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.worstDayInChosenMounts = action.payload;
+    },
+    clearWorstInChosenMounts: (state) => {
+      state.worstDayInChosenMounts = {};
+    },
   },
 });
 
@@ -212,6 +228,10 @@ export const {
   clearBestAndWorstDaySelectedDates,
   setBestAndWorstDayMode,
   clearBestAndWorstDayMode,
+  setBestInChosenMounts,
+  clearBestInChosenMounts,
+  setWorstInChosenMounts,
+  clearWorstInChosenMounts,
 } = mainSlice.actions;
 
 export const getChartData = (state: RootState) => state?.main?.chartData;
@@ -242,5 +262,7 @@ export const getSelectedDate = (state: RootState) => state?.main?.selectedDates;
 export const getBestAndWorstDayDatePickerMode = (state: RootState) => state?.main?.bestAndWorstDayDatePickerMode;
 // eslint-disable-next-line max-len
 export const getBestAndWorstDaySelectedDates = (state: RootState) => state?.main?.bestAndWorstDaySelectedDates;
+export const getBestDayInChosenMounts = (state: RootState) => state?.main?.bestDayInChosenMounts;
+export const getWorstDayInChosenMounts = (state: RootState) => state?.main?.worstDayInChosenMounts;
 
 export default mainSlice.reducer;

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useAppSelector } from '../../store/hooks';
-import { getLocationTableData, getTransactionTableDateFooter } from '../../feautures/main/mainSlice';
-import { padTo2Digits } from '../../utils/dateTime/functionsDateTime';
+import TableCell from '@mui/material/TableCell';
+import TableBody from '@mui/material/TableBody';
+import { useAppSelector } from '../../../../store/hooks';
+import { getMachineTableData, getTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
 
-const LocationTable = () => {
+const MachineTable = () => {
   const [newData, setNewData] = useState([]);
-  const data = useAppSelector(getLocationTableData);
+  const data = useAppSelector(getMachineTableData);
   const footer = useAppSelector(getTransactionTableDateFooter);
 
   function sum(a, b) {
@@ -20,32 +19,29 @@ const LocationTable = () => {
   }
 
   useEffect(() => {
-    // eslint-disable-next-line no-return-assign
     setNewData(
       data.map((row) => ({
         ...row,
-        // eslint-disable-next-line max-len,no-restricted-globals
         sum: row?.transactions?.reduce(
           // eslint-disable-next-line max-len,no-restricted-globals
-          (previousValue, currentValue) => sum(previousValue?.sum ? previousValue?.sum : !isNaN(previousValue) ? previousValue : 0, currentValue?.sum ? currentValue?.sum : !isNaN(currentValue) ? currentValue : 0),
+          (previousValue, currentValue) => sum(previousValue?.profit ? previousValue?.profit : !isNaN(previousValue) ? previousValue : 0, currentValue?.profit ? currentValue?.profit : !isNaN(currentValue) ? currentValue : 0),
           0,
         ),
         average: row?.transactions?.reduce(
           // eslint-disable-next-line max-len,no-restricted-globals
-          (previousValue, currentValue) => sum(previousValue?.sum ? previousValue?.sum : !isNaN(previousValue) ? previousValue : 0, currentValue?.sum ? currentValue?.sum : !isNaN(currentValue) ? currentValue : 0),
+          (previousValue, currentValue) => sum(previousValue?.profit ? previousValue?.profit : !isNaN(previousValue) ? previousValue : 0, currentValue?.profit ? currentValue?.profit : !isNaN(currentValue) ? currentValue : 0),
           0,
         ) / row?.transactions.length,
       })),
     );
-  },
-  [data]);
+  }, [data]);
 
   return (
     <TableContainer component={Paper} sx={{ maxWidth: '100%', flex: 1 }}>
       <Table className="_table-container">
         <TableHead>
           <TableRow className="_table-header-container">
-            <TableCell className="_table-cell-header-location _table-header">Lokacije</TableCell>
+            <TableCell className="_table-cell-header-machine _table-header">Masine (BR. NA LOK. I TIP) </TableCell>
             {
                             newData[0]?.transactions?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
@@ -63,15 +59,11 @@ const LocationTable = () => {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell
-                component="th"
-                scope="row"
-                className="_table-cell-header _table-cell-header-location"
+                className="_table-cell-header"
               >
-                {padTo2Digits(row?.id)}
-                {' / '}
-                {row?.locationName.trim()}
-                {', '}
-                {row?.address}
+                {row?.orderNumber}
+                {' '}
+                {row?.typeOfGame}
               </TableCell>
               {
                                 row?.transactions?.map((item, index) => (
@@ -80,7 +72,7 @@ const LocationTable = () => {
                                     key={index}
                                     className="_table-cell"
                                   >
-                                    {item?.sum ? item?.sum : '/'}
+                                    {item?.profit ? item?.profit : '/'}
                                   </TableCell>
                                 ))
                             }
@@ -99,7 +91,7 @@ const LocationTable = () => {
             <TableCell
               component="th"
               scope="row"
-              className="_table-cell-header-location _table-header"
+              className="_table-cell-header-machine _table-header"
             >
               Total
             </TableCell>
@@ -118,7 +110,7 @@ const LocationTable = () => {
             <TableCell
               component="th"
               scope="row"
-              className="_table-cell-header-location _table-header"
+              className="_table-cell-header-machine _table-header"
             >
               Prosek
             </TableCell>
@@ -137,4 +129,4 @@ const LocationTable = () => {
   );
 };
 
-export default LocationTable;
+export default MachineTable;
