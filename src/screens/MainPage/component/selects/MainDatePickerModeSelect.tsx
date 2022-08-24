@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { clearPickedDate, getDatePickerMode, setDatePickerMode } from '../../../../feautures/main/mainSlice';
+import { clearMainPickedDate, getMainDatePickerMode, setMainDatePickerMode } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 import { DateModeSelectItems } from '../../../../constants/select';
 
 const MainDatePickerModeSelect = () => {
-  const dataPickerMode = useAppSelector(getDatePickerMode);
+  const dataPickerMode = useAppSelector(getMainDatePickerMode);
   const dispatch = useAppDispatch();
 
   const [width, setWidth] = useState(0);
@@ -24,8 +24,8 @@ const MainDatePickerModeSelect = () => {
     const {
       target: { value },
     } = event;
-    dispatch(clearPickedDate());
-    dispatch(setDatePickerMode(typeof value === 'string' ? value.split(',') : value));
+    dispatch(clearMainPickedDate());
+    dispatch(setMainDatePickerMode(typeof value === 'string' ? value.split(',') : value));
   };
 
   return (

@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useAppSelector } from '../../../../store/hooks';
-import { getDatePickerMode } from '../../../../feautures/main/mainSlice';
+import { getMainDatePickerMode } from '../../../../feautures/main/mainSlice';
 import { MainPageContext } from '../../../../feautures/main/context';
 import CustomDatePicker from '../../../../components/CustomDatePicker/CustomDatePicker';
 
 const MainDatePicker = () => {
-  const datePickerMode = useAppSelector(getDatePickerMode);
+  const datePickerMode = useAppSelector(getMainDatePickerMode);
   const { values, setValues } = useContext(MainPageContext);
 
   return (

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
-  clearBestAndWorstDaySelectedDates,
-  getBestAndWorstDayDatePickerMode,
-  setBestAndWorstDayMode,
+  clearMainBestAndWorstDaySelectedDates,
+  getMainBestAndWorstDayDatePickerMode,
+  setMainBestAndWorstDayMode,
 } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 import { DateNoDayModeSelectItems } from '../../../../constants/select';
 
 const MainBestAndWorstDayDatePickerModeSelect = () => {
-  const dataPickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
+  const dataPickerMode = useAppSelector(getMainBestAndWorstDayDatePickerMode);
   const dispatch = useAppDispatch();
 
   const [width, setWidth] = useState(0);
@@ -28,8 +28,8 @@ const MainBestAndWorstDayDatePickerModeSelect = () => {
     const {
       target: { value },
     } = event;
-    dispatch(clearBestAndWorstDaySelectedDates());
-    dispatch(setBestAndWorstDayMode(typeof value === 'string' ? value.split(',') : value));
+    dispatch(clearMainBestAndWorstDaySelectedDates());
+    dispatch(setMainBestAndWorstDayMode(typeof value === 'string' ? value.split(',') : value));
   };
 
   return (

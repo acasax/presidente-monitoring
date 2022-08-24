@@ -10,259 +10,264 @@ import { ILocationSelect } from '../location/locationModal';
 
 interface InitialState {
   mainChartData: any,
-  locationTableData: any,
-  machineTableData: any,
-  transactionTableDateFooter: any,
-  bestDayAllTime: any,
-  worstDayAllTime: any,
-  bestDayWeekAnalytics: any,
-  bestDayWeekAnalyticsFooter: any,
-  worstDayWeekAnalytics: any,
-  worstDayWeekAnalyticsFooter: any,
-  locationData: ILocationSelect[],
-  selectedLocationData: any[],
-  machineLocationData: ILocationSelect[],
-  selectedMachineLocationData: any,
-  selectedBestAndWorstLocationData: any,
+  mainLocationTableData: any,
+  mainMachineTableData: any,
+  mainTransactionTableDateFooter: any,
+  mainBestDayAllTime: any,
+  mainWorstDayAllTime: any,
+  mainBestDayWeekAnalytics: any,
+  mainBestDayWeekAnalyticsFooter: any,
+  mainWorstDayWeekAnalytics: any,
+  mainWorstDayWeekAnalyticsFooter: any,
+  mainLocationData: ILocationSelect[],
+  mainSelectedLocationData: any[],
+  mainMachineLocationData: ILocationSelect[],
+  mainSelectedMachineLocationData: any,
+  mainSelectedBestAndWorstLocationData: any,
   mainDatePickerMode: string[],
-  selectedDates: any[],
-  bestAndWorstDayDatePickerMode: string[],
-  bestAndWorstDaySelectedDates: any[],
-  bestDayInChosenMounts: any,
-  worstDayInChosenMounts: any,
+  mainSelectedDates: any[],
+  mainBestAndWorstDayDatePickerMode: string[],
+  mainBestAndWorstDaySelectedDates: any[],
+  mainBestDayInChosenMounts: any,
+  mainWorstDayInChosenMounts: any,
 }
 
 const initialState: InitialState = {
   mainChartData: [],
-  locationTableData: [],
-  machineTableData: [],
-  transactionTableDateFooter: [],
-  bestDayAllTime: {},
-  worstDayAllTime: {},
-  bestDayWeekAnalytics: [],
-  bestDayWeekAnalyticsFooter: [],
-  worstDayWeekAnalytics: [],
-  worstDayWeekAnalyticsFooter: [],
-  locationData: [],
-  selectedLocationData: [],
-  machineLocationData: [],
-  selectedMachineLocationData: '',
-  selectedBestAndWorstLocationData: '',
+  mainLocationTableData: [],
+  mainMachineTableData: [],
+  mainTransactionTableDateFooter: [],
+  mainBestDayAllTime: {},
+  mainWorstDayAllTime: {},
+  mainBestDayWeekAnalytics: [],
+  mainBestDayWeekAnalyticsFooter: [],
+  mainWorstDayWeekAnalytics: [],
+  mainWorstDayWeekAnalyticsFooter: [],
+  mainLocationData: [],
+  mainSelectedLocationData: [],
+  mainMachineLocationData: [],
+  mainSelectedMachineLocationData: '',
+  mainSelectedBestAndWorstLocationData: '',
   mainDatePickerMode: ['DAY'],
-  selectedDates: [],
-  bestAndWorstDayDatePickerMode: ['MONTH'],
-  bestAndWorstDaySelectedDates: [],
-  bestDayInChosenMounts: {},
-  worstDayInChosenMounts: {},
+  mainSelectedDates: [],
+  mainBestAndWorstDayDatePickerMode: ['MONTH'],
+  mainBestAndWorstDaySelectedDates: [],
+  mainBestDayInChosenMounts: {},
+  mainWorstDayInChosenMounts: {},
 };
 
 const mainSlice = createSlice({
   name: 'mainSlice',
   initialState,
   reducers: {
-    setChartData: (state, action: PayloadAction<any[]>) => {
+    setMainChartData: (state, action: PayloadAction<any[]>) => {
       state.mainChartData = action.payload;
     },
-    clearChartData: (state) => {
+    clearMainChartData: (state) => {
       state.mainChartData = [];
     },
-    setLocationTableData: (state, action: PayloadAction<ITransactionItem[]>) => {
-      state.locationTableData = action.payload;
+    setMainLocationTableData: (state, action: PayloadAction<ITransactionItem[]>) => {
+      state.mainLocationTableData = action.payload;
     },
-    clearLocationTableData: (state) => {
-      state.locationTableData = [];
+    clearMainLocationTableData: (state) => {
+      state.mainLocationTableData = [];
     },
-    setMachineTableData: (state, action: PayloadAction<IMachineTransactionItem[]>) => {
-      state.machineTableData = action.payload;
+    setMainMachineTableData: (state, action: PayloadAction<IMachineTransactionItem[]>) => {
+      state.mainMachineTableData = action.payload;
     },
-    clearMachineTableData: (state) => {
-      state.machineTableData = [];
+    clearMainMachineTableData: (state) => {
+      state.mainMachineTableData = [];
     },
-    setTransactionTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
-      state.transactionTableDateFooter = action.payload;
+    // eslint-disable-next-line max-len
+    setMainTransactionTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
+      state.mainTransactionTableDateFooter = action.payload;
     },
-    clearTransactionTableDataFooter: (state) => {
-      state.transactionTableDateFooter = [];
+    clearMainTransactionTableDataFooter: (state) => {
+      state.mainTransactionTableDateFooter = [];
     },
-    setBestDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
-      state.bestDayAllTime = action.payload;
+    setMainBestDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.mainBestDayAllTime = action.payload;
     },
-    clearBesDayOfAllTime: (state) => {
-      state.bestDayAllTime = {};
+    clearMainBesDayOfAllTime: (state) => {
+      state.mainBestDayAllTime = {};
     },
-    setWorstDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
-      state.worstDayAllTime = action.payload;
+    setMainWorstDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.mainWorstDayAllTime = action.payload;
     },
-    clearWorstDayOfAllTime: (state) => {
-      state.worstDayAllTime = {};
+    clearMainWorstDayOfAllTime: (state) => {
+      state.mainWorstDayAllTime = {};
     },
-    setBestDayWeekAnalytics: (state, action: PayloadAction<any[]>) => {
-      state.bestDayWeekAnalytics = action.payload;
+    setMainBestDayWeekAnalytics: (state, action: PayloadAction<any[]>) => {
+      state.mainBestDayWeekAnalytics = action.payload;
     },
-    clearBestDayWeekAnalytics: (state) => {
-      state.bestDayWeekAnalytics = [];
+    clearMainBestDayWeekAnalytics: (state) => {
+      state.mainBestDayWeekAnalytics = [];
     },
-    setBestDayWeekAnalyticsFooter: (state, action: PayloadAction<any[]>) => {
-      state.bestDayWeekAnalyticsFooter = action.payload;
+    setMainBestDayWeekAnalyticsFooter: (state, action: PayloadAction<any[]>) => {
+      state.mainBestDayWeekAnalyticsFooter = action.payload;
     },
-    clearBestDayWeekAnalyticsFooter: (state) => {
-      state.bestDayWeekAnalyticsFooter = [];
+    clearMainBestDayWeekAnalyticsFooter: (state) => {
+      state.mainBestDayWeekAnalyticsFooter = [];
     },
-    setWorstDayWeekAnalytics: (state, action: PayloadAction<any[]>) => {
-      state.worstDayWeekAnalytics = action.payload;
+    setMainWorstDayWeekAnalytics: (state, action: PayloadAction<any[]>) => {
+      state.mainWorstDayWeekAnalytics = action.payload;
     },
-    clearWorstDayWeekAnalytics: (state) => {
-      state.worstDayWeekAnalytics = [];
+    clearMainWorstDayWeekAnalytics: (state) => {
+      state.mainWorstDayWeekAnalytics = [];
     },
-    setWorstDayWeekAnalyticsFooter: (state, action: PayloadAction<any[]>) => {
-      state.worstDayWeekAnalyticsFooter = action.payload;
+    setMainWorstDayWeekAnalyticsFooter: (state, action: PayloadAction<any[]>) => {
+      state.mainWorstDayWeekAnalyticsFooter = action.payload;
     },
-    clearWorstDayWeekAnalyticsFooter: (state) => {
-      state.worstDayWeekAnalyticsFooter = [];
+    clearMainWorstDayWeekAnalyticsFooter: (state) => {
+      state.mainWorstDayWeekAnalyticsFooter = [];
     },
-    setSelectLocationData: (state, action: PayloadAction<ILocationSelect[]>) => {
-      state.locationData = action.payload;
+    setMainSelectLocationData: (state, action: PayloadAction<ILocationSelect[]>) => {
+      state.mainLocationData = action.payload;
     },
-    clearSelectLocationData: (state) => {
-      state.locationData = null;
+    clearMainSelectLocationData: (state) => {
+      state.mainLocationData = null;
     },
-    setSelectedLocation: (state, action: PayloadAction<String[]>) => {
-      state.selectedLocationData = action.payload;
+    setMainSelectedLocation: (state, action: PayloadAction<String[]>) => {
+      state.mainSelectedLocationData = action.payload;
     },
-    clearSelectedLocation: (state) => {
-      state.selectedLocationData = [];
+    clearMainSelectedLocation: (state) => {
+      state.mainSelectedLocationData = [];
     },
-    setSelectMachineLocationData: (state, action: PayloadAction<ILocationSelect[]>) => {
-      state.machineLocationData = action.payload;
+    setMainSelectMachineLocationData: (state, action: PayloadAction<ILocationSelect[]>) => {
+      state.mainMachineLocationData = action.payload;
     },
-    clearSelectMachineLocationData: (state) => {
-      state.machineLocationData = [];
+    clearMainSelectMachineLocationData: (state) => {
+      state.mainMachineLocationData = [];
     },
-    setSelectedMachineLocation: (state, action: PayloadAction<any>) => {
-      state.selectedMachineLocationData = action.payload;
+    setMainSelectedMachineLocation: (state, action: PayloadAction<any>) => {
+      state.mainSelectedMachineLocationData = action.payload;
     },
-    clearSelectedMachineLocation: (state) => {
-      state.selectedMachineLocationData = '';
+    clearMainSelectedMachineLocation: (state) => {
+      state.mainSelectedMachineLocationData = '';
     },
-    setSelectedBestAndWorstLocation: (state, action: PayloadAction<any>) => {
-      state.selectedBestAndWorstLocationData = action.payload;
+    setMainSelectedBestAndWorstLocation: (state, action: PayloadAction<any>) => {
+      state.mainSelectedBestAndWorstLocationData = action.payload;
     },
-    clearSelectedBestAndWorstLocation: (state) => {
-      state.selectedBestAndWorstLocationData = '';
+    clearMainSelectedBestAndWorstLocation: (state) => {
+      state.mainSelectedBestAndWorstLocationData = '';
     },
-    setDatePickerMode: (state, action: PayloadAction<string[]>) => {
+    setMainDatePickerMode: (state, action: PayloadAction<string[]>) => {
       state.mainDatePickerMode = action.payload;
     },
-    clearDatePickerMode: (state) => {
+    clearMainDatePickerMode: (state) => {
       state.mainDatePickerMode = initialState.mainDatePickerMode;
     },
-    setPickedDate: (state, action: PayloadAction<string[]>) => {
-      state.selectedDates = action.payload;
+    setMainPickedDate: (state, action: PayloadAction<string[]>) => {
+      state.mainSelectedDates = action.payload;
     },
-    clearPickedDate: (state) => {
-      state.selectedDates = [];
+    clearMainPickedDate: (state) => {
+      state.mainSelectedDates = [];
     },
-    setBestAndWorstDayMode: (state, action: PayloadAction<string[]>) => {
-      state.bestAndWorstDayDatePickerMode = action.payload;
+    setMainBestAndWorstDayMode: (state, action: PayloadAction<string[]>) => {
+      state.mainBestAndWorstDayDatePickerMode = action.payload;
     },
-    clearBestAndWorstDayMode: (state) => {
-      state.bestAndWorstDayDatePickerMode = initialState.bestAndWorstDayDatePickerMode;
+    clearMainBestAndWorstDayMode: (state) => {
+      state.mainBestAndWorstDayDatePickerMode = initialState.mainBestAndWorstDayDatePickerMode;
     },
-    setBestAndWorstDaySelectedDates: (state, action: PayloadAction<string[]>) => {
-      state.bestAndWorstDaySelectedDates = action.payload;
+    setMainBestAndWorstDaySelectedDates: (state, action: PayloadAction<string[]>) => {
+      state.mainBestAndWorstDaySelectedDates = action.payload;
     },
-    clearBestAndWorstDaySelectedDates: (state) => {
-      state.bestAndWorstDaySelectedDates = [];
+    clearMainBestAndWorstDaySelectedDates: (state) => {
+      state.mainBestAndWorstDaySelectedDates = [];
     },
-    setBestInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
-      state.bestDayInChosenMounts = action.payload;
+    setMainBestInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.mainBestDayInChosenMounts = action.payload;
     },
-    clearBestInChosenMounts: (state) => {
-      state.bestDayInChosenMounts = {};
+    clearMainBestInChosenMounts: (state) => {
+      state.mainBestDayInChosenMounts = {};
     },
-    setWorstInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
-      state.worstDayInChosenMounts = action.payload;
+    setMainWorstInChosenMounts: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
+      state.mainWorstDayInChosenMounts = action.payload;
     },
-    clearWorstInChosenMounts: (state) => {
-      state.worstDayInChosenMounts = {};
+    clearMainWorstInChosenMounts: (state) => {
+      state.mainWorstDayInChosenMounts = {};
     },
   },
 });
 
 export const {
-  setChartData,
-  clearChartData,
-  setLocationTableData,
-  clearLocationTableData,
-  setTransactionTableDataFooter,
-  clearTransactionTableDataFooter,
-  setMachineTableData,
-  clearMachineTableData,
-  setBestDayOfAllTime,
-  clearBesDayOfAllTime,
-  setWorstDayOfAllTime,
-  clearWorstDayOfAllTime,
-  setBestDayWeekAnalytics,
-  clearBestDayWeekAnalytics,
-  setBestDayWeekAnalyticsFooter,
-  clearBestDayWeekAnalyticsFooter,
-  setWorstDayWeekAnalytics,
-  clearWorstDayWeekAnalytics,
-  setWorstDayWeekAnalyticsFooter,
-  clearWorstDayWeekAnalyticsFooter,
-  setSelectLocationData,
-  clearSelectLocationData,
-  setSelectedLocation,
-  clearSelectedLocation,
-  setSelectMachineLocationData,
-  clearSelectMachineLocationData,
-  setSelectedMachineLocation,
-  clearSelectedMachineLocation,
-  setSelectedBestAndWorstLocation,
-  clearSelectedBestAndWorstLocation,
-  setDatePickerMode,
-  clearDatePickerMode,
-  setPickedDate,
-  clearPickedDate,
-  setBestAndWorstDaySelectedDates,
-  clearBestAndWorstDaySelectedDates,
-  setBestAndWorstDayMode,
-  clearBestAndWorstDayMode,
-  setBestInChosenMounts,
-  clearBestInChosenMounts,
-  setWorstInChosenMounts,
-  clearWorstInChosenMounts,
+  setMainChartData,
+  clearMainChartData,
+  setMainLocationTableData,
+  clearMainLocationTableData,
+  setMainTransactionTableDataFooter,
+  clearMainTransactionTableDataFooter,
+  setMainMachineTableData,
+  clearMainMachineTableData,
+  setMainBestDayOfAllTime,
+  clearMainBesDayOfAllTime,
+  setMainWorstDayOfAllTime,
+  clearMainWorstDayOfAllTime,
+  setMainBestDayWeekAnalytics,
+  clearMainBestDayWeekAnalytics,
+  setMainBestDayWeekAnalyticsFooter,
+  clearMainBestDayWeekAnalyticsFooter,
+  setMainWorstDayWeekAnalytics,
+  clearMainWorstDayWeekAnalytics,
+  setMainWorstDayWeekAnalyticsFooter,
+  clearMainWorstDayWeekAnalyticsFooter,
+  setMainSelectLocationData,
+  clearMainSelectLocationData,
+  setMainSelectedLocation,
+  clearMainSelectedLocation,
+  setMainSelectMachineLocationData,
+  clearMainSelectMachineLocationData,
+  setMainSelectedMachineLocation,
+  clearMainSelectedMachineLocation,
+  setMainSelectedBestAndWorstLocation,
+  clearMainSelectedBestAndWorstLocation,
+  setMainDatePickerMode,
+  clearMainDatePickerMode,
+  setMainPickedDate,
+  clearMainPickedDate,
+  setMainBestAndWorstDaySelectedDates,
+  clearMainBestAndWorstDaySelectedDates,
+  setMainBestAndWorstDayMode,
+  clearMainBestAndWorstDayMode,
+  setMainBestInChosenMounts,
+  clearMainBestInChosenMounts,
+  setMainWorstInChosenMounts,
+  clearMainWorstInChosenMounts,
 } = mainSlice.actions;
 
 export const getMainChartData = (state: RootState) => state?.main?.mainChartData;
-export const getLocationTableData = (state: RootState) => state?.main?.locationTableData;
-export const getMachineTableData = (state: RootState) => state?.main?.machineTableData;
+export const getMainLocationTableData = (state: RootState) => state?.main?.mainLocationTableData;
+export const getMainMachineTableData = (state: RootState) => state?.main?.mainMachineTableData;
 // eslint-disable-next-line max-len
-export const getTransactionTableDateFooter = (state: RootState) => state?.main?.transactionTableDateFooter;
-export const getBestDayOfAllTime = (state: RootState) => state?.main?.bestDayAllTime;
-export const getWorstDayOfAllTime = (state: RootState) => state?.main?.worstDayAllTime;
-export const getBestDayWeekAnalytics = (state: RootState) => state?.main?.bestDayWeekAnalytics;
+export const getMainTransactionTableDateFooter = (state: RootState) => state?.main?.mainTransactionTableDateFooter;
+export const getMainBestDayOfAllTime = (state: RootState) => state?.main?.mainBestDayAllTime;
+export const getMainWorstDayOfAllTime = (state: RootState) => state?.main?.mainWorstDayAllTime;
 // eslint-disable-next-line max-len
-export const getBestDayWeekAnalyticsFooter = (state: RootState) => state?.main?.bestDayWeekAnalyticsFooter;
-export const getWorstDayWeekAnalytics = (state: RootState) => state?.main?.worstDayWeekAnalytics;
+export const getMainBestDayWeekAnalytics = (state: RootState) => state?.main?.mainBestDayWeekAnalytics;
 // eslint-disable-next-line max-len
-export const getWorstDayWeekAnalyticsFooter = (state: RootState) => state?.main?.worstDayWeekAnalyticsFooter;
-export const getSelectLocationData = (state: RootState) => state?.main?.locationData;
+export const getMainBestDayWeekAnalyticsFooter = (state: RootState) => state?.main?.mainBestDayWeekAnalyticsFooter;
 // eslint-disable-next-line max-len
-export const getSelectedLocation = (state: RootState) => state?.main?.selectedLocationData;
+export const getMainWorstDayWeekAnalytics = (state: RootState) => state?.main?.mainWorstDayWeekAnalytics;
 // eslint-disable-next-line max-len
-export const getSelectMachineLocationData = (state: RootState) => state?.main?.machineLocationData;
+export const getMainWorstDayWeekAnalyticsFooter = (state: RootState) => state?.main?.mainWorstDayWeekAnalyticsFooter;
+export const getMainSelectLocationData = (state: RootState) => state?.main?.mainLocationData;
 // eslint-disable-next-line max-len
-export const getSelectedMachineLocation = (state: RootState) => state?.main?.selectedMachineLocationData;
+export const getMainSelectedLocation = (state: RootState) => state?.main?.mainSelectedLocationData;
 // eslint-disable-next-line max-len
-export const getSelectedBestAndWorstLocation = (state: RootState) => state?.main?.selectedBestAndWorstLocationData;
-export const getDatePickerMode = (state: RootState) => state?.main?.mainDatePickerMode;
-export const getSelectedDate = (state: RootState) => state?.main?.selectedDates;
+export const getMainSelectMachineLocationData = (state: RootState) => state?.main?.mainMachineLocationData;
 // eslint-disable-next-line max-len
-export const getBestAndWorstDayDatePickerMode = (state: RootState) => state?.main?.bestAndWorstDayDatePickerMode;
+export const getMainSelectedMachineLocation = (state: RootState) => state?.main?.mainSelectedMachineLocationData;
 // eslint-disable-next-line max-len
-export const getBestAndWorstDaySelectedDates = (state: RootState) => state?.main?.bestAndWorstDaySelectedDates;
-export const getBestDayInChosenMounts = (state: RootState) => state?.main?.bestDayInChosenMounts;
-export const getWorstDayInChosenMounts = (state: RootState) => state?.main?.worstDayInChosenMounts;
+export const getMainSelectedBestAndWorstLocation = (state: RootState) => state?.main?.mainSelectedBestAndWorstLocationData;
+export const getMainDatePickerMode = (state: RootState) => state?.main?.mainDatePickerMode;
+export const getMainSelectedDate = (state: RootState) => state?.main?.mainSelectedDates;
+// eslint-disable-next-line max-len
+export const getMainBestAndWorstDayDatePickerMode = (state: RootState) => state?.main?.mainBestAndWorstDayDatePickerMode;
+// eslint-disable-next-line max-len
+export const getMainBestAndWorstDaySelectedDates = (state: RootState) => state?.main?.mainBestAndWorstDaySelectedDates;
+// eslint-disable-next-line max-len
+export const getMainBestDayInChosenMounts = (state: RootState) => state?.main?.mainBestDayInChosenMounts;
+// eslint-disable-next-line max-len
+export const getMainWorstDayInChosenMounts = (state: RootState) => state?.main?.mainWorstDayInChosenMounts;
 
 export default mainSlice.reducer;

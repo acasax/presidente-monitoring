@@ -137,7 +137,8 @@
       @media (max-width: 600px) {
         ._main-page ._table-row ._location-table-mobile {
           width: 100%;
-          margin-bottom: 20px; } }
+          margin-bottom: 20px;
+          display: block; } }
   ._main-page ._best-and-worst-day-container {
     display: flex;
     justify-content: flex-start;
@@ -461,7 +462,7 @@
   min-width: 400px; }
   @media (max-width: 600px) {
     ._table-cell-header-location {
-      min-width: 100px; } }
+      min-width: 295px; } }
 
 ._table-cell-header-machine {
   min-width: 150px; }

@@ -7,13 +7,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useAppSelector } from '../../../../store/hooks';
-import { getLocationTableData, getTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
+import { getMainLocationTableData, getMainTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
 import { padTo2Digits } from '../../../../utils/dateTime/functionsDateTime';
 
 const LocationTable = () => {
   const [newData, setNewData] = useState([]);
-  const data = useAppSelector(getLocationTableData);
-  const footer = useAppSelector(getTransactionTableDateFooter);
+  const data = useAppSelector(getMainLocationTableData);
+  const footer = useAppSelector(getMainTransactionTableDateFooter);
 
   function sum(a, b) {
     return a + b;

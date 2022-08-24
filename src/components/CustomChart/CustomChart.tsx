@@ -75,7 +75,7 @@ const CustomChart = ({ chartData }: any) => {
   return (
     <TableContainer component={Paper}>
       <Paper sx={{
-        minWidth: chartData.length > 25 ? 2000 : width < 600 ? 0 : 1000,
+        minWidth: chartData.length > 25 ? 2000 : (width < 600 && chartData.length > 5) ? 1000 : 0,
         width: '100%',
         paddingTop: width < 600 ? '20px' : '30px',
         paddingBottom: width < 600 ? '20px' : '30px',

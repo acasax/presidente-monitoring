@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import {
-  getSelectedMachineLocation,
-  getSelectMachineLocationData,
-  setSelectedMachineLocation,
+  getMainSelectedMachineLocation,
+  getMainSelectMachineLocationData,
+  setMainSelectedMachineLocation,
 } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 
 const MainMachineLocationSelect = () => {
-  const machineLocationData = useAppSelector(getSelectMachineLocationData);
-  const machineSelectedLocation = useAppSelector(getSelectedMachineLocation);
+  const machineLocationData = useAppSelector(getMainSelectMachineLocationData);
+  const machineSelectedLocation = useAppSelector(getMainSelectedMachineLocation);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
 
@@ -26,7 +26,7 @@ const MainMachineLocationSelect = () => {
   }, [updateDimension]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch(setSelectedMachineLocation(event.target.value as string));
+    dispatch(setMainSelectedMachineLocation(event.target.value as string));
   };
 
   useEffect(() => {

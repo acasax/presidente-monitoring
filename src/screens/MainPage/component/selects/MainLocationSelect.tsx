@@ -11,10 +11,10 @@ import {
   setAlertStatus,
 } from '../../../../components/CustomAlert/alertSlice';
 import {
-  getSelectedLocation,
-  getSelectLocationData,
-  setSelectedLocation,
-  setSelectLocationData,
+  getMainSelectedLocation,
+  getMainSelectLocationData,
+  setMainSelectedLocation,
+  setMainSelectLocationData,
 } from '../../../../feautures/main/mainSlice';
 import CustomSelect from '../../../../components/CustomSelect/CustomSelect';
 
@@ -24,8 +24,8 @@ const MainLocationSelect = () => {
     resetLoading,
   } = useLoading();
   const token = useAppSelector(getToken);
-  const locationData = useAppSelector(getSelectLocationData);
-  const selectedLocations = useAppSelector(getSelectedLocation);
+  const locationData = useAppSelector(getMainSelectLocationData);
+  const selectedLocations = useAppSelector(getMainSelectedLocation);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
 
@@ -49,7 +49,7 @@ const MainLocationSelect = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        dispatch(setSelectLocationData(res?.data));
+        dispatch(setMainSelectLocationData(res?.data));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -77,7 +77,7 @@ const MainLocationSelect = () => {
     const {
       target: { value },
     } = event;
-    dispatch(setSelectedLocation(
+    dispatch(setMainSelectedLocation(
       typeof value === 'string' ? value.split(',') : value,
     ));
   };

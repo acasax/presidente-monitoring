@@ -9,40 +9,40 @@ import CustomButton from '../../components/CustomButton/CustomButton';
 import MainDatePickerModeSelect from './component/selects/MainDatePickerModeSelect';
 import MainDatePicker from './component/datePicker/MainDatePicker';
 import {
-  getBestAndWorstDayDatePickerMode,
-  getBestAndWorstDaySelectedDates,
-  getBestDayInChosenMounts,
-  getBestDayOfAllTime,
-  getBestDayWeekAnalytics,
-  getBestDayWeekAnalyticsFooter,
-  getDatePickerMode,
-  getLocationTableData,
-  getMachineTableData,
+  getMainBestAndWorstDayDatePickerMode,
+  getMainBestAndWorstDaySelectedDates,
+  getMainBestDayInChosenMounts,
+  getMainBestDayOfAllTime,
+  getMainBestDayWeekAnalytics,
+  getMainBestDayWeekAnalyticsFooter,
+  getMainDatePickerMode,
+  getMainLocationTableData,
+  getMainMachineTableData,
   getMainChartData,
-  getSelectedBestAndWorstLocation,
-  getSelectedDate,
-  getSelectedLocation,
-  getSelectedMachineLocation,
-  getSelectLocationData,
-  getSelectMachineLocationData,
-  getTransactionTableDateFooter,
-  getWorstDayInChosenMounts,
-  getWorstDayOfAllTime,
-  getWorstDayWeekAnalytics,
-  getWorstDayWeekAnalyticsFooter,
-  setBestDayOfAllTime,
-  setBestDayWeekAnalytics,
-  setBestDayWeekAnalyticsFooter,
-  setBestInChosenMounts,
-  setChartData,
-  setLocationTableData,
-  setMachineTableData,
-  setSelectMachineLocationData,
-  setTransactionTableDataFooter,
-  setWorstDayOfAllTime,
-  setWorstDayWeekAnalytics,
-  setWorstDayWeekAnalyticsFooter,
-  setWorstInChosenMounts,
+  getMainSelectedBestAndWorstLocation,
+  getMainSelectedDate,
+  getMainSelectedLocation,
+  getMainSelectedMachineLocation,
+  getMainSelectLocationData,
+  getMainSelectMachineLocationData,
+  getMainTransactionTableDateFooter,
+  getMainWorstDayInChosenMounts,
+  getMainWorstDayOfAllTime,
+  getMainWorstDayWeekAnalytics,
+  getMainWorstDayWeekAnalyticsFooter,
+  setMainBestDayOfAllTime,
+  setMainBestDayWeekAnalytics,
+  setMainBestDayWeekAnalyticsFooter,
+  setMainBestInChosenMounts,
+  setMainChartData,
+  setMainLocationTableData,
+  setMainMachineTableData,
+  setMainSelectMachineLocationData,
+  setMainTransactionTableDataFooter,
+  setMainWorstDayOfAllTime,
+  setMainWorstDayWeekAnalytics,
+  setMainWorstDayWeekAnalyticsFooter,
+  setMainWorstInChosenMounts,
 } from '../../feautures/main/mainSlice';
 import { clearUser, getToken } from '../../feautures/auth/authSlice';
 import {
@@ -79,27 +79,29 @@ interface PageTestProps {
 
 const MainPage: FC<PageTestProps> = () => {
   const token = useAppSelector(getToken);
-  const selectedLocations = useAppSelector(getSelectedLocation);
-  const dataPickerMode = useAppSelector(getDatePickerMode);
-  const pickedDate = useAppSelector(getSelectedDate);
+  const selectedLocations = useAppSelector(getMainSelectedLocation);
+  const dataPickerMode = useAppSelector(getMainDatePickerMode);
+  const pickedDate = useAppSelector(getMainSelectedDate);
   const chartData = useAppSelector(getMainChartData);
-  const locationTableData = useAppSelector(getLocationTableData);
-  const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
-  const locationData = useAppSelector(getSelectLocationData);
-  const selectedMachineLocations = useAppSelector(getSelectedMachineLocation);
-  const machineSelectedLocation = useAppSelector(getSelectMachineLocationData);
-  const machineTableData = useAppSelector(getMachineTableData);
-  const bestDayOfAllTime = useAppSelector(getBestDayOfAllTime);
-  const worstDayOfAllTime = useAppSelector(getWorstDayOfAllTime);
-  const bestAndWorstWeekAnalyticsSelectedLocation = useAppSelector(getSelectedBestAndWorstLocation);
-  const bestAndWorstWeekAnalyticsSelectedDates = useAppSelector(getBestAndWorstDaySelectedDates);
-  const bestDayWeekAnalytics = useAppSelector(getBestDayWeekAnalytics);
-  const bestDayWeekAnalyticsFooter = useAppSelector(getBestDayWeekAnalyticsFooter);
-  const worstDayWeekAnalytics = useAppSelector(getWorstDayWeekAnalytics);
-  const worstDayWeekAnalyticsFooter = useAppSelector(getWorstDayWeekAnalyticsFooter);
-  const bestAndWorstDayDatePickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
-  const bestDayInChosenMounts = useAppSelector(getBestDayInChosenMounts);
-  const worstDayInChosenMounts = useAppSelector(getWorstDayInChosenMounts);
+  const locationTableData = useAppSelector(getMainLocationTableData);
+  const transactionTableDateFooter = useAppSelector(getMainTransactionTableDateFooter);
+  const locationData = useAppSelector(getMainSelectLocationData);
+  const selectedMachineLocations = useAppSelector(getMainSelectedMachineLocation);
+  const machineSelectedLocation = useAppSelector(getMainSelectMachineLocationData);
+  const machineTableData = useAppSelector(getMainMachineTableData);
+  const bestDayOfAllTime = useAppSelector(getMainBestDayOfAllTime);
+  const worstDayOfAllTime = useAppSelector(getMainWorstDayOfAllTime);
+  // eslint-disable-next-line max-len
+  const bestAndWorstWeekAnalyticsSelectedLocation = useAppSelector(getMainSelectedBestAndWorstLocation);
+  // eslint-disable-next-line max-len
+  const bestAndWorstWeekAnalyticsSelectedDates = useAppSelector(getMainBestAndWorstDaySelectedDates);
+  const bestDayWeekAnalytics = useAppSelector(getMainBestDayWeekAnalytics);
+  const bestDayWeekAnalyticsFooter = useAppSelector(getMainBestDayWeekAnalyticsFooter);
+  const worstDayWeekAnalytics = useAppSelector(getMainWorstDayWeekAnalytics);
+  const worstDayWeekAnalyticsFooter = useAppSelector(getMainWorstDayWeekAnalyticsFooter);
+  const bestAndWorstDayDatePickerMode = useAppSelector(getMainBestAndWorstDayDatePickerMode);
+  const bestDayInChosenMounts = useAppSelector(getMainBestDayInChosenMounts);
+  const worstDayInChosenMounts = useAppSelector(getMainWorstDayInChosenMounts);
   const mainChartData = useAppSelector(getMainChartData);
   const {
     values,
@@ -134,7 +136,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        dispatch(setBestDayOfAllTime(res));
+        dispatch(setMainBestDayOfAllTime(res));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -154,7 +156,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        dispatch(setWorstDayOfAllTime(res));
+        dispatch(setMainWorstDayOfAllTime(res));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -216,7 +218,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setLocationTableData(res));
+      dispatch(setMainLocationTableData(res));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -226,7 +228,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setTransactionTableDataFooter(footer));
+      dispatch(setMainTransactionTableDataFooter(footer));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -236,12 +238,12 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setChartData(chart));
+      dispatch(setMainChartData(chart));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
       // eslint-disable-next-line max-len
       const machineSelectData = locationData.filter((item) => selectedLocations.includes(Number(item.id)));
-      dispatch(setSelectMachineLocationData(machineSelectData));
+      dispatch(setMainSelectMachineLocationData(machineSelectData));
     } catch (e) {
       dispatch(setAlertStatus('error'));
       dispatch(setAlertMsg(e?.message));
@@ -272,7 +274,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setMachineTableData(res));
+      dispatch(setMainMachineTableData(res));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
@@ -341,7 +343,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setBestDayWeekAnalytics(best));
+      dispatch(setMainBestDayWeekAnalytics(best));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -351,7 +353,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setBestDayWeekAnalyticsFooter(bestFooter));
+      dispatch(setMainBestDayWeekAnalyticsFooter(bestFooter));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -361,7 +363,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setWorstDayWeekAnalytics(worst));
+      dispatch(setMainWorstDayWeekAnalytics(worst));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -371,7 +373,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setWorstDayWeekAnalyticsFooter(worstFooter));
+      dispatch(setMainWorstDayWeekAnalyticsFooter(worstFooter));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -381,7 +383,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setBestInChosenMounts(bestInChosenMounts));
+      dispatch(setMainBestInChosenMounts(bestInChosenMounts));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
 
@@ -391,7 +393,7 @@ const MainPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
         return;
       }
-      dispatch(setWorstInChosenMounts(worstInChosenMounts));
+      dispatch(setMainWorstInChosenMounts(worstInChosenMounts));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
@@ -430,10 +432,10 @@ const MainPage: FC<PageTestProps> = () => {
           <div className="_location-table-mobile">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <Header2 text="Podaci o lokacijama" />}
+                && <Header2 text="Podaci o lokacijama" />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <LocationTable />}
+                && <LocationTable />}
           </div>
         </div>
         <Header2 text="Pretraga za podatke po masinama" />
@@ -494,7 +496,7 @@ const MainPage: FC<PageTestProps> = () => {
             worstFooter={worstDayWeekAnalyticsFooter}
           />
           {
-                        (bestDayInChosenMounts && worstDayInChosenMounts)
+                        (bestDayInChosenMounts.month && worstDayInChosenMounts.month)
                         && (
                         <>
                           <div className="_best-and-worst-day-header-container">

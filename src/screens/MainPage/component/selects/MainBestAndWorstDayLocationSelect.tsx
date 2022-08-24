@@ -4,10 +4,10 @@ import { useLoading } from '../../../../hooks/UseLoading';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
 import { getToken } from '../../../../feautures/auth/authSlice';
 import {
-  getSelectedBestAndWorstLocation,
-  getSelectLocationData,
-  setSelectedBestAndWorstLocation,
-  setSelectLocationData,
+  getMainSelectedBestAndWorstLocation,
+  getMainSelectLocationData,
+  setMainSelectedBestAndWorstLocation,
+  setMainSelectLocationData,
 } from '../../../../feautures/main/mainSlice';
 import { getLocations } from '../../../../feautures/location/LocationService';
 import {
@@ -24,8 +24,8 @@ const MainBestAndWorstDayLocationSelect = () => {
     resetLoading,
   } = useLoading();
   const token = useAppSelector(getToken);
-  const locationData = useAppSelector(getSelectLocationData);
-  const selectedLocations = useAppSelector(getSelectedBestAndWorstLocation);
+  const locationData = useAppSelector(getMainSelectLocationData);
+  const selectedLocations = useAppSelector(getMainSelectedBestAndWorstLocation);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState([]);
 
@@ -49,7 +49,7 @@ const MainBestAndWorstDayLocationSelect = () => {
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
-        dispatch(setSelectLocationData(res?.data));
+        dispatch(setMainSelectLocationData(res?.data));
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }
@@ -74,7 +74,7 @@ const MainBestAndWorstDayLocationSelect = () => {
   }, [locationData]);
 
   const handleChange = (event: SelectChangeEvent) => {
-    dispatch(setSelectedBestAndWorstLocation(event.target.value as string));
+    dispatch(setMainSelectedBestAndWorstLocation(event.target.value as string));
   };
 
   return (

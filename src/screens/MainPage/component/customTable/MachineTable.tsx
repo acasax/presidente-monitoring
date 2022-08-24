@@ -7,12 +7,12 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import { useAppSelector } from '../../../../store/hooks';
-import { getMachineTableData, getTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
+import { getMainMachineTableData, getMainTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
 
 const MachineTable = () => {
   const [newData, setNewData] = useState([]);
-  const data = useAppSelector(getMachineTableData);
-  const footer = useAppSelector(getTransactionTableDateFooter);
+  const data = useAppSelector(getMainMachineTableData);
+  const footer = useAppSelector(getMainTransactionTableDateFooter);
 
   function sum(a, b) {
     return a + b;
