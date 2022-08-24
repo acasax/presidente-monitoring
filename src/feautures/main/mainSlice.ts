@@ -9,7 +9,7 @@ import {
 import { ILocationSelect } from '../location/locationModal';
 
 interface InitialState {
-  chartData: any,
+  mainChartData: any,
   locationTableData: any,
   machineTableData: any,
   transactionTableDateFooter: any,
@@ -33,7 +33,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  chartData: [],
+  mainChartData: [],
   locationTableData: [],
   machineTableData: [],
   transactionTableDateFooter: [],
@@ -61,10 +61,10 @@ const mainSlice = createSlice({
   initialState,
   reducers: {
     setChartData: (state, action: PayloadAction<any[]>) => {
-      state.chartData = action.payload;
+      state.mainChartData = action.payload;
     },
     clearChartData: (state) => {
-      state.chartData = [];
+      state.mainChartData = [];
     },
     setLocationTableData: (state, action: PayloadAction<ITransactionItem[]>) => {
       state.locationTableData = action.payload;
@@ -234,7 +234,7 @@ export const {
   clearWorstInChosenMounts,
 } = mainSlice.actions;
 
-export const getChartData = (state: RootState) => state?.main?.chartData;
+export const getMainChartData = (state: RootState) => state?.main?.mainChartData;
 export const getLocationTableData = (state: RootState) => state?.main?.locationTableData;
 export const getMachineTableData = (state: RootState) => state?.main?.machineTableData;
 // eslint-disable-next-line max-len

@@ -286,6 +286,9 @@
   align-items: center;
   top: 50px;
   width: 100%; }
+  @media (max-width: 600px) {
+    ._alert-container {
+      top: 70px; } }
 
 ._nav-bar-container {
   background: linear-gradient(119deg, #333867 12.45%, #17193B 94.7%);

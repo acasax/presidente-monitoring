@@ -8,5 +8,8 @@
   top: 50px;
   width: 100%;
 
+  @media (max-width: $extraSmall) {
+    top: 70px;
+  }
 
 }

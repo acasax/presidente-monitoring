@@ -15,10 +15,10 @@ import {
   getBestDayOfAllTime,
   getBestDayWeekAnalytics,
   getBestDayWeekAnalyticsFooter,
-  getChartData,
   getDatePickerMode,
   getLocationTableData,
   getMachineTableData,
+  getMainChartData,
   getSelectedBestAndWorstLocation,
   getSelectedDate,
   getSelectedLocation,
@@ -82,7 +82,7 @@ const MainPage: FC<PageTestProps> = () => {
   const selectedLocations = useAppSelector(getSelectedLocation);
   const dataPickerMode = useAppSelector(getDatePickerMode);
   const pickedDate = useAppSelector(getSelectedDate);
-  const chartData = useAppSelector(getChartData);
+  const chartData = useAppSelector(getMainChartData);
   const locationTableData = useAppSelector(getLocationTableData);
   const transactionTableDateFooter = useAppSelector(getTransactionTableDateFooter);
   const locationData = useAppSelector(getSelectLocationData);
@@ -100,6 +100,7 @@ const MainPage: FC<PageTestProps> = () => {
   const bestAndWorstDayDatePickerMode = useAppSelector(getBestAndWorstDayDatePickerMode);
   const bestDayInChosenMounts = useAppSelector(getBestDayInChosenMounts);
   const worstDayInChosenMounts = useAppSelector(getWorstDayInChosenMounts);
+  const mainChartData = useAppSelector(getMainChartData);
   const {
     values,
     handleChoseDate,
@@ -422,7 +423,7 @@ const MainPage: FC<PageTestProps> = () => {
         {chartData.length !== 0
                     && (
                     <div className="_row">
-                      <CustomChart />
+                      <CustomChart chartData={mainChartData} />
                     </div>
                     )}
         <div className="_table-row">

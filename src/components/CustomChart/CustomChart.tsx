@@ -7,9 +7,6 @@ import { curveCatmullRom, line } from 'd3-shape';
 import { scalePoint } from 'd3-scale';
 import TableContainer from '@mui/material/TableContainer';
 
-import { useAppSelector } from '../../store/hooks';
-import { getChartData } from '../../feautures/main/mainSlice';
-
 const PREFIX = 'Demo';
 
 const classes = {
@@ -54,8 +51,7 @@ const StyledChart = styled(Chart)(() => ({
   },
 }));
 
-const CustomChart = () => {
-  const chartData = useAppSelector(getChartData);
+const CustomChart = ({ chartData }: any) => {
   const [chartArgument, setChartArgument] = useState([]);
 
   const [width, setWidth] = useState(0);
@@ -79,7 +75,7 @@ const CustomChart = () => {
   return (
     <TableContainer component={Paper}>
       <Paper sx={{
-        minWidth: chartData.length > 25 ? width < 600 ? 1000 : 2000 : 0,
+        minWidth: chartData.length > 25 ? 2000 : width < 600 ? 0 : 1000,
         width: '100%',
         paddingTop: width < 600 ? '20px' : '30px',
         paddingBottom: width < 600 ? '20px' : '30px',
