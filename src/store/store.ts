@@ -4,6 +4,7 @@ import authReducer from '../feautures/auth/authSlice';
 import loadingReducer from '../components/SpinnerLoading/loadingSlice';
 import alertReducer from '../components/CustomAlert/alertSlice';
 import mainReducer from '../feautures/main/mainSlice';
+import attendanceReducer from '../feautures/attendance/attendanceSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     loading: loadingReducer,
     alert: alertReducer,
     main: mainReducer,
+    attendance: attendanceReducer,
   },
 });
 
