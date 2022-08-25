@@ -5,7 +5,6 @@ import {
   IBestAndWorstDayOfAllTime,
   IMachineTransaction,
   ITransaction,
-  ITransactionByLocationChart,
   IWeekAnalytics,
 } from './MainModal';
 
