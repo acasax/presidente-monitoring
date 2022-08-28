@@ -6,15 +6,15 @@ import CustomDatePicker from '../../../../components/CustomDatePicker/CustomDate
 
 const AttendanceDatePicker = () => {
   const datePickerMode = useAppSelector(getAttendanceDatePickerMode);
-  const { values, setValues } = useContext(AttendancePageContext);
+  const { attendanceValues, setAttendanceValues } = useContext(AttendancePageContext);
 
   return (
     <CustomDatePicker
       header="Izaberi datume"
       yearPicker={datePickerMode[0] === 'YEAR'}
       monthPicker={datePickerMode[0] === 'MONTH'}
-      value={values}
-      onChange={setValues}
+      value={attendanceValues}
+      onChange={setAttendanceValues}
       format={datePickerMode[0] === 'YEAR' ? 'YYYY' : datePickerMode[0] === 'MONTH' ? 'MM.YYYY' : 'DD.MM.YYYY'}
     />
   );

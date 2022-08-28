@@ -5,7 +5,7 @@ import { getAttendanceBestAndWorstDayDatePickerMode } from '../../../../feauture
 import CustomDatePicker from '../../../../components/CustomDatePicker/CustomDatePicker';
 
 const AttendanceBestAndWorstDayDatePicker = () => {
-  const { bestAndWorstDayValues, setBestAndWorstDayValues } = useContext(AttendancePageContext);
+  const { bestAndWorstDayValuesAttendance, setBestAndWorstDayValuesAttendance } = useContext(AttendancePageContext);
   const bestAndWorstDayDatePickerMode = useAppSelector(getAttendanceBestAndWorstDayDatePickerMode);
 
   return (
@@ -13,8 +13,8 @@ const AttendanceBestAndWorstDayDatePicker = () => {
       header="Izaberi datume"
       yearPicker={bestAndWorstDayDatePickerMode[0] === 'YEAR'}
       monthPicker={bestAndWorstDayDatePickerMode[0] === 'MONTH'}
-      value={bestAndWorstDayValues}
-      onChange={setBestAndWorstDayValues}
+      value={bestAndWorstDayValuesAttendance}
+      onChange={setBestAndWorstDayValuesAttendance}
       format={bestAndWorstDayDatePickerMode[0] === 'YEAR' ? 'YYYY' : 'MM.YYYY'}
     />
   );

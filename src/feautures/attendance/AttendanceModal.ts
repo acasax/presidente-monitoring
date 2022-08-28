@@ -117,10 +117,10 @@ export type {
 };
 
 export type TAttendancePageContext = {
-  values: any,
-  setValues: (b: any) => void,
-  handleChoseDate: () => void,
-  bestAndWorstDayValues: any,
-  setBestAndWorstDayValues: (b: any) => void,
-  handleChoseBestAndWorstDayDate: () => void,
+  attendanceValues: any,
+  setAttendanceValues: (b: any) => void,
+  handleChoseDateAttendance: () => void,
+  bestAndWorstDayValuesAttendance: any,
+  setBestAndWorstDayValuesAttendance: (b: any) => void,
+  handleChoseBestAndWorstDayDateAttendance: () => void,
 };

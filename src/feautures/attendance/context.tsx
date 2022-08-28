@@ -12,43 +12,43 @@ import { formatDate } from '../../utils/dateTime/functionsDateTime';
 export const AttendancePageContext = createContext({} as TAttendancePageContext);
 
 const AttendancePageContextContainer = ({ children }: { children: ReactNode }) => {
-  const [values, setValues] = useState<any>([]);
+  const [attendanceValues, setAttendanceValues] = useState<any>([]);
   const datePickerMode = useAppSelector(getAttendanceDatePickerMode);
-  const [bestAndWorstDayValues, setBestAndWorstDayValues] = useState<any>([]);
+  const [bestAndWorstDayValuesAttendance, setBestAndWorstDayValuesAttendance] = useState<any>([]);
   const dispatch = useAppDispatch();
 
-  const handleChoseDate = () => {
-    const selectedDate = values.map((x) => formatDate(new DateObject(x), datePickerMode));
+  const handleChoseDateAttendance = () => {
+    const selectedDate = attendanceValues.map((x) => formatDate(new DateObject(x), datePickerMode));
     dispatch(setAttendancePickedDate(selectedDate));
   };
 
-  const handleChoseBestAndWorstDayDate = () => {
+  const handleChoseBestAndWorstDayDateAttendance = () => {
     // eslint-disable-next-line max-len
-    const selectedDate = bestAndWorstDayValues.map((x) => formatDate(new DateObject(x), ['MONTH2']));
+    const selectedDate = bestAndWorstDayValuesAttendance.map((x) => formatDate(new DateObject(x), ['MONTH2']));
     dispatch(setAttendanceBestAndWorstDaySelectedDates(selectedDate));
   };
 
   useEffect(() => {
-    setValues([]);
+    setAttendanceValues([]);
   }, [datePickerMode]);
 
   const exportData = useMemo(
     () => (
       {
-        values,
-        setValues,
-        handleChoseDate,
-        bestAndWorstDayValues,
-        setBestAndWorstDayValues,
-        handleChoseBestAndWorstDayDate,
+        attendanceValues,
+        setAttendanceValues,
+        handleChoseDateAttendance,
+        bestAndWorstDayValuesAttendance,
+        setBestAndWorstDayValuesAttendance,
+        handleChoseBestAndWorstDayDateAttendance,
       }),
     [
-      values,
-      setValues,
-      handleChoseDate,
-      bestAndWorstDayValues,
-      setBestAndWorstDayValues,
-      handleChoseBestAndWorstDayDate,
+      attendanceValues,
+      setAttendanceValues,
+      handleChoseDateAttendance,
+      bestAndWorstDayValuesAttendance,
+      setBestAndWorstDayValuesAttendance,
+      handleChoseBestAndWorstDayDateAttendance,
     ],
   );
   return (
