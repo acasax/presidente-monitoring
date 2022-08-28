@@ -6,7 +6,7 @@ import { RootState } from '../../store/store';
 interface InitialState {
   attendanceChartData: any,
   attendanceLocationTableData: any,
-  attendanceTransactionTableDateFooter: any,
+  attendanceTableDateFooter: any,
   attendanceBestDayAllTime: any,
   attendanceWorstDayAllTime: any,
   attendanceBestDayWeekAnalytics: any,
@@ -27,7 +27,7 @@ interface InitialState {
 const initialState: InitialState = {
   attendanceChartData: [],
   attendanceLocationTableData: [],
-  attendanceTransactionTableDateFooter: [],
+  attendanceTableDateFooter: [],
   attendanceBestDayAllTime: {},
   attendanceWorstDayAllTime: {},
   attendanceBestDayWeekAnalytics: [],
@@ -62,11 +62,11 @@ const attendanceSlice = createSlice({
       state.attendanceLocationTableData = [];
     },
     // eslint-disable-next-line max-len
-    setAttendanceTransactionTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
-      state.attendanceTransactionTableDateFooter = action.payload;
+    setAttendanceTableDataFooter: (state, action: PayloadAction<IAverageAndSumByDateItem[]>) => {
+      state.attendanceTableDateFooter = action.payload;
     },
-    clearAttendanceTransactionTableDataFooter: (state) => {
-      state.attendanceTransactionTableDateFooter = [];
+    clearAttendanceTableDataFooter: (state) => {
+      state.attendanceTableDateFooter = [];
     },
     // eslint-disable-next-line max-len
     setAttendanceBestDayOfAllTime: (state, action: PayloadAction<IBestAndWorstDayOfAllTimeItem>) => {
@@ -171,8 +171,8 @@ export const {
   clearAttendanceChartData,
   setAttendanceLocationTableData,
   clearAttendanceLocationTableData,
-  setAttendanceTransactionTableDataFooter,
-  clearAttendanceTransactionTableDataFooter,
+  setAttendanceTableDataFooter,
+  clearAttendanceTableDataFooter,
   setAttendanceBestDayOfAllTime,
   clearAttendanceBesDayOfAllTime,
   setAttendanceWorstDayOfAllTime,
@@ -209,7 +209,7 @@ export const getAttendanceChartData = (state: RootState) => state?.attendance?.a
 // eslint-disable-next-line max-len
 export const getAttendanceLocationTableData = (state: RootState) => state?.attendance?.attendanceLocationTableData;
 // eslint-disable-next-line max-len
-export const getAttendanceTransactionTableDateFooter = (state: RootState) => state?.attendance?.attendanceTransactionTableDateFooter;
+export const getAttendanceTableDateFooter = (state: RootState) => state?.attendance?.attendanceTableDateFooter;
 // eslint-disable-next-line max-len
 export const getAttendanceBestDayOfAllTime = (state: RootState) => state?.attendance?.attendanceBestDayAllTime;
 // eslint-disable-next-line max-len
@@ -222,6 +222,7 @@ export const getAttendanceBestDayWeekAnalyticsFooter = (state: RootState) => sta
 export const getAttendanceWorstDayWeekAnalytics = (state: RootState) => state?.attendance?.attendanceWorstDayWeekAnalytics;
 // eslint-disable-next-line max-len
 export const getAttendanceWorstDayWeekAnalyticsFooter = (state: RootState) => state?.attendance?.attendanceWorstDayWeekAnalyticsFooter;
+// At main page use to machine selected locations
 // eslint-disable-next-line max-len
 export const getAttendanceSelectLocationData = (state: RootState) => state?.attendance?.attendanceLocationData;
 // eslint-disable-next-line max-len

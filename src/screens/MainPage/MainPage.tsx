@@ -81,7 +81,6 @@ const MainPage: FC<PageTestProps> = () => {
   const selectedLocations = useAppSelector(getMainSelectedLocation);
   const dataPickerMode = useAppSelector(getMainDatePickerMode);
   const pickedDate = useAppSelector(getMainSelectedDate);
-  const chartData = useAppSelector(getMainChartData);
   const locationTableData = useAppSelector(getMainLocationTableData);
   const transactionTableDateFooter = useAppSelector(getMainTransactionTableDateFooter);
   const locationData = useAppSelector(getMainSelectLocationData);
@@ -420,8 +419,8 @@ const MainPage: FC<PageTestProps> = () => {
             />
           </div>
         </div>
-        {chartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
-        {chartData.length !== 0
+        {mainChartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
+        {mainChartData.length !== 0
                     && (
                     <div className="_row">
                       <CustomChart chartData={mainChartData} />
