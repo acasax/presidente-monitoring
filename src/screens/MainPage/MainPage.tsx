@@ -15,10 +15,10 @@ import {
   getMainBestDayOfAllTime,
   getMainBestDayWeekAnalytics,
   getMainBestDayWeekAnalyticsFooter,
+  getMainChartData,
   getMainDatePickerMode,
   getMainLocationTableData,
   getMainMachineTableData,
-  getMainChartData,
   getMainSelectedBestAndWorstLocation,
   getMainSelectedDate,
   getMainSelectedLocation,
@@ -50,7 +50,6 @@ import {
   getBestAndWorstDayAllTime,
   getBestAndWorstInChosenMounts,
   getDataForLocation,
-  getDataForLocationForChart,
   getDataForMachine,
   getDataForWeekAnalytics,
   getDataForWeekAnalyticsFooter,
@@ -62,7 +61,7 @@ import { useLoading } from '../../hooks/UseLoading';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { getDaysArray, getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import MainMachineLocationSelect from './component/selects/MainMachineLocationSelect';
-import LocationTable from './component/customTable/LocationTable';
+import LocationTable from '../../components/CustomTable/LocationTable';
 import MachineTable from './component/customTable/MachineTable';
 import MainBestAndWorstDayLocationSelect from './component/selects/MainBestAndWorstDayLocationSelect';
 import BestAndWorstDayDatePicker from './component/datePicker/BestAndWorstDayDatePicker';
@@ -432,10 +431,15 @@ const MainPage: FC<PageTestProps> = () => {
           <div className="_location-table-mobile">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                && <Header2 text="Podaci o lokacijama" />}
+                            && <Header2 text="Podaci o lokacijama" />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                && <LocationTable />}
+                            && (
+                            <LocationTable
+                              data={locationTableData}
+                              footer={transactionTableDateFooter}
+                            />
+                            )}
           </div>
         </div>
         <Header2 text="Pretraga za podatke po masinama" />
@@ -466,7 +470,12 @@ const MainPage: FC<PageTestProps> = () => {
                             && <Header2 text="Podaci o lokacijama" />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <LocationTable />}
+                            && (
+                            <LocationTable
+                              data={locationTableData}
+                              footer={transactionTableDateFooter}
+                            />
+                            )}
           </div>
         </div>
         <div className="_best-and-worst-day-container">

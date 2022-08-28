@@ -6,14 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useAppSelector } from '../../../../store/hooks';
-import { getMainLocationTableData, getMainTransactionTableDateFooter } from '../../../../feautures/main/mainSlice';
-import { padTo2Digits } from '../../../../utils/dateTime/functionsDateTime';
+import { padTo2Digits } from '../../utils/dateTime/functionsDateTime';
 
-const LocationTable = () => {
+const LocationTable = ({ data, footer }: any) => {
   const [newData, setNewData] = useState([]);
-  const data = useAppSelector(getMainLocationTableData);
-  const footer = useAppSelector(getMainTransactionTableDateFooter);
 
   function sum(a, b) {
     return a + b;

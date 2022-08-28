@@ -1,5 +1,5 @@
 import React from 'react';
-import BestAndWorstDayWeekAnalyticsTable from '../../screens/MainPage/component/customTable/BestAndWorstDayWeekAnalyticsTable';
+import BestAndWorstDayWeekAnalyticsTable from '../CustomTable/BestAndWorstDayWeekAnalyticsTable';
 
 const WeekAnalyticsContainer = ({ bestData, bestFooter, worstData, worstFooter }: any) => (
   <div className="_week-analytics-container">
