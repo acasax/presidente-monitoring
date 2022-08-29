@@ -51,15 +51,15 @@ export function getMountsArray(date: string, status = true) {
     arr = date.split('-');
   }
   const cDate = new Date(Number(arr[0]), 1, 1);
-  const yearIndex = Number(arr[0]);
+  let i = 0;
   const res = [];
-  while (cDate.getFullYear() === yearIndex) {
+  while (i < 12) {
     if (status) {
-      res.push(`${padTo2Digits(cDate.getMonth())}.${cDate.getFullYear()}`);
+      res.push(`${padTo2Digits(i + 1)}.${cDate.getFullYear()}`);
     } else {
-      res.push(`${cDate.getFullYear()}-${padTo2Digits(cDate.getMonth())}`);
+      res.push(`${cDate.getFullYear()}-${padTo2Digits(i + 1)}`);
     }
-    cDate.setMonth(cDate.getMonth() + 1);
+    i += 1;
   }
   return res;
 }
