@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Router, Switch, useHistory } from 'react-router-dom';
 import { pathComponentArray } from './RouteComponentMap';
 import { ProtectedRoute } from './ProtectedRoute';
-import { LOGIN_PATH, MAIN_PATH, NOT_FOUND_PATH } from './path-constants';
+import { LOGIN_PATH, NOT_FOUND_PATH } from './path-constants';
 import { useAppSelector } from '../store/hooks';
 import { isLogged } from '../feautures/auth/authSlice';
 import NavBar from '../components/NavBar/NavBar';
@@ -15,13 +15,11 @@ const Routes = () => {
     const paths = pathComponentArray.map((x) => x.path);
     if (!IsLogged) {
       history.push(LOGIN_PATH);
-    } else {
-      history.push(MAIN_PATH);
     }
     if (!paths.includes(history.location.pathname)) {
       history.push(NOT_FOUND_PATH);
     }
-  }, [history.location, isLogged]);
+  }, [history.location, IsLogged]);
 
   return (
     <Router history={history}>

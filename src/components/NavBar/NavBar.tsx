@@ -36,21 +36,21 @@ const NavBar = () => {
           </div>
           <div className="_item-container">
             <Link
+              className={location.pathname === ATTENDANCE_PATH ? '_text _active' : '_text'}
+              onClick={() => history.push(ATTENDANCE_PATH)}
+              to={ATTENDANCE_PATH}
+            >
+              posecenost
+            </Link>
+          </div>
+          <div className="_item-container">
+            <Link
               className={location.pathname === COMPARISON_PATH ? '_text _active' : '_text'}
               onClick={() => history.push(COMPARISON_PATH)}
               to={COMPARISON_PATH}
             >
               razlika
               ka upravi
-            </Link>
-          </div>
-          <div className="_item-container">
-            <Link
-              className={location.pathname === ATTENDANCE_PATH ? '_text _active' : '_text'}
-              onClick={() => history.push(ATTENDANCE_PATH)}
-              to={ATTENDANCE_PATH}
-            >
-              posecenost
             </Link>
           </div>
 

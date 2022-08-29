@@ -3,12 +3,14 @@ import { Controller, useForm } from 'react-hook-form';
 import { Button, FormControl, FormHelperText, IconButton, InputAdornment, OutlinedInput } from '@mui/material';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useHistory } from 'react-router-dom';
 import Screen from '../Screen';
 import { useLoading } from '../../hooks/UseLoading';
 import { useAppDispatch } from '../../store/hooks';
 import { Login } from '../../feautures/auth/AuthServices';
 import { clearUser, setUser } from '../../feautures/auth/authSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
+import { MAIN_PATH } from '../../routes/path-constants';
 
 interface PageTestProps {
   test?: string;
@@ -19,6 +21,7 @@ const AuthPage: FC<PageTestProps> = () => {
     handleSubmit,
     control,
   } = useForm();
+  const history = useHistory();
 
   const {
     setLoading,
@@ -50,6 +53,7 @@ const AuthPage: FC<PageTestProps> = () => {
         dispatch(setAlertOpenStatus(true));
       } else {
         dispatch(setUser(res));
+        history.push(MAIN_PATH);
         dispatch(setAlertOpenStatus(false));
         dispatch(clearAlertMsg());
       }

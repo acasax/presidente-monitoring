@@ -28,6 +28,6 @@ export const { setUser, clearUser } = authSlice.actions;
 
 export const getToken = (state: RootState) => state?.auth?.userData?.token;
 export const getUserData = (state: RootState) => state?.auth?.userData;
-export const isLogged = (state: RootState) => !!state?.auth?.userData?.token;
+export const isLogged = (state: RootState) => state?.auth?.userData?.token;
 
 export default authSlice.reducer;
