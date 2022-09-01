@@ -11,7 +11,7 @@ interface ITransactionItem {
   id?: number,
   address?: string,
   locationName?: string,
-  transactions?: ITransactionInfo[],
+  attendances?: ITransactionInfo[],
 }
 
 interface ITransaction {

@@ -437,6 +437,7 @@ const MainPageView: FC<PageTestProps> = () => {
                             <LocationTable
                               data={locationTableData}
                               footer={transactionTableDateFooter}
+                              table="transactions"
                             />
                             )}
           </div>
@@ -473,6 +474,7 @@ const MainPageView: FC<PageTestProps> = () => {
                             <LocationTable
                               data={locationTableData}
                               footer={transactionTableDateFooter}
+                              table="transactions"
                             />
                             )}
           </div>

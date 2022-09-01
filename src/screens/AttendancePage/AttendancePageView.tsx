@@ -389,6 +389,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
                             <LocationTable
                               data={locationTableData}
                               footer={locationTableFooter}
+                              table="attendances"
                             />
                             )}
           </div>
