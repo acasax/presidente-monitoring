@@ -3,6 +3,7 @@ import { DateObject } from 'react-multi-date-picker';
 import { TAttendancePageContext } from './AttendanceModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
+  getAttendanceBestAndWorstDayDatePickerMode,
   getAttendanceDatePickerMode,
   setAttendanceBestAndWorstDaySelectedDates,
   setAttendancePickedDate,
@@ -13,8 +14,9 @@ export const AttendancePageContext = createContext({} as TAttendancePageContext)
 
 const AttendancePageContextContainer = ({ children }: { children: ReactNode }) => {
   const [attendanceValues, setAttendanceValues] = useState<any>([]);
-  const datePickerMode = useAppSelector(getAttendanceDatePickerMode);
   const [bestAndWorstDayValuesAttendance, setBestAndWorstDayValuesAttendance] = useState<any>([]);
+  const datePickerMode = useAppSelector(getAttendanceDatePickerMode);
+  const bestAndWorstDayDatePickerMode = useAppSelector(getAttendanceBestAndWorstDayDatePickerMode);
   const dispatch = useAppDispatch();
 
   const handleChoseDateAttendance = () => {
@@ -31,6 +33,10 @@ const AttendancePageContextContainer = ({ children }: { children: ReactNode }) =
   useEffect(() => {
     setAttendanceValues([]);
   }, [datePickerMode]);
+
+  useEffect(() => {
+    setBestAndWorstDayValuesAttendance([]);
+  }, [bestAndWorstDayDatePickerMode]);
 
   const exportData = useMemo(
     () => (

@@ -2,15 +2,21 @@ import React, { createContext, ReactNode, useEffect, useMemo, useState } from 'r
 import { DateObject } from 'react-multi-date-picker';
 import { TMainPageContext } from './MainModal';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { getMainDatePickerMode, setMainBestAndWorstDaySelectedDates, setMainPickedDate } from './mainSlice';
+import {
+  getMainBestAndWorstDayDatePickerMode,
+  getMainDatePickerMode,
+  setMainBestAndWorstDaySelectedDates,
+  setMainPickedDate,
+} from './mainSlice';
 import { formatDate } from '../../utils/dateTime/functionsDateTime';
 
 export const MainPageContext = createContext({} as TMainPageContext);
 
 const MainPageContextContainer = ({ children }: { children: ReactNode }) => {
   const [values, setValues] = useState<any>([]);
-  const datePickerMode = useAppSelector(getMainDatePickerMode);
   const [bestAndWorstDayValues, setBestAndWorstDayValues] = useState<any>([]);
+  const datePickerMode = useAppSelector(getMainDatePickerMode);
+  const bestAndWorstDayPickerMode = useAppSelector(getMainBestAndWorstDayDatePickerMode);
   const dispatch = useAppDispatch();
 
   const handleChoseDate = () => {
@@ -27,6 +33,10 @@ const MainPageContextContainer = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setValues([]);
   }, [datePickerMode]);
+
+  useEffect(() => {
+    setBestAndWorstDayValues([]);
+  }, [bestAndWorstDayPickerMode]);
 
   const exportData = useMemo(
     () => (
