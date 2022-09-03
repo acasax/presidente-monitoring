@@ -207,7 +207,7 @@ const getAttendanceForWeekAnalyticsFooter = async (token: string, query = {}): P
     });
   queryString = queryString.slice(0, -1);
 
-  const path = baseService.url.build('attendance/best-or-worst-day-in-month');
+  const path = baseService.url.build('attendance/best-or-worst-day-in-months');
   const url = `${path}?${queryString}`;
   const response: AxiosResponse<IWeekAnalytics> = await baseService.get(url, {});
   if (response?.data?.statusCode) {

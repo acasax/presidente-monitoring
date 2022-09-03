@@ -56,12 +56,12 @@ import CustomChart from '../../components/CustomChart/CustomChart';
 import LocationTable from '../../components/CustomTable/LocationTable';
 import BestAndWorstDayOfAllTimeContainer
   from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
-import MainBestAndWorstDayLocationSelect from '../MainPage/component/selects/MainBestAndWorstDayLocationSelect';
-import MainBestAndWorstDayDatePickerModeSelect
-  from '../MainPage/component/selects/MainBestAndWorstDayDatePickerModeSelect';
-import BestAndWorstDayDatePicker from '../MainPage/component/datePicker/BestAndWorstDayDatePicker';
 import WeekAnalyticsContainer from '../../components/WeekAnalyticsContainer/WeekAnalyticsContainer';
 import CustomIconButtonSend from '../../components/CustomIconButton/CustomIconButtonSend';
+import AttendanceBestAndWorstDayLocationSelect from './component/selects/AttendanceBestAndWorstDayLocationSelect';
+import AttendanceBestAndWorstDayDatePickerModeSelect
+  from './component/selects/AttendanceBestAndWorstDayDatePickerModeSelect';
+import AttendanceBestAndWorstDayDatePicker from './component/datePicker/AttendanceBestAndWorstDayDatePicker';
 
 interface PageTestProps {
   test?: string
@@ -378,7 +378,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
                       <CustomChart chartData={attendanceChartData} />
                     </div>
                     )}
-        <div className="_table-row">
+        <div className="_table-row-attendance">
           <div className="_location-table-attendance">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && locationTableFooter.length !== 0)
@@ -404,9 +404,9 @@ const AttendancePageView: FC<PageTestProps> = () => {
             <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
           </div>
           <div className="_row-attendance">
-            <MainBestAndWorstDayLocationSelect />
-            <MainBestAndWorstDayDatePickerModeSelect />
-            <BestAndWorstDayDatePicker />
+            <AttendanceBestAndWorstDayLocationSelect />
+            <AttendanceBestAndWorstDayDatePickerModeSelect />
+            <AttendanceBestAndWorstDayDatePicker />
             <div className="_search-button-container-attendance">
               <CustomButton
                 text="PRETRAZI"

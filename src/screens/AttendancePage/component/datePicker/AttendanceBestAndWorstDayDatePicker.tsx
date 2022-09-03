@@ -5,6 +5,7 @@ import { getAttendanceBestAndWorstDayDatePickerMode } from '../../../../feauture
 import CustomDatePicker from '../../../../components/CustomDatePicker/CustomDatePicker';
 
 const AttendanceBestAndWorstDayDatePicker = () => {
+  // eslint-disable-next-line max-len
   const { bestAndWorstDayValuesAttendance, setBestAndWorstDayValuesAttendance } = useContext(AttendancePageContext);
   const bestAndWorstDayDatePickerMode = useAppSelector(getAttendanceBestAndWorstDayDatePickerMode);
 
