@@ -12,7 +12,7 @@ const LocationTable = ({ data, footer, table }: any) => {
   const [newData, setNewData] = useState([]);
 
   function sum(a, b) {
-    return a + b;
+    return parseInt(a, 10) + parseInt(b, 10);
   }
 
   useEffect(() => {
