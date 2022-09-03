@@ -21,6 +21,7 @@ const CustomDatePicker = ({
       value={value}
       onChange={onChange}
       format={format}
+      maxDate={new Date()}
     />
   </div>
 );
