@@ -78,6 +78,7 @@ const CustomChart = ({ chartData }: any) => {
         // eslint-disable-next-line max-len
         minWidth: chartArgument.length > 10 ? 3500 : chartArgument.length > 8 ? 2700 : chartArgument.length > 6 ? 2500 : chartArgument.length > 4 ? 2000 : chartData.length > 25 ? 2000 : (width < 600 && chartData.length > 5) ? 1000 : 0,
         width: '100%',
+        height: '100%',
         paddingTop: width < 600 ? '20px' : '30px',
         paddingBottom: width < 600 ? '20px' : '30px',
         paddingLeft: width < 600 ? '20px' : '30px',
@@ -87,6 +88,7 @@ const CustomChart = ({ chartData }: any) => {
       >
         <StyledChart
           data={chartData}
+          height={width < 600 ? 1000 : 600}
         >
           <ArgumentScale factory={scalePoint} />
           <ArgumentAxis />
