@@ -5,6 +5,7 @@ import loadingReducer from '../components/SpinnerLoading/loadingSlice';
 import alertReducer from '../components/CustomAlert/alertSlice';
 import mainReducer from '../feautures/main/mainSlice';
 import attendanceReducer from '../feautures/attendance/attendanceSlice';
+import comparisonReducer from '../feautures/comparison/comparisonSlice';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     alert: alertReducer,
     main: mainReducer,
     attendance: attendanceReducer,
+    comparison: comparisonReducer,
   },
 });
 

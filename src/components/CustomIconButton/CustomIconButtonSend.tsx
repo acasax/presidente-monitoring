@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getToken } from '../../feautures/auth/authSlice';
 import { useLoading } from '../../hooks/UseLoading';
 import { setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../CustomAlert/alertSlice';
+import { SendExcelWithAttendance } from '../../feautures/attendance/AttendanceService';
 
-const CustomIconButtonSend = () => {
+const CustomIconButtonSend = ({ file }: any) => {
   const [selectedFile, setSelectedFile] = React.useState(null);
   const token = useAppSelector(getToken);
   const {
@@ -28,7 +29,13 @@ const CustomIconButtonSend = () => {
     form.append('file', selectedFile);
     setLoading();
     try {
-      const res = await SendExcelWithTransaction(form, {}, token);
+      let res;
+      if (file === 'transaction') {
+        res = await SendExcelWithTransaction(form, {}, token);
+      }
+      if (file === 'attendance') {
+        res = await SendExcelWithAttendance(form, {}, token);
+      }
       dispatch(setAlertStatus(res?.status));
       dispatch(setAlertMsg(res?.message));
       dispatch(setAlertOpenStatus(true));

@@ -521,7 +521,9 @@ const MainPageView: FC<PageTestProps> = () => {
                     }
         </div>
         <div className="_footer">
-          <CustomIconButtonSend />
+          <CustomIconButtonSend
+            file="transaction"
+          />
           {
                         width < 600 && (
                         <div className="_logout-icon-button">

@@ -6,3 +6,7 @@ interface IComparisonAllTimeData {
 }
 
 export type { IComparisonAllTimeData };
+
+export type TComparisonPageContext = {
+
+};

@@ -436,7 +436,9 @@ const AttendancePageView: FC<PageTestProps> = () => {
                     }
         </div>
         <div className="_footer-attendance">
-          <CustomIconButtonSend />
+          <CustomIconButtonSend
+            file="attendance"
+          />
           {
                         width < 600 && (
                         <div className="_logout-icon-button-attendance">

@@ -2,11 +2,13 @@
 
 ._comparison-page {
   background-color: $lightGray;
-  width: 100vw;
-  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 55px;
+  padding-left: 77px;
+  padding-right: 77px;
 
   ._text {
     font-size: 100px;

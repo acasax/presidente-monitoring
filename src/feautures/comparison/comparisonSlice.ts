@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IComparisonAllTimeData } from './ComparisonModal';
+import { RootState } from '../../store/store';
 
 interface InitialState {
   comparisonAllTimeData: IComparisonAllTimeData[]
@@ -26,5 +27,7 @@ export const {
   setComparisonAllTimeData,
   clearComparisonAllTimeData,
 } = comparisonSlice.actions;
+
+export const getComparisonAllTime = (state: RootState) => state?.comparison?.comparisonAllTimeData;
 
 export default comparisonSlice.reducer;

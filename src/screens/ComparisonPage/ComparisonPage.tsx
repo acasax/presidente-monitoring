@@ -1,16 +1,11 @@
-import React, { FC } from 'react';
-import Screen from '../Screen';
+import React from 'react';
+import ComparisonPageContextContainer from '../../feautures/comparison/context';
+import ComparisonPageView from './ComparisonPageView';
 
-interface PageTestProps {
-  test?: string
-}
-
-const ComparisonPage: FC<PageTestProps> = () => (
-  <Screen>
-    <div className="_comparison-page">
-      <p className="_text">Comparison</p>
-    </div>
-  </Screen>
+const ComparisonPage = () => (
+  <ComparisonPageContextContainer>
+    <ComparisonPageView />
+  </ComparisonPageContextContainer>
 );
 
 export default ComparisonPage;
