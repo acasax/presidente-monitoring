@@ -6,7 +6,7 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
-import { padTo2Digits } from '../../../utils/dateTime/functionsDateTime';
+import { padTo2Digits } from '../../../../utils/dateTime/functionsDateTime';
 
 const ComparisonAllTimeTable = ({ tableData }: any) => (
   <TableContainer component={Paper} sx={{ maxWidth: '100%', flex: 1 }}>

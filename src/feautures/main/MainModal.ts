@@ -3,7 +3,7 @@ interface IFile {
 }
 
 interface ITransactionInfo {
-  profit?: number,
+  sum?: number,
   date: string
 }
 

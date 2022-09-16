@@ -10,9 +10,47 @@
   padding-left: 77px;
   padding-right: 77px;
 
-  ._text {
-    font-size: 100px;
-    color: $black;
-    text-align: center;
+  @media (max-width: $extraSmall) {
+    padding-top: 70px;
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
+  ._row-comparison {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 40px;
+    width: 100%;
+    flex-direction: row;
+
+    @media (max-width: $extraSmall) {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding-bottom: 20px;
+    }
+
+    ._search-button-container-comparison {
+      @media (max-width: $extraSmall) {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: center;
+      }
+    }
+
+  }
+
+  ._table-row-comparison {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 100%;
+    flex-direction: row;
+
+    ._location-table-comparison {
+      width: 100%;
+      margin-bottom: 20px;
+    }
   }
 }
