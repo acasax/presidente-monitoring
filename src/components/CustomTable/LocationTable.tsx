@@ -93,7 +93,7 @@ const LocationTable = ({ data, footer, table }: any) => {
               >
                 {padTo2Digits(row?.id)}
                 {' / '}
-                {row?.locationName.trim()}
+                {row?.locationName.split(',')[0].trim()}
                 {', '}
                 {row?.address}
               </TableCell>
