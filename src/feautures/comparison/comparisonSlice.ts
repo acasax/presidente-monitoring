@@ -6,7 +6,8 @@ interface InitialState {
   comparisonAllTimeData: IComparisonAllTimeDataItem[],
   comparisonData: IComparisonData[],
   comparisonDatePickerMode: string[],
-  comparisonSelectedDates: any[]
+  comparisonSelectedDates: any[],
+  comparisonDateTableFooter: any[],
 }
 
 const initialState: InitialState = {
@@ -14,6 +15,7 @@ const initialState: InitialState = {
   comparisonData: [],
   comparisonDatePickerMode: ['DAY'],
   comparisonSelectedDates: [],
+  comparisonDateTableFooter: [],
 };
 
 const comparisonSlice = createSlice({
@@ -44,6 +46,12 @@ const comparisonSlice = createSlice({
     clearComparisonSelectedDates: (state) => {
       state.comparisonSelectedDates = [];
     },
+    setComparisonDateTableFooter: (state, action: PayloadAction<any[]>) => {
+      state.comparisonDateTableFooter = action.payload;
+    },
+    clearComparisonDateTableFooter: (state) => {
+      state.comparisonDateTableFooter = [];
+    },
   },
 });
 
@@ -56,6 +64,8 @@ export const {
   clearComparisonDatePickerMode,
   setComparisonSelectedDates,
   clearComparisonSelectedDates,
+  setComparisonDateTableFooter,
+  clearComparisonDateTableFooter,
 } = comparisonSlice.actions;
 
 export const getComparisonAllTime = (state: RootState) => state?.comparison?.comparisonAllTimeData;
@@ -64,5 +74,7 @@ export const getComparison = (state: RootState) => state?.comparison?.comparison
 export const getComparisonDatePickerMode = (state: RootState) => state?.comparison?.comparisonDatePickerMode;
 // eslint-disable-next-line max-len
 export const getComparisonSelectedDates = (state: RootState) => state?.comparison?.comparisonSelectedDates;
+// eslint-disable-next-line max-len
+export const getComparisonTableFooter = (state: RootState) => state?.comparison?.comparisonDateTableFooter;
 
 export default comparisonSlice.reducer;

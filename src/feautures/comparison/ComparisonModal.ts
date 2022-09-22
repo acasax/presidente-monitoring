@@ -29,11 +29,25 @@ interface IComparisonAllTimeData {
   statusCode?: string
 }
 
+interface IAverageAndSumByDateItem {
+  total?: string,
+  average?: string,
+  date?: string,
+}
+
+interface IAverageAndSumByDate {
+  data?: IAverageAndSumByDateItem[],
+  message?: string,
+  statusCode?: string
+}
+
 export type {
   IComparisonAllTimeData,
   IComparisonAllTimeDataItem,
   IComparisonDataItem,
   IComparisonData,
+  IAverageAndSumByDateItem,
+  IAverageAndSumByDate,
 };
 
 export type TComparisonPageContext = {

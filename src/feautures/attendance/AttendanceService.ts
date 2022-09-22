@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import BaseService from '../../services/common/BaseService';
-import { IAverageAndSumByDate, IBestAndWorstDayOfAllTime, ITransaction, IWeekAnalytics } from '../main/MainModal';
+import { IAverageAndSumByDate, IBestAndWorstDayOfAllTime, ITransaction, IWeekAnalytics } from './AttendanceModal';
 
 const SendExcelWithAttendance = async (data = {}, query = {}, token: string): Promise<any> => {
   const baseService = new BaseService(token, 'multipart/form-data');

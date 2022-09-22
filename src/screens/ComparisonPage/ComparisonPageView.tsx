@@ -4,14 +4,20 @@ import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useLoading } from '../../hooks/UseLoading';
 import { getToken } from '../../feautures/auth/authSlice';
-import { getComparisonAllTimeDate, getComparisonData } from '../../feautures/comparison/ComparisonService';
+import {
+  getAverageAndSumByDateForComparison,
+  getComparisonAllTimeDate,
+  getComparisonData,
+} from '../../feautures/comparison/ComparisonService';
 import {
   getComparison,
   getComparisonAllTime,
   getComparisonDatePickerMode,
   getComparisonSelectedDates,
+  getComparisonTableFooter,
   setComparisonAllTimeData,
   setComparisonData,
+  setComparisonDateTableFooter,
 } from '../../feautures/comparison/comparisonSlice';
 import ComparisonAllTimeTable from './component/table/ComparisonAllTimeTable';
 import Header1 from '../../components/Text/Header1';
@@ -33,6 +39,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
   const dataPickerMode = useAppSelector(getComparisonDatePickerMode);
   const tableComparisonAllTimeData = useAppSelector(getComparisonAllTime);
   const tableComparisonDate = useAppSelector(getComparison);
+  const tableComparisonDateFooter = useAppSelector(getComparisonTableFooter);
   const dispatch = useAppDispatch();
 
   const {
@@ -87,6 +94,11 @@ const ComparisonPageView: FC<PageTestProps> = () => {
         dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode,
       });
 
+      const footer = await getAverageAndSumByDateForComparison(token, {
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
+      });
+
       if (res?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(res?.message));
@@ -94,6 +106,16 @@ const ComparisonPageView: FC<PageTestProps> = () => {
         return;
       }
       dispatch(setComparisonData(res));
+      dispatch(setAlertOpenStatus(false));
+      dispatch(clearAlertMsg());
+
+      if (footer?.message) {
+        dispatch(setAlertStatus('error'));
+        dispatch(setAlertMsg(res?.message));
+        dispatch(setAlertOpenStatus(true));
+        return;
+      }
+      dispatch(setComparisonDateTableFooter(footer));
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
@@ -133,14 +155,14 @@ const ComparisonPageView: FC<PageTestProps> = () => {
         <div className="_table-row-comparison">
           <div className="_location-table-comparison">
             {/* eslint-disable-next-line max-len */}
-            {tableComparisonDate.length !== 0
+            {(tableComparisonDate.length !== 0 && tableComparisonDateFooter.length !== 0)
                             && <Header2 text="Razlika o lokacijama" />}
             {/* eslint-disable-next-line max-len */}
-            {tableComparisonDate.length !== 0
+            {(tableComparisonDate.length !== 0 && tableComparisonDateFooter.length !== 0)
                             && (
                             <LocationTable
                               data={tableComparisonDate}
-                              footer={[]}
+                              footer={tableComparisonDateFooter}
                               table="transactions"
                             />
                             )}
