@@ -50,7 +50,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
   const fetchLComparisonAllTimeDate = async () => {
     setLoading();
     try {
-      const res = await getComparisonAllTimeDate(token, { dates: ['2021-07-11', new Date().toISOString().split('T')[0]] });
+      const res = await getComparisonAllTimeDate(token, { dates: JSON.stringify(['2021-07-11', new Date().toISOString().split('T')[0]]) });
       if (res?.message) {
         dispatch(setAlertStatus('error'));
         dispatch(setAlertMsg(res?.message));
