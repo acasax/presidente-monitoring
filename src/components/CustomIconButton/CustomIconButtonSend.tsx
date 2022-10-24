@@ -9,6 +9,8 @@ import { getToken } from '../../feautures/auth/authSlice';
 import { useLoading } from '../../hooks/UseLoading';
 import { setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../CustomAlert/alertSlice';
 import { SendExcelWithAttendance } from '../../feautures/attendance/AttendanceService';
+import { AlertStatus, DateTypes } from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 const CustomIconButtonSend = ({ file }: any) => {
   const [selectedFile, setSelectedFile] = React.useState(null);
@@ -30,17 +32,17 @@ const CustomIconButtonSend = ({ file }: any) => {
     setLoading();
     try {
       let res;
-      if (file === 'transaction') {
+      if (file === DateTypes.TRANSACTION) {
         res = await SendExcelWithTransaction(form, {}, token);
       }
-      if (file === 'attendance') {
+      if (file === DateTypes.ATTENDANCE) {
         res = await SendExcelWithAttendance(form, {}, token);
       }
       dispatch(setAlertStatus(res?.status));
       dispatch(setAlertMsg(res?.message));
       dispatch(setAlertOpenStatus(true));
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -57,10 +59,10 @@ const CustomIconButtonSend = ({ file }: any) => {
     <div className="_icon-button-container">
       {
                 selectedFile && (
-                <Tooltip title="Odustani">
+                <Tooltip title={Texts.cancel}>
                   <IconButton
                     color="primary"
-                    aria-label="Odustani"
+                    aria-label={Texts.cancel}
                     component="label"
                     onClick={handleClearSelectedFile}
                   >
@@ -71,17 +73,17 @@ const CustomIconButtonSend = ({ file }: any) => {
             }
       <div className="_text-container">
         <p className="_text">
-          {selectedFile ? selectedFile.name : 'Uvezi fajl'}
+          {selectedFile ? selectedFile.name : Texts.importFile}
         </p>
       </div>
       <div className="_icon-container">
 
         {
                     !selectedFile ? (
-                      <Tooltip title="Uvezi fajl">
+                      <Tooltip title={Texts.importFile}>
                         <IconButton
                           color="primary"
-                          aria-label="Uvezi fajl"
+                          aria-label={Texts.importFile}
                           component="label"
                         >
                           <input
@@ -94,10 +96,10 @@ const CustomIconButtonSend = ({ file }: any) => {
                         </IconButton>
                       </Tooltip>
                     ) : (
-                      <Tooltip title="Posalji na server">
+                      <Tooltip title={Texts.sendToServer}>
                         <IconButton
                           color="primary"
-                          aria-label="Posalji na server"
+                          aria-label={Texts.sendToServer}
                           component="label"
                           onClick={handleSubmit}
                         >

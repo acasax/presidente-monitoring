@@ -11,6 +11,8 @@ import { Login } from '../../feautures/auth/AuthServices';
 import { clearUser, setUser } from '../../feautures/auth/authSlice';
 import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { MAIN_PATH } from '../../routes/path-constants';
+import { AlertStatus, AuthPageControllersNames } from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 interface PageTestProps {
   test?: string;
@@ -48,7 +50,7 @@ const AuthPage: FC<PageTestProps> = () => {
       dispatch(clearUser());
       const res = await Login(data);
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -69,10 +71,10 @@ const AuthPage: FC<PageTestProps> = () => {
       <div className="_auth-page">
         <form className="_form_container" onSubmit={handleSubmit(onSubmit)}>
           <div className="_label-container">
-            <p className="_text">Korisnicko ime</p>
+            <p className="_text">{Texts.userName}</p>
           </div>
           <Controller
-            name="username"
+            name={AuthPageControllersNames.USERNAME}
             control={control}
             defaultValue=""
             render={({
@@ -89,7 +91,7 @@ const AuthPage: FC<PageTestProps> = () => {
                 variant="standard"
               >
                 <OutlinedInput
-                  id="username"
+                  id={AuthPageControllersNames.USERNAME}
                   type="text"
                   fullWidth
                   className={error ? '_input _input-error' : '_input'}
@@ -97,10 +99,10 @@ const AuthPage: FC<PageTestProps> = () => {
                   onChange={onChange}
                   value={value}
                   endAdornment={<PersonOutlineIcon />}
-                  placeholder="Unesi korisnicko ime"
+                  placeholder={Texts.userNamePlaceholder}
                 />
                 <FormHelperText
-                  id="username"
+                  id={AuthPageControllersNames.USERNAME}
                   className="_error-text"
                 >
                   {error ? error.message : ''}
@@ -108,15 +110,15 @@ const AuthPage: FC<PageTestProps> = () => {
               </FormControl>
             )}
             rules={{
-              required: 'Polje korisnicko ime je obavezno.',
-              minLength: { value: 5, message: 'Korisnicko ime mora biti duze od 5 karaktera' },
+              required: Texts.userNameRequiredValidationError,
+              minLength: { value: 5, message: Texts.userNameMinLengthValidationError },
             }}
           />
           <div className="_label-container">
-            <p className="_text">Lozinka</p>
+            <p className="_text">{Texts.password}</p>
           </div>
           <Controller
-            name="password"
+            name={AuthPageControllersNames.PASSWORD}
             control={control}
             defaultValue=""
             render={({
@@ -131,7 +133,7 @@ const AuthPage: FC<PageTestProps> = () => {
                 variant="standard"
               >
                 <OutlinedInput
-                  id="password"
+                  id={AuthPageControllersNames.PASSWORD}
                   type={showPassword ? 'text' : 'password'}
                   value={value}
                   fullWidth
@@ -140,7 +142,7 @@ const AuthPage: FC<PageTestProps> = () => {
                   endAdornment={(
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="Vidljivost lozinke"
+                        aria-label={Texts.passwordVisibility}
                         onClick={handleClickShowPassword}
                         onMouseDown={handleMouseDownPassword}
                       >
@@ -151,10 +153,10 @@ const AuthPage: FC<PageTestProps> = () => {
                     </InputAdornment>
                                     )}
                   error={!!error}
-                  placeholder="Unesi lozinku"
+                  placeholder={Texts.passwordVisibility}
                 />
                 <FormHelperText
-                  id="password"
+                  id={AuthPageControllersNames.PASSWORD}
                   className="_error-text"
                 >
                   {error ? error.message : ''}
@@ -162,13 +164,13 @@ const AuthPage: FC<PageTestProps> = () => {
               </FormControl>
             )}
             rules={{
-              required: 'Polje loznika je obavezno',
-              minLength: { value: 5, message: 'Lozinka mora biti duza od 5 karaktera' },
+              required: Texts.passwordRequiredValidationError,
+              minLength: { value: 5, message: Texts.passwordMinLengthValidationError },
             }}
           />
           <div className="_button-container">
             <Button variant="outlined" className="_button" type="submit">
-              PRIJAVA
+              {Texts.login}
             </Button>
           </div>
 

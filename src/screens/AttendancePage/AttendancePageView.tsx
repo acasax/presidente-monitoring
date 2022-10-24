@@ -62,6 +62,16 @@ import AttendanceBestAndWorstDayLocationSelect from './component/selects/Attenda
 import AttendanceBestAndWorstDayDatePickerModeSelect
   from './component/selects/AttendanceBestAndWorstDayDatePickerModeSelect';
 import AttendanceBestAndWorstDayDatePicker from './component/datePicker/AttendanceBestAndWorstDayDatePicker';
+import {
+  AlertStatus,
+  BestAndWorstDayStatus,
+  BestAndWorstDayType,
+  DataPickerModeStatus,
+  DateTypes,
+  RequestDataType,
+  SortTypes,
+} from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 interface PageTestProps {
   test?: string
@@ -116,9 +126,10 @@ const AttendancePageView: FC<PageTestProps> = () => {
   const fetchLBestDayOfAllTime = async () => {
     setLoading();
     try {
-      const res = await getBestAndWorstDayAllTimeForAttendance(token, { orderBy: 'DESC' });
+      const res = await getBestAndWorstDayAllTimeForAttendance(token,
+        { orderBy: BestAndWorstDayType.BEST });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -136,9 +147,10 @@ const AttendancePageView: FC<PageTestProps> = () => {
   const fetchLWorstDayOfAllTime = async () => {
     setLoading();
     try {
-      const res = await getBestAndWorstDayAllTimeForAttendance(token, { orderBy: 'ASC' });
+      const res = await getBestAndWorstDayAllTimeForAttendance(token,
+        { orderBy: BestAndWorstDayType.WORST });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -170,36 +182,42 @@ const AttendancePageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (selectedLocations.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu po lokacijama.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedLocation));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       if (pickedDate.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijedan datum za pretragu po lokacijama.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedDate));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const res = await getAttendanceForLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode,
-        responseDataType: 'TABLE',
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode,
+        responseDataType: RequestDataType.TABLE,
       });
       const footer = await getAverageAndSumByAttendanceAndLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode[0],
       });
       const chart = await getAttendanceForLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
-        responseDataType: 'CHART',
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode[0],
+        responseDataType: RequestDataType.CHART,
       });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -209,7 +227,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (footer?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(footer?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -219,7 +237,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (chart?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(chart?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -228,7 +246,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -240,55 +258,67 @@ const AttendancePageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (bestAndWorstWeekAnalyticsSelectedLocation.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedLocationForBestAndWorst));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       if (bestAndWorstDayDatePickerMode.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu datum za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedDateForBestAndWorst));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const best = await getAttendanceForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const bestFooter = await getAttendanceForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const worst = await getAttendanceForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       const worstFooter = await getAttendanceForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       const bestInChosenMounts = await getBestAndWorstInChosenMountsForAttendance(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const worstInChosenMounts = await getBestAndWorstInChosenMountsForAttendance(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       if (best?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(best?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -298,7 +328,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (bestFooter?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(bestFooter?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -308,7 +338,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worst?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worst?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -318,7 +348,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worstFooter?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worstFooter?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -328,7 +358,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (bestInChosenMounts?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(bestInChosenMounts?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -338,7 +368,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worstInChosenMounts?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worstInChosenMounts?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -347,7 +377,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -358,20 +388,20 @@ const AttendancePageView: FC<PageTestProps> = () => {
   return (
     <Screen>
       <div className="_attendance-page">
-        <Header1 text="POSECENOST PO LOKACIJAMA" />
-        <Header2 text="Pretraga za posecenost po lokacijama" />
+        <Header1 text={Texts.attendancePageHeader} />
+        <Header2 text={Texts.searchByLocation} />
         <div className="_row-attendance">
           <AttendanceLocationSelect />
           <AttendanceDatePickerModeSelect />
           <AttendanceDatePicker />
           <div className="_search-button-container-attendance">
             <CustomButton
-              text="PRETRAZI"
+              text={Texts.search}
               handleFunction={handleLocationsRequest}
             />
           </div>
         </div>
-        {attendanceChartData.length !== 0 && <Header2 text="Posecenost po lokacijama" />}
+        {attendanceChartData.length !== 0 && <Header2 text={Texts.attendanceByLocation} />}
         {attendanceChartData.length !== 0
                     && (
                     <div className="_row-attendance">
@@ -382,26 +412,32 @@ const AttendancePageView: FC<PageTestProps> = () => {
           <div className="_location-table-attendance">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && locationTableFooter.length !== 0)
-                            && <Header2 text="Posecenost o lokacijama" />}
+                            && <Header2 text={Texts.attendanceByLocation} />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && locationTableFooter.length !== 0)
                             && (
                             <LocationTable
                               data={locationTableData}
                               footer={locationTableFooter}
-                              table="attendances"
+                              table={DateTypes.ATTENDANCE}
                             />
                             )}
           </div>
         </div>
         <div className="_best-and-worst-day-container-attendance">
-          <Header1 text="NAJBOLJI I NAJGORI DAN" />
+          <Header1 text={Texts.bestAndWorstDayPartHeader} />
           <div className="_best-and-worst-day-header-container-attendance">
-            <Header2 text="Podaci oduvek" />
+            <Header2 text={Texts.dataForAllTime} />
           </div>
           <div className="_best-and-worst-day-off-all-time-row-attendance">
-            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
-            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
+            <BestAndWorstDayOfAllTimeContainer
+              header={BestAndWorstDayStatus.BEST}
+              data={bestDayOfAllTime}
+            />
+            <BestAndWorstDayOfAllTimeContainer
+              header={BestAndWorstDayStatus.WORST}
+              data={worstDayOfAllTime}
+            />
           </div>
           <div className="_row-attendance">
             <AttendanceBestAndWorstDayLocationSelect />
@@ -409,7 +445,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
             <AttendanceBestAndWorstDayDatePicker />
             <div className="_search-button-container-attendance">
               <CustomButton
-                text="PRETRAZI"
+                text={Texts.search}
                 handleFunction={handleWeekAnalyticsRequest}
               />
             </div>
@@ -425,11 +461,17 @@ const AttendancePageView: FC<PageTestProps> = () => {
                         && (
                         <>
                           <div className="_best-and-worst-day-header-container-attendance">
-                            <Header2 text="Podaci u izabranim mesecima" />
+                            <Header2 text={Texts.dataForChosenMount} />
                           </div>
                           <div className="_best-and-worst-day-off-all-time-row-attendance">
-                            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayInChosenMounts} />
-                            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayInChosenMounts} />
+                            <BestAndWorstDayOfAllTimeContainer
+                              header={BestAndWorstDayStatus.BEST}
+                              data={bestDayInChosenMounts}
+                            />
+                            <BestAndWorstDayOfAllTimeContainer
+                              header={BestAndWorstDayStatus.WORST}
+                              data={worstDayInChosenMounts}
+                            />
                           </div>
                         </>
                         )
@@ -437,7 +479,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
         </div>
         <div className="_footer-attendance">
           <CustomIconButtonSend
-            file="attendance"
+            file={DateTypes.ATTENDANCE}
           />
           {
                         width < 600 && (

@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { padTo2Digits } from '../../utils/dateTime/functionsDateTime';
+import { DateTypes } from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 const LocationTable = ({ data, footer, table }: any) => {
   const [newData, setNewData] = useState([]);
@@ -17,7 +19,7 @@ const LocationTable = ({ data, footer, table }: any) => {
 
   useEffect(() => {
     // eslint-disable-next-line no-return-assign
-    if (table === 'transactions') {
+    if (table === DateTypes.TRANSACTION) {
       setNewData(
         data.map((row) => ({
           ...row,
@@ -35,7 +37,7 @@ const LocationTable = ({ data, footer, table }: any) => {
         })),
       );
     }
-    if (table === 'attendances') {
+    if (table === DateTypes.ATTENDANCE) {
       setNewData(
         data.map((row) => ({
           ...row,
@@ -61,23 +63,23 @@ const LocationTable = ({ data, footer, table }: any) => {
       <Table className="_table-container">
         <TableHead>
           <TableRow className="_table-header-container">
-            <TableCell className="_table-cell-header-location _table-header">Lokacije</TableCell>
+            <TableCell className="_table-cell-header-location _table-header">{Texts.location}</TableCell>
             {
-                            (table === 'transactions')
+                            (table === DateTypes.TRANSACTION)
                             && newData[0]?.transactions?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
                               <TableCell align="center" key={key} className="_table-header">{row?.date}</TableCell>
                             ))
                         }
             {
-                            (table === 'attendances')
+                            (table === DateTypes.ATTENDANCE)
                             && newData[0]?.attendances?.map((row, key) => (
                               // eslint-disable-next-line react/no-array-index-key
                               <TableCell align="center" key={key} className="_table-header">{row?.date}</TableCell>
                             ))
                         }
-            <TableCell align="center" className="_table-header">Total</TableCell>
-            <TableCell align="center" className="_table-header">Prosek</TableCell>
+            <TableCell align="center" className="_table-header">{Texts.total}</TableCell>
+            <TableCell align="center" className="_table-header">{Texts.average}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -98,7 +100,7 @@ const LocationTable = ({ data, footer, table }: any) => {
                 {row?.address}
               </TableCell>
               {
-                                (table === 'transactions')
+                                (table === DateTypes.TRANSACTION)
                                 && row?.transactions?.map((item, index) => (
                                   <TableCell
                                     align="center"
@@ -110,7 +112,7 @@ const LocationTable = ({ data, footer, table }: any) => {
                                 ))
                             }
               {
-                                (table === 'attendances')
+                                (table === DateTypes.ATTENDANCE)
                                 && row?.attendances?.map((item, index) => (
                                   <TableCell
                                     align="center"
@@ -139,7 +141,7 @@ const LocationTable = ({ data, footer, table }: any) => {
               scope="row"
               className="_table-cell-header-location _table-header"
             >
-              Total
+              {Texts.total}
             </TableCell>
             {
                             footer.map((item, index) => (
@@ -158,7 +160,7 @@ const LocationTable = ({ data, footer, table }: any) => {
               scope="row"
               className="_table-cell-header-location _table-header"
             >
-              Prosek
+              {Texts.average}
             </TableCell>
             {
                             footer.map((item, index) => (

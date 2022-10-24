@@ -5,6 +5,7 @@ import { IconButton } from '@mui/material';
 import { ATTENDANCE_PATH, COMPARISON_PATH, MAIN_PATH } from '../../routes/path-constants';
 import { useAppDispatch } from '../../store/hooks';
 import { clearUser } from '../../feautures/auth/authSlice';
+import { Texts } from '../../utils/Texts';
 
 const NavBar = () => {
   const history = useHistory();
@@ -31,7 +32,7 @@ const NavBar = () => {
               onClick={() => history.push(MAIN_PATH)}
               to={MAIN_PATH}
             >
-              efikasnost
+              {Texts.navBarEfficiency}
             </Link>
           </div>
           <div className="_item-container">
@@ -40,7 +41,7 @@ const NavBar = () => {
               onClick={() => history.push(ATTENDANCE_PATH)}
               to={ATTENDANCE_PATH}
             >
-              posecenost
+              {Texts.navBarAttendance}
             </Link>
           </div>
           <div className="_item-container">
@@ -49,8 +50,7 @@ const NavBar = () => {
               onClick={() => history.push(COMPARISON_PATH)}
               to={COMPARISON_PATH}
             >
-              razlika
-              ka upravi
+              {Texts.navBarDifference}
             </Link>
           </div>
 

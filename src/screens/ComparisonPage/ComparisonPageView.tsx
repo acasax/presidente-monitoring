@@ -28,6 +28,8 @@ import { getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import ComparisonDatePicker from './component/datePicker/ComparisonDatePicker';
 import LocationTable from '../../components/CustomTable/LocationTable';
 import { ComparisonPageContext } from '../../feautures/comparison/context';
+import { AlertStatus, DataPickerModeStatus, StartWorkTimeOfIKS } from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 interface PageTestProps {
   test?: string
@@ -50,9 +52,9 @@ const ComparisonPageView: FC<PageTestProps> = () => {
   const fetchLComparisonAllTimeDate = async () => {
     setLoading();
     try {
-      const res = await getComparisonAllTimeDate(token, { dates: ['2021-07-11', new Date().toISOString().split('T')[0]] });
+      const res = await getComparisonAllTimeDate(token, { dates: [StartWorkTimeOfIKS, new Date().toISOString().split('T')[0]] });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -84,23 +86,28 @@ const ComparisonPageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (pickedDate.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijedan datum za pretragu po lokacijama.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedDate));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const res = await getComparisonData(token, {
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode,
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode,
       });
 
       const footer = await getAverageAndSumByDateForComparison(token, {
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH
+          : dataPickerMode[0],
       });
 
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -110,7 +117,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (footer?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -119,7 +126,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -130,24 +137,24 @@ const ComparisonPageView: FC<PageTestProps> = () => {
   return (
     <Screen>
       <div className="_comparison-page">
-        <Header1 text="RAZLIKA KA UPRAVI" />
+        <Header1 text={Texts.comparisonPageTitle} />
         {tableComparisonAllTimeData.length !== 0
                     && (
                     <>
-                      <Header2 text="Razlika oduvek" />
+                      <Header2 text={Texts.differenceAllTime} />
                       <ComparisonAllTimeTable
                         tableData={tableComparisonAllTimeData}
                       />
                     </>
 
                     )}
-        <Header2 text="Razlika za period" />
+        <Header2 text={Texts.differenceForPeriodOfTime} />
         <div className="_row-comparison">
           <ComparisonDatePickerModeSelect />
           <ComparisonDatePicker />
           <div className="_search-button-container-comparison">
             <CustomButton
-              text="PRETRAZI"
+              text={Texts.search}
               handleFunction={handleComparisonData}
             />
           </div>
@@ -156,7 +163,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
           <div className="_location-table-comparison">
             {/* eslint-disable-next-line max-len */}
             {(tableComparisonDate.length !== 0 && tableComparisonDateFooter.length !== 0)
-                            && <Header2 text="Razlika o lokacijama" />}
+                            && <Header2 text={Texts.differenceByLocation} />}
             {/* eslint-disable-next-line max-len */}
             {(tableComparisonDate.length !== 0 && tableComparisonDateFooter.length !== 0)
                             && (

@@ -6,6 +6,7 @@ import { Animation, ArgumentScale } from '@devexpress/dx-react-chart';
 import { curveCatmullRom, line } from 'd3-shape';
 import { scalePoint } from 'd3-scale';
 import TableContainer from '@mui/material/TableContainer';
+import { LocationsFullNames, LocationsShortNames } from '../../utils/Constants';
 
 const PREFIX = 'Demo';
 
@@ -94,31 +95,20 @@ const CustomChart = ({ chartData }: any) => {
           <ArgumentAxis />
           <ValueAxis />
           {
-                        chartArgument.includes('1Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC1) && (
                         <LineSeries
-                          name="01 Kruševac, Trg Despota Stefana 30"
-                          valueField="1Kruševac"
+                          name={LocationsFullNames.KRUSEVAC1}
+                          valueField={LocationsShortNames.KRUSEVAC1}
                           argumentField="date"
                           seriesComponent={Line}
                         />
                         )
                     }
           {
-                        chartArgument.includes('2Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC2) && (
                         <LineSeries
-                          name="02 Kruševac, Cara Lazara 193"
-                          valueField="2Kruševac"
-                          argumentField="date"
-                          seriesComponent={Line}
-                        />
-                        )
-                    }
-
-          {
-                        chartArgument.includes('3Aleksandrovac') && (
-                        <LineSeries
-                          name="03 Aleksandrovac, 29. Novembra bb"
-                          valueField="3Aleksandrovac"
+                          name={LocationsFullNames.KRUSEVAC2}
+                          valueField={LocationsShortNames.KRUSEVAC2}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -126,10 +116,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('4Brus') && (
+                        chartArgument.includes(LocationsShortNames.ALEKSANDROVAC3) && (
                         <LineSeries
-                          name="04 Brus, Kralja Petra I 42"
-                          valueField="4Brus"
+                          name={LocationsFullNames.ALEKSANDROVAC3}
+                          valueField={LocationsShortNames.ALEKSANDROVAC3}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -137,10 +127,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('7Paraćin') && (
+                        chartArgument.includes(LocationsShortNames.BRUS4) && (
                         <LineSeries
-                          name="07 Paraćin, Vojvode Mišića 8"
-                          valueField="7Paraćin"
+                          name={LocationsFullNames.BRUS4}
+                          valueField={LocationsShortNames.BRUS4}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -148,10 +138,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('8Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.PARACIN7) && (
                         <LineSeries
-                          name="08 Kruševac, Bircaninova 10"
-                          valueField="8Kruševac"
+                          name={LocationsFullNames.PARACIN7}
+                          valueField={LocationsShortNames.PARACIN7}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -159,10 +149,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('9Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC8) && (
                         <LineSeries
-                          name="09 Kruševac, Vidovdanska 233"
-                          valueField="9Kruševac"
+                          name={LocationsFullNames.KRUSEVAC8}
+                          valueField={LocationsShortNames.KRUSEVAC8}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -170,10 +160,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('10Kraljevo') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC9) && (
                         <LineSeries
-                          name="10 Kraljevo, Dimitrija Tucovića 40"
-                          valueField="10Kraljevo"
+                          name={LocationsFullNames.KRUSEVAC9}
+                          valueField={LocationsShortNames.KRUSEVAC9}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -181,10 +171,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('11Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.KRALJEVO10) && (
                         <LineSeries
-                          name="11 Kruševac, Rasinska 101"
-                          valueField="11Kruševac"
+                          name={LocationsFullNames.KRALJEVO10}
+                          valueField={LocationsShortNames.KRALJEVO10}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -192,10 +182,10 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('12Borča') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC11) && (
                         <LineSeries
-                          name="12 Borča, Zrenjaninski put 155"
-                          valueField="12Borča"
+                          name={LocationsFullNames.KRUSEVAC11}
+                          valueField={LocationsShortNames.KRUSEVAC11}
                           argumentField="date"
                           seriesComponent={Line}
                         />
@@ -203,20 +193,31 @@ const CustomChart = ({ chartData }: any) => {
                     }
 
           {
-                        chartArgument.includes('13Kraljevo') && (
+                        chartArgument.includes(LocationsShortNames.BORCA12) && (
                         <LineSeries
-                          name="13 Kraljevo, Trg Kralja Petra I Oslobodioca 3/1"
-                          valueField="13Kraljevo"
+                          name={LocationsFullNames.BORCA12}
+                          valueField={LocationsShortNames.BORCA12}
+                          argumentField="date"
+                          seriesComponent={Line}
+                        />
+                        )
+                    }
+
+          {
+                        chartArgument.includes(LocationsShortNames.KRALJEVO13) && (
+                        <LineSeries
+                          name={LocationsFullNames.KRALJEVO13}
+                          valueField={LocationsShortNames.KRALJEVO13}
                           argumentField="date"
                           seriesComponent={Line}
                         />
                         )
                     }
           {
-                        chartArgument.includes('14Kruševac') && (
+                        chartArgument.includes(LocationsShortNames.KRUSEVAC14) && (
                         <LineSeries
-                          name="14 Kruševac, Čolak Antina 17"
-                          valueField="14Kruševac"
+                          name={LocationsFullNames.KRUSEVAC14}
+                          valueField={LocationsShortNames.KRUSEVAC14}
                           argumentField="date"
                           seriesComponent={Line}
                         />

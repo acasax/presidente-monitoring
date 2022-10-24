@@ -7,15 +7,17 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TableContainer from '@mui/material/TableContainer';
 import { translateDayName } from '../../utils/dateTime/functionsDateTime';
+import { BestAndWorstDayStatus } from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
   <TableContainer
     component={Paper}
-    className={header.includes('Najbolji') ? '_week-analytic-table-container _week-analytic-best-table-container' : '_week-analytic-table-container'}
+    className={header.includes(BestAndWorstDayStatus.BEST) ? '_week-analytic-table-container _week-analytic-best-table-container' : '_week-analytic-table-container'}
   >
     <div className="_week-analytic-table-header-container">
       <p
-        className={header.includes('Najbolji') ? '_table-header-text _best' : '_table-header-text _worst'}
+        className={header.includes(BestAndWorstDayStatus.BEST) ? '_table-header-text _best' : '_table-header-text _worst'}
       >
         {header}
       </p>
@@ -32,40 +34,37 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Nedelja u
-            godini
+            {Texts.weekInYear}
           </TableCell>
           <TableCell
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Nedelja u
-            mesecu
+            {Texts.weekInMonth}
           </TableCell>
           <TableCell
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Trajanje od -
-            do
+            {Texts.duration}
           </TableCell>
           <TableCell
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Dan
+            {Texts.day}
           </TableCell>
           <TableCell
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Datum
+            {Texts.date}
           </TableCell>
           <TableCell
             className="_table-header _week-analytic-table-cell"
             align="center"
           >
-            Vrednost za nedelju
+            {Texts.valuesInWeek}
           </TableCell>
         </TableRow>
       </TableHead>
@@ -130,11 +129,11 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
           className="_table-cell _week-analytic-table-footer-header-cell"
           sx={{ border: 0 }}
         >
-          Najbolji datum u mesecu
+          {Texts.bestDateInMount}
         </TableCell>
         <TableCell
           align="center"
-          className={header.includes('Najbolji') ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
+          className={header.includes(BestAndWorstDayStatus.BEST) ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
           sx={{ border: 0 }}
         >
           {footer?.bestDate?.day ? footer?.bestDate?.day : '/'}
@@ -145,11 +144,11 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
           className="_table-cell _week-analytic-table-footer-value-header-cell"
           sx={{ border: 0 }}
         >
-          Vrednost
+          {Texts.value}
         </TableCell>
         <TableCell
           align="center"
-          className={header.includes('Najbolji') ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
+          className={header.includes(BestAndWorstDayStatus.BEST) ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
           sx={{ border: 0 }}
         >
           {footer?.bestDate?.sum ? footer?.bestDate?.sum : '/'}
@@ -165,11 +164,11 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
           className="_table-cell _week-analytic-table-footer-header-cell"
           sx={{ border: 0 }}
         >
-          Najbolji dan u mesecu
+          {Texts.bestDayInMount}
         </TableCell>
         <TableCell
           align="center"
-          className={header.includes('Najbolji') ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
+          className={header.includes(BestAndWorstDayStatus.BEST) ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
           sx={{ border: 0 }}
         >
           {footer?.bestDay?.day ? translateDayName(footer?.bestDay?.day) : '/'}
@@ -184,7 +183,7 @@ const BestAndWorstDayWeekAnalyticsTable = ({ header, data, footer }: any) => (
         </TableCell>
         <TableCell
           align="center"
-          className={header.includes('Najbolji') ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
+          className={header.includes(BestAndWorstDayStatus.BEST) ? '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-best' : '_week-analytic-table-footer-value-cell _table-cell _week-analytic-table-footer-row-text-worst'}
           sx={{ border: 0 }}
         >
           {footer?.bestDay?.sum ? footer?.bestDay?.sum : '/'}
