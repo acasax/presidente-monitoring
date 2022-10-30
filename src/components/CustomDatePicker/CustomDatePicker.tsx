@@ -1,5 +1,6 @@
 import React from 'react';
 import DatePicker from 'react-multi-date-picker';
+import { StartWorkTimeOfIKS } from '../../utils/Constants';
 
 const CustomDatePicker = ({
   header,
@@ -21,6 +22,7 @@ const CustomDatePicker = ({
       value={value}
       onChange={onChange}
       format={format}
+      minDate={StartWorkTimeOfIKS}
       maxDate={new Date()}
     />
   </div>
