@@ -389,7 +389,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
     <Screen>
       <div className="_attendance-page">
         <Header1 text={Texts.attendancePageHeader} />
-        <Header2 text={Texts.searchByLocation} />
+        <Header2 text={Texts.searchAttendanceByLocation} />
         <div className="_row-attendance">
           <AttendanceLocationSelect />
           <AttendanceDatePickerModeSelect />

@@ -71,6 +71,16 @@ import Header2 from '../../components/Text/Header2';
 import WeekAnalyticsContainer from '../../components/WeekAnalyticsContainer/WeekAnalyticsContainer';
 import BestAndWorstDayOfAllTimeContainer
   from '../../components/BestAndWorstDayOfAllTimeContainer/BestAndWorstDayOfAllTimeContainer';
+import {
+  AlertStatus,
+  BestAndWorstDayStatus,
+  BestAndWorstDayType,
+  DataPickerModeStatus,
+  DateTypes,
+  RequestDataType,
+  SortTypes,
+} from '../../utils/Constants';
+import { Texts } from '../../utils/Texts';
 
 interface PageTestProps {
   test?: string
@@ -128,9 +138,9 @@ const MainPageView: FC<PageTestProps> = () => {
   const fetchLBestDayOfAllTime = async () => {
     setLoading();
     try {
-      const res = await getBestAndWorstDayAllTime(token, { orderBy: 'DESC' });
+      const res = await getBestAndWorstDayAllTime(token, { orderBy: BestAndWorstDayType.BEST });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -148,9 +158,9 @@ const MainPageView: FC<PageTestProps> = () => {
   const fetchLWorstDayOfAllTime = async () => {
     setLoading();
     try {
-      const res = await getBestAndWorstDayAllTime(token, { orderBy: 'ASC' });
+      const res = await getBestAndWorstDayAllTime(token, { orderBy: BestAndWorstDayType.WORST });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
       } else {
@@ -182,36 +192,42 @@ const MainPageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (selectedLocations.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu po lokacijama.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedDate));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       if (pickedDate.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijedan datum za pretragu po lokacijama.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedLocation));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const res = await getDataForLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode,
-        responseDataType: 'TABLE',
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode,
+        responseDataType: RequestDataType.TABLE,
       });
       const footer = await getAverageAndSumByDateAndLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode[0],
       });
       const chart = await getDataForLocation(token, {
         locations: selectedLocations,
-        dates: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === 'YEAR') ? 'MONTH' : dataPickerMode[0],
-        responseDataType: 'CHART',
+        dates: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (pickedDate.length === 1 && dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH : dataPickerMode[0],
+        responseDataType: RequestDataType.CHART,
       });
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -221,7 +237,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (footer?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(footer?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -231,7 +247,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (chart?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(chart?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -243,7 +259,7 @@ const MainPageView: FC<PageTestProps> = () => {
       const machineSelectData = locationData.filter((item) => selectedLocations.includes(Number(item.id)));
       dispatch(setMainSelectMachineLocationData(machineSelectData));
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -255,19 +271,25 @@ const MainPageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (selectedMachineLocations.length === 0) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu po masinama.'));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const res = await getDataForMachine(token, {
         location: selectedMachineLocations,
-        dates: (dataPickerMode[0] === 'YEAR') ? getMountsArray(pickedDate[0]) : (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? getDaysArray(pickedDate[0]) : pickedDate,
-        dateQueryType: (dataPickerMode[0] === 'YEAR') ? 'MONTH' : (dataPickerMode[0] === 'MONTH' && pickedDate.length === 1) ? 'DAY' : dataPickerMode[0],
+        dates: (dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(pickedDate[0])
+          : (dataPickerMode[0] === DataPickerModeStatus.MONTH && pickedDate.length === 1)
+            ? getDaysArray(pickedDate[0]) : pickedDate,
+        dateQueryType: (dataPickerMode[0] === DataPickerModeStatus.YEAR)
+          ? DataPickerModeStatus.MONTH
+          : (dataPickerMode[0] === DataPickerModeStatus.MONTH && pickedDate.length === 1)
+            ? DataPickerModeStatus.DAY : dataPickerMode[0],
       });
 
       if (res?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(res?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -276,7 +298,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -288,55 +310,67 @@ const MainPageView: FC<PageTestProps> = () => {
     setLoading();
     try {
       if (bestAndWorstWeekAnalyticsSelectedLocation.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu lokaciju za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedLocationForBestAndWorst));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       if (bestAndWorstDayDatePickerMode.length === 0) {
-        dispatch(setAlertStatus('error'));
-        dispatch(setAlertMsg('Niste izabralio nijednu datum za pretragu za najbolji i najgori dan.'));
+        dispatch(setAlertStatus(AlertStatus.Error));
+        dispatch(setAlertMsg(Texts.noPickedDateForBestAndWorst));
         dispatch(setAlertOpenStatus(true));
         return;
       }
       const best = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const bestFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const worst = await getDataForWeekAnalytics(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       const worstFooter = await getDataForWeekAnalyticsFooter(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       const bestInChosenMounts = await getBestAndWorstInChosenMounts(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'BEST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.BEST,
       });
 
       const worstInChosenMounts = await getBestAndWorstInChosenMounts(token, {
         location: bestAndWorstWeekAnalyticsSelectedLocation,
-        months: (bestAndWorstDayDatePickerMode[0] === 'YEAR') ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false) : bestAndWorstWeekAnalyticsSelectedDates,
-        sortType: 'WORST',
+        months: (bestAndWorstDayDatePickerMode[0] === DataPickerModeStatus.YEAR)
+          ? getMountsArray(bestAndWorstWeekAnalyticsSelectedDates[0], false)
+          : bestAndWorstWeekAnalyticsSelectedDates,
+        sortType: SortTypes.WORST,
       });
 
       if (best?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(best?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -346,7 +380,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (bestFooter?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(bestFooter?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -356,7 +390,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worst?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worst?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -366,7 +400,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worstFooter?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worstFooter?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -376,7 +410,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (bestInChosenMounts?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(bestInChosenMounts?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -386,7 +420,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(clearAlertMsg());
 
       if (worstInChosenMounts?.message) {
-        dispatch(setAlertStatus('error'));
+        dispatch(setAlertStatus(AlertStatus.Error));
         dispatch(setAlertMsg(worstInChosenMounts?.message));
         dispatch(setAlertOpenStatus(true));
         return;
@@ -395,7 +429,7 @@ const MainPageView: FC<PageTestProps> = () => {
       dispatch(setAlertOpenStatus(false));
       dispatch(clearAlertMsg());
     } catch (e) {
-      dispatch(setAlertStatus('error'));
+      dispatch(setAlertStatus(AlertStatus.Error));
       dispatch(setAlertMsg(e?.message));
       dispatch(setAlertOpenStatus(true));
     } finally {
@@ -406,20 +440,20 @@ const MainPageView: FC<PageTestProps> = () => {
   return (
     <Screen>
       <div className="_main-page">
-        <Header1 text="TRANSAKCIJE PO LOKACIJAMA" />
-        <Header2 text="Pretraga za podatke po lokacijama" />
+        <Header1 text={Texts.mainPageHeader} />
+        <Header2 text={Texts.searchDataByLocation} />
         <div className="_row">
           <MainLocationSelect />
           <MainDatePickerModeSelect />
           <MainDatePicker />
           <div className="_search-button-container">
             <CustomButton
-              text="PRETRAZI"
+              text={Texts.search}
               handleFunction={handleLocationsRequest}
             />
           </div>
         </div>
-        {mainChartData.length !== 0 && <Header2 text="Podaci po lokacijama" />}
+        {mainChartData.length !== 0 && <Header2 text={Texts.searchByLocation} />}
         {mainChartData.length !== 0
                     && (
                     <div className="_row">
@@ -430,25 +464,25 @@ const MainPageView: FC<PageTestProps> = () => {
           <div className="_location-table-mobile">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <Header2 text="Podaci o lokacijama" />}
+                            && <Header2 text={Texts.dataAboutLocation} />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
                             && (
                             <LocationTable
                               data={locationTableData}
                               footer={transactionTableDateFooter}
-                              table="transactions"
+                              table={DateTypes.TRANSACTION}
                             />
                             )}
           </div>
         </div>
-        <Header2 text="Pretraga za podatke po masinama" />
+        <Header2 text={Texts.searchDataByMachine} />
 
         <div className="_row">
           <MainMachineLocationSelect />
           <div className="_search-button-container">
             <CustomButton
-              text="PRETRAZI"
+              text={Texts.search}
               handleFunction={handleMachineLocationsRequest}
               disabled={machineSelectedLocation.length === 0}
             />
@@ -460,33 +494,39 @@ const MainPageView: FC<PageTestProps> = () => {
           <div className="_machine-table">
             {/* eslint-disable-next-line max-len */}
             {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <Header2 text="Podaci o masinama" />}
+                            && <Header2 text={Texts.dataAboutMachine} />}
             {/* eslint-disable-next-line max-len */}
             {(machineTableData.length !== 0 && transactionTableDateFooter.length !== 0) && <MachineTable />}
           </div>
           <div className="_location-table">
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
-                            && <Header2 text="Podaci o lokacijama" />}
+                            && <Header2 text={Texts.dataAboutLocation} />}
             {/* eslint-disable-next-line max-len */}
             {(locationTableData.length !== 0 && transactionTableDateFooter.length !== 0)
                             && (
                             <LocationTable
                               data={locationTableData}
                               footer={transactionTableDateFooter}
-                              table="transactions"
+                              table={DateTypes.TRANSACTION}
                             />
                             )}
           </div>
         </div>
         <div className="_best-and-worst-day-container">
-          <Header1 text="NAJBOLJI I NAJGORI DAN" />
+          <Header1 text={Texts.bestAndWorstDayPartHeader} />
           <div className="_best-and-worst-day-header-container">
-            <Header2 text="Podaci oduvek" />
+            <Header2 text={Texts.dataForAllTime} />
           </div>
           <div className="_best-and-worst-day-off-all-time-row">
-            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayOfAllTime} />
-            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayOfAllTime} />
+            <BestAndWorstDayOfAllTimeContainer
+              header={BestAndWorstDayStatus.BEST}
+              data={bestDayOfAllTime}
+            />
+            <BestAndWorstDayOfAllTimeContainer
+              header={BestAndWorstDayStatus.WORST}
+              data={worstDayOfAllTime}
+            />
           </div>
           <div className="_row">
             <MainBestAndWorstDayLocationSelect />
@@ -494,7 +534,7 @@ const MainPageView: FC<PageTestProps> = () => {
             <BestAndWorstDayDatePicker />
             <div className="_search-button-container">
               <CustomButton
-                text="PRETRAZI"
+                text={Texts.search}
                 handleFunction={handleWeekAnalyticsRequest}
               />
             </div>
@@ -510,11 +550,17 @@ const MainPageView: FC<PageTestProps> = () => {
                         && (
                         <>
                           <div className="_best-and-worst-day-header-container">
-                            <Header2 text="Podaci u izabranim mesecima" />
+                            <Header2 text={Texts.dataInChosenMounts} />
                           </div>
                           <div className="_best-and-worst-day-off-all-time-row">
-                            <BestAndWorstDayOfAllTimeContainer header="Najbolji" data={bestDayInChosenMounts} />
-                            <BestAndWorstDayOfAllTimeContainer header="Najgori" data={worstDayInChosenMounts} />
+                            <BestAndWorstDayOfAllTimeContainer
+                              header={BestAndWorstDayStatus.BEST}
+                              data={bestDayInChosenMounts}
+                            />
+                            <BestAndWorstDayOfAllTimeContainer
+                              header={BestAndWorstDayStatus.WORST}
+                              data={worstDayInChosenMounts}
+                            />
                           </div>
                         </>
                         )
@@ -522,7 +568,7 @@ const MainPageView: FC<PageTestProps> = () => {
         </div>
         <div className="_footer">
           <CustomIconButtonSend
-            file="transaction"
+            file={DateTypes.TRANSACTION}
           />
           {
                         width < 600 && (

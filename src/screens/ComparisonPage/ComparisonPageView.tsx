@@ -28,7 +28,7 @@ import { getMountsArray } from '../../utils/dateTime/functionsDateTime';
 import ComparisonDatePicker from './component/datePicker/ComparisonDatePicker';
 import LocationTable from '../../components/CustomTable/LocationTable';
 import { ComparisonPageContext } from '../../feautures/comparison/context';
-import { AlertStatus, DataPickerModeStatus, StartWorkTimeOfIKS } from '../../utils/Constants';
+import { AlertStatus, DataPickerModeStatus, DateTypes, StartWorkTimeOfIKS } from '../../utils/Constants';
 import { Texts } from '../../utils/Texts';
 
 interface PageTestProps {
@@ -170,7 +170,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
                             <LocationTable
                               data={tableComparisonDate}
                               footer={tableComparisonDateFooter}
-                              table="transactions"
+                              table={DateTypes.TRANSACTION}
                             />
                             )}
           </div>
