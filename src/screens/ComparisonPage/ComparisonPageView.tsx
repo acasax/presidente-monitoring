@@ -1,6 +1,5 @@
 import React, { FC, useContext, useEffect } from 'react';
 import Screen from '../Screen';
-import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useLoading } from '../../hooks/UseLoading';
 import { getToken } from '../../feautures/auth/authSlice';
@@ -15,7 +14,6 @@ import {
   getComparisonDatePickerMode,
   getComparisonSelectedDates,
   getComparisonTableFooter,
-  setComparisonAllTimeData,
   setComparisonData,
   setComparisonDateTableFooter,
 } from '../../feautures/comparison/comparisonSlice';
@@ -30,6 +28,7 @@ import LocationTable from '../../components/CustomTable/LocationTable';
 import { ComparisonPageContext } from '../../feautures/comparison/context';
 import { AlertStatus, DataPickerModeStatus, DateTypes, StartWorkTimeOfIKS } from '../../utils/Constants';
 import { Texts } from '../../utils/Texts';
+import { useAlert } from '../../hooks/UseAlert';
 
 interface PageTestProps {
   test?: string
@@ -49,18 +48,20 @@ const ComparisonPageView: FC<PageTestProps> = () => {
     resetLoading,
   } = useLoading();
 
+  const {
+    openAlert,
+    closeAlert,
+    noChosenDateOrLocation,
+  } = useAlert();
+
   const fetchLComparisonAllTimeDate = async () => {
     setLoading();
     try {
       const res = await getComparisonAllTimeDate(token, { dates: [StartWorkTimeOfIKS, new Date().toISOString().split('T')[0]] });
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
       } else {
-        dispatch(setComparisonAllTimeData(res));
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        closeAlert();
       }
     } catch (e) {
       console.log(e);
@@ -85,10 +86,7 @@ const ComparisonPageView: FC<PageTestProps> = () => {
   const handleComparisonData = async () => {
     setLoading();
     try {
-      if (pickedDate.length === 0) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(Texts.noPickedDate));
-        dispatch(setAlertOpenStatus(true));
+      if (!noChosenDateOrLocation(1, pickedDate.length)) {
         return;
       }
       const res = await getComparisonData(token, {
@@ -107,28 +105,18 @@ const ComparisonPageView: FC<PageTestProps> = () => {
       });
 
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
+        return;
+      }
+      if (footer?.message) {
+        openAlert(footer?.message, AlertStatus.Error);
         return;
       }
       dispatch(setComparisonData(res));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (footer?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setComparisonDateTableFooter(footer));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
+      closeAlert();
     } catch (e) {
-      dispatch(setAlertStatus(AlertStatus.Error));
-      dispatch(setAlertMsg(e?.message));
-      dispatch(setAlertOpenStatus(true));
+      openAlert(e?.message, AlertStatus.Error);
     } finally {
       resetLoading();
     }

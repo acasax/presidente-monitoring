@@ -9,10 +9,10 @@ import { useLoading } from '../../hooks/UseLoading';
 import { useAppDispatch } from '../../store/hooks';
 import { Login } from '../../feautures/auth/AuthServices';
 import { clearUser, setUser } from '../../feautures/auth/authSlice';
-import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import { MAIN_PATH } from '../../routes/path-constants';
 import { AlertStatus, AuthPageControllersNames } from '../../utils/Constants';
 import { Texts } from '../../utils/Texts';
+import { useAlert } from '../../hooks/UseAlert';
 
 interface PageTestProps {
   test?: string;
@@ -29,6 +29,11 @@ const AuthPage: FC<PageTestProps> = () => {
     setLoading,
     resetLoading,
   } = useLoading();
+
+  const {
+    openAlert,
+    closeAlert,
+  } = useAlert();
 
   const [showPassword, setShowPassword] = React.useState(
     false,
@@ -50,14 +55,11 @@ const AuthPage: FC<PageTestProps> = () => {
       dispatch(clearUser());
       const res = await Login(data);
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
       } else {
         dispatch(setUser(res));
         history.push(MAIN_PATH);
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        closeAlert();
       }
     } catch (e) {
       console.log(e);

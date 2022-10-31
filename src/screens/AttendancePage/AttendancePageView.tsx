@@ -36,7 +36,6 @@ import {
 } from '../../feautures/attendance/attendanceSlice';
 import { useLoading } from '../../hooks/UseLoading';
 import { AttendancePageContext } from '../../feautures/attendance/context';
-import { clearAlertMsg, setAlertMsg, setAlertOpenStatus, setAlertStatus } from '../../components/CustomAlert/alertSlice';
 import {
   getAttendanceForLocation,
   getAttendanceForWeekAnalytics,
@@ -72,6 +71,7 @@ import {
   SortTypes,
 } from '../../utils/Constants';
 import { Texts } from '../../utils/Texts';
+import { useAlert } from '../../hooks/UseAlert';
 
 interface PageTestProps {
   test?: string
@@ -112,6 +112,13 @@ const AttendancePageView: FC<PageTestProps> = () => {
     resetLoading,
   } = useLoading();
 
+  const {
+    openAlert,
+    closeAlert,
+    noChosenDateOrLocation,
+    noChosenDateOrLocationForBestAndWorstPart,
+  } = useAlert();
+
   const [width, setWidth] = useState(0);
 
   const updateDimension = () => {
@@ -129,13 +136,10 @@ const AttendancePageView: FC<PageTestProps> = () => {
       const res = await getBestAndWorstDayAllTimeForAttendance(token,
         { orderBy: BestAndWorstDayType.BEST });
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
       } else {
         dispatch(setAttendanceBestDayOfAllTime(res));
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        closeAlert();
       }
     } catch (e) {
       console.log(e);
@@ -150,13 +154,10 @@ const AttendancePageView: FC<PageTestProps> = () => {
       const res = await getBestAndWorstDayAllTimeForAttendance(token,
         { orderBy: BestAndWorstDayType.WORST });
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
       } else {
         dispatch(setAttendanceWorstDayOfAllTime(res));
-        dispatch(setAlertOpenStatus(false));
-        dispatch(clearAlertMsg());
+        closeAlert();
       }
     } catch (e) {
       console.log(e);
@@ -181,16 +182,7 @@ const AttendancePageView: FC<PageTestProps> = () => {
   const handleLocationsRequest = async () => {
     setLoading();
     try {
-      if (selectedLocations.length === 0) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(Texts.noPickedLocation));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
-      if (pickedDate.length === 0) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(Texts.noPickedDate));
-        dispatch(setAlertOpenStatus(true));
+      if (!noChosenDateOrLocation(selectedLocations.length, pickedDate.length)) {
         return;
       }
       const res = await getAttendanceForLocation(token, {
@@ -217,38 +209,23 @@ const AttendancePageView: FC<PageTestProps> = () => {
         responseDataType: RequestDataType.CHART,
       });
       if (res?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(res?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(res?.message, AlertStatus.Error);
+        return;
+      }
+      if (footer?.message) {
+        openAlert(footer?.message, AlertStatus.Error);
+        return;
+      }
+      if (chart?.message) {
+        openAlert(chart?.message, AlertStatus.Error);
         return;
       }
       dispatch(setAttendanceLocationTableData(res));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (footer?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(footer?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceTableDataFooter(footer));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (chart?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(chart?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceChartData(chart));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
+      closeAlert();
     } catch (e) {
-      dispatch(setAlertStatus(AlertStatus.Error));
-      dispatch(setAlertMsg(e?.message));
-      dispatch(setAlertOpenStatus(true));
+      openAlert(e?.message, AlertStatus.Error);
     } finally {
       resetLoading();
     }
@@ -257,16 +234,10 @@ const AttendancePageView: FC<PageTestProps> = () => {
   const handleWeekAnalyticsRequest = async () => {
     setLoading();
     try {
-      if (bestAndWorstWeekAnalyticsSelectedLocation.length === 0) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(Texts.noPickedLocationForBestAndWorst));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
-      if (bestAndWorstDayDatePickerMode.length === 0) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(Texts.noPickedDateForBestAndWorst));
-        dispatch(setAlertOpenStatus(true));
+      if (!noChosenDateOrLocationForBestAndWorstPart(
+        bestAndWorstWeekAnalyticsSelectedLocation.length,
+        bestAndWorstDayDatePickerMode.length,
+      )) {
         return;
       }
       const best = await getAttendanceForWeekAnalytics(token, {
@@ -318,68 +289,38 @@ const AttendancePageView: FC<PageTestProps> = () => {
       });
 
       if (best?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(best?.message));
-        dispatch(setAlertOpenStatus(true));
+        openAlert(best?.message, AlertStatus.Error);
+        return;
+      }
+      if (bestFooter?.message) {
+        openAlert(bestFooter?.message, AlertStatus.Error);
+        return;
+      }
+      if (worst?.message) {
+        openAlert(worst?.message, AlertStatus.Error);
+        return;
+      }
+      if (worstFooter?.message) {
+        openAlert(worstFooter?.message, AlertStatus.Error);
+        return;
+      }
+      if (bestInChosenMounts?.message) {
+        openAlert(bestInChosenMounts?.message, AlertStatus.Error);
+        return;
+      }
+      if (worstInChosenMounts?.message) {
+        openAlert(worstInChosenMounts?.message, AlertStatus.Error);
         return;
       }
       dispatch(setAttendanceBestDayWeekAnalytics(best));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (bestFooter?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(bestFooter?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceBestDayWeekAnalyticsFooter(bestFooter));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (worst?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(worst?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceWorstDayWeekAnalytics(worst));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (worstFooter?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(worstFooter?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceWorstDayWeekAnalyticsFooter(worstFooter));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (bestInChosenMounts?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(bestInChosenMounts?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceBestInChosenMounts(bestInChosenMounts));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
-
-      if (worstInChosenMounts?.message) {
-        dispatch(setAlertStatus(AlertStatus.Error));
-        dispatch(setAlertMsg(worstInChosenMounts?.message));
-        dispatch(setAlertOpenStatus(true));
-        return;
-      }
       dispatch(setAttendanceWorstInChosenMounts(worstInChosenMounts));
-      dispatch(setAlertOpenStatus(false));
-      dispatch(clearAlertMsg());
+      closeAlert();
     } catch (e) {
-      dispatch(setAlertStatus(AlertStatus.Error));
-      dispatch(setAlertMsg(e?.message));
-      dispatch(setAlertOpenStatus(true));
+      openAlert(e?.message, AlertStatus.Error);
     } finally {
       resetLoading();
     }

@@ -4,6 +4,7 @@ export const Texts = {
   noPickedLocation: 'Niste izabralio nijednu lokaciju za pretragu po lokacijama.',
   noPickedDateForBestAndWorst: 'Niste izabralio nijednu datum za pretragu za najbolji i najgori dan.',
   noPickedLocationForBestAndWorst: 'Niste izabralio nijednu lokaciju za pretragu za najbolji i najgori dan.',
+  noPickedLocationForMachine: 'Niste izabralio nijednu lokaciju za pretragu po masinama.',
 
   // Text in components
   comparisonPageTitle: 'RAZLIKA KA UPRAVI',
