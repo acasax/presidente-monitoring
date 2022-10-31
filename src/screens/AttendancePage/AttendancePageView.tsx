@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect } from 'react';
 import { IconButton } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Screen from '../Screen';
@@ -72,6 +72,7 @@ import {
 } from '../../utils/Constants';
 import { Texts } from '../../utils/Texts';
 import { useAlert } from '../../hooks/UseAlert';
+import { AppContext } from '../../context';
 
 interface PageTestProps {
   test?: string
@@ -105,6 +106,11 @@ const AttendancePageView: FC<PageTestProps> = () => {
     bestAndWorstDayValuesAttendance,
     handleChoseBestAndWorstDayDateAttendance,
   } = useContext(AttendancePageContext);
+
+  const {
+    width,
+  } = useContext(AppContext);
+
   const dispatch = useAppDispatch();
 
   const {
@@ -118,17 +124,6 @@ const AttendancePageView: FC<PageTestProps> = () => {
     noChosenDateOrLocation,
     noChosenDateOrLocationForBestAndWorstPart,
   } = useAlert();
-
-  const [width, setWidth] = useState(0);
-
-  const updateDimension = () => {
-    const widthScreen = window.innerWidth;
-    setWidth(widthScreen);
-  };
-
-  useEffect(() => {
-    updateDimension();
-  }, [updateDimension]);
 
   const fetchLBestDayOfAllTime = async () => {
     setLoading();

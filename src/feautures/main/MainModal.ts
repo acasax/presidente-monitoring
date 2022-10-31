@@ -124,3 +124,7 @@ export type TMainPageContext = {
   setBestAndWorstDayValues: (b: any) => void,
   handleChoseBestAndWorstDayDate: () => void,
 };
+
+export type TAppContext = {
+  width: any
+};
